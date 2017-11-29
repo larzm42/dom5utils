@@ -1,3 +1,4 @@
+package dom5utils;
 /* This file is part of dom5utils.
  *
  * dom5utils is free software: you can redistribute it and/or modify
@@ -24,7 +25,7 @@ public class Starts {
 	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x00311eb0l;
 	public static final int MONSTER_COUNT = 3102;
 	
-	public static final long MONSTER_TRS_INDEX = 0x001707cl;
+	public static final long MONSTER_TRS_INDEX = 0x001ef4al;
 	
 	public static final long SITE = 0x00f0b288l;
 	public static final int SITE_COUNT = 1052;

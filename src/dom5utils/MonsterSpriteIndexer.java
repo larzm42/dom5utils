@@ -1,3 +1,4 @@
+package dom5utils;
 /* This file is part of dom5utils.
  *
  * dom5utils is free software: you can redistribute it and/or modify
@@ -226,7 +227,7 @@ public class MonsterSpriteIndexer {
 					System.out.println(id + ":" + name + ": " + offset + " " + index);
 					
 					id++;
-					stream.skip(218);
+					stream.skip(226);
 				}
 				TreeSet<String> sorted = new TreeSet<String>(new Comparator<String>() {
 					@Override

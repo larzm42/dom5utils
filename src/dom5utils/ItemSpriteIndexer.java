@@ -1,3 +1,4 @@
+package dom5utils;
 /* This file is part of dom5utils.
  *
  * dom5utils is free software: you can redistribute it and/or modify
@@ -69,6 +70,29 @@ public class ItemSpriteIndexer {
 				System.out.println(id + ":" + name + ": " + offset + " " + index + "=" + Integer.decode("0X" + index + offset));
 				
 				int val = Integer.decode("0X" + index + offset);
+				if (val > 10000) {
+					val -= 9268;
+				} else if (val > 9000) {
+					val -= 8276;
+				} else if (val > 8000) {
+					val -= 7337;
+				} else if (val > 7000) {
+					val -= 6339;
+				} else if (val > 6000) {
+					val -= 5383;
+				} else if (val > 5000) {
+					val -= 4444;
+				} else if (val > 4000) {
+					val -= 3475;
+				} else if (val > 3000) {
+					val -= 2505;
+				} else
+				if (val > 2000) {
+					val -= 1519;
+				} else
+				if (val > 1000) {
+					val -= 538;
+				}
 				String.format("%04d", val);
 				if (val > 0) {
 					String oldFileName1 = "item_" + String.format("%04d", val) + ".tga";
@@ -88,7 +112,7 @@ public class ItemSpriteIndexer {
 				}
 				
 				id++;
-				stream.skip(164);
+				stream.skip(188);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

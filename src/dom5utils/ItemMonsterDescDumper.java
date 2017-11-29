@@ -1,3 +1,4 @@
+package dom5utils;
 /* This file is part of dom5utils.
  *
  * dom5utils is free software: you can redistribute it and/or modify
@@ -32,9 +33,9 @@ public class ItemMonsterDescDumper {
 		ITEM, NOTHING, UNIT
 	};
 	static Map<Integer, String> monsters = new HashMap<Integer, String>();
-	static String LAST_ITEM = "Mercybrand";
+	static String LAST_ITEM = "Armor of the Five Elements";
 	static String FIRST_UNIT = "Minister of Magic";
-	static String LAST_UNIT = "Phoenix";
+	static String LAST_UNIT = "Lord of Fertility";
 	static Set<Integer> blockedMonsterIds = new HashSet<Integer>();
 	
 	public static void main(String[] args) {
@@ -67,7 +68,7 @@ public class ItemMonsterDescDumper {
 				}
 				monsters.put(id, name.toString().toUpperCase());
 				id++;
-				stream.skip(218);
+				stream.skip(226);
 			}
 			stream.close();
 

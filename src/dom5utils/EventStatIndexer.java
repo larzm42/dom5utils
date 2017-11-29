@@ -1,3 +1,4 @@
+package dom5utils;
 /* This file is part of dom5utils.
  *
  * dom5utils is free software: you can redistribute it and/or modify
