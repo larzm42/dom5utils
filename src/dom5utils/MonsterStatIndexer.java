@@ -15,11 +15,9 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -248,7 +246,7 @@ public class MonsterStatIndexer {
 		int i = 0;
 		byte[] c = new byte[16];
 		boolArray = new boolean[Starts.MONSTER_COUNT];
-		stream.skip(240);
+		stream.skip(248);
 		while ((stream.read(c, 0, 16)) != -1) {
 			boolean found = false;
 			String high = String.format("%02X", c[1]);
@@ -348,7 +346,7 @@ public class MonsterStatIndexer {
 				}
 			}
 			boolArray[i] = found;
-			stream.skip(240l);
+			stream.skip(248l);
 			i++;
 			if (i >= Starts.MONSTER_COUNT) {
 				break;
@@ -1023,9 +1021,9 @@ public class MonsterStatIndexer {
 			
 			/*stream = new FileInputStream("Dominions5.exe");			
 			stream.skip(Starts.MONSTER);
-			i = 0;
-			c = new byte[16];
-			stream.skip(240);
+			int i = 0;
+			byte[] c = new byte[16];
+			stream.skip(248);
 			while ((stream.read(c, 0, 16)) != -1) {
 				boolean found = false;
 				System.out.print("(" + (i+1) + ") ");
@@ -1155,7 +1153,7 @@ public class MonsterStatIndexer {
 					//System.out.println("");
 				}
 				System.out.println(" ");
-				stream.skip(240l);
+				stream.skip(248l);
 				i++;
 				if (i >= Starts.MONSTER_COUNT) {
 					break;
@@ -1208,7 +1206,7 @@ public class MonsterStatIndexer {
 					i++;
 				} else {
 					//System.out.print(low + high + " ");
-					if ((low + high).equals("AA01")) {
+					if ((low + high).equals("5A02")) {
 						posSet.add(k);
 					}
 					k++;

@@ -42,4 +42,13 @@ public class Starts {
 	
 	public static final long MERCENARY = 0x00cb6dcal;
 	public static final int MERCENARY_COUNT = 68;
+
+	public static final long ARMOR = 0x001c2998l;
+	public static final int ARMOR_COUNT = 235;
+
+	public static final long WEAPON = 0x01267e28l;
+	public static final int WEAPON_COUNT = 720;
+	
+	public static final long NATION = 0x00c2fe60l;
+	public static final int NATION_COUNT = 112;
 }
