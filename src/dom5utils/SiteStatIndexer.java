@@ -52,13 +52,13 @@ public class SiteStatIndexer {
 		int numFound = 0;
 		Set<Integer> posSet = new HashSet<Integer>();
 		byte[] c = new byte[2];
-		stream.skip(42);
+		stream.skip(44);
 		while ((stream.read(c, 0, 2)) != -1) {
 			String high = String.format("%02X", c[1]);
 			String low = String.format("%02X", c[0]);
 			int weapon = Integer.decode("0X" + high + low);
 			if (weapon == 0) {
-				stream.skip(32l - numFound*2l);
+				stream.skip(34l - numFound*2l);
 				// Values
 				boolean found = false;
 				List<Integer> values = new ArrayList<Integer>();
@@ -76,7 +76,7 @@ public class SiteStatIndexer {
 						//System.out.print(fire);
 						values.add(fire);
 					}
-					stream.skip(2);
+					stream.skip(6);
 				}
 				
 				//System.out.println("");
@@ -93,7 +93,7 @@ public class SiteStatIndexer {
 					}
 					ind++;
 				}
-				stream.skip(142l - 32l - numFound*4l);
+				stream.skip(214l - 34l - numFound*8l);
 				numFound = 0;
 				posSet.clear();
 				k = 0;
@@ -124,7 +124,7 @@ public class SiteStatIndexer {
 		int pos = -1;
 		long numFound = 0;
 		byte[] c = new byte[2];
-		stream.skip(42);
+		stream.skip(44);
 		while ((stream.read(c, 0, 2)) != -1) {
 			String high = String.format("%02X", c[1]);
 			String low = String.format("%02X", c[0]);
@@ -132,7 +132,7 @@ public class SiteStatIndexer {
 			if (weapon == 0) {
 				boolean found = false;
 				int value = 0;
-				stream.skip(32l - numFound*2l);
+				stream.skip(34l - numFound*2l);
 				// Values
 				for (int x = 0; x < numFound; x++) {
 					stream.read(c, 0, 2);
@@ -149,7 +149,7 @@ public class SiteStatIndexer {
 						//System.out.print(fire);
 						found = true;
 					}
-					stream.skip(2);
+					stream.skip(6);
 				}
 				
 				//System.out.println("");
@@ -169,7 +169,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(callback.notFound());
 					}
 				}
-				stream.skip(142l - 32l - numFound*4l);
+				stream.skip(214l - 34l - numFound*8l);
 				numFound = 0;
 				pos = -1;
 				k = 0;
@@ -225,7 +225,7 @@ public class SiteStatIndexer {
 				in.close();
 
 				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 144l;
+				startIndex = startIndex + 216l;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -247,7 +247,7 @@ public class SiteStatIndexer {
 			// rarity
 			int i = 0;
 			byte[] c = new byte[1];
-			stream.skip(40);
+			stream.skip(42);
 			while ((stream.read(c, 0, 1)) != -1) {
 				XSSFRow row = sheet.getRow(rowNumber);
 				rowNumber++;
@@ -259,7 +259,7 @@ public class SiteStatIndexer {
 					//System.out.println(c[0]);
 					cell.setCellValue(c[0]);
 				}
-				stream.skip(143l);
+				stream.skip(215l);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;
@@ -273,7 +273,7 @@ public class SiteStatIndexer {
 			// loc
 			i = 0;
 			c = new byte[2];
-			stream.skip(140);
+			stream.skip(208);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
@@ -282,7 +282,7 @@ public class SiteStatIndexer {
 				rowNumber++;
 				XSSFCell cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(Integer.decode("0X" + high + low));
-				stream.skip(142l);
+				stream.skip(214l);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;
@@ -296,7 +296,7 @@ public class SiteStatIndexer {
 			// level
 			i = 0;
 			c = new byte[1];
-			stream.skip(38);
+			stream.skip(40);
 			while ((stream.read(c, 0, 1)) != -1) {
 				String high = String.format("%02X", c[0]);
 				//System.out.println(Integer.decode("0X" + high));
@@ -304,7 +304,7 @@ public class SiteStatIndexer {
 				rowNumber++;
 				XSSFCell cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(Integer.decode("0X" + high));
-				stream.skip(143l);
+				stream.skip(214l);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;
@@ -319,7 +319,7 @@ public class SiteStatIndexer {
 			String[] paths = {"Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Blood", "Holy"};
 			i = 0;
 			c = new byte[1];
-			stream.skip(36);
+			stream.skip(38);
 			while ((stream.read(c, 0, 1)) != -1) {
 				XSSFRow row = sheet.getRow(rowNumber);
 				rowNumber++;
@@ -331,7 +331,7 @@ public class SiteStatIndexer {
 					//System.out.println(paths[c[0]]);
 					cell.setCellValue(paths[c[0]]);
 				}
-				stream.skip(143l);
+				stream.skip(215l);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;
@@ -406,13 +406,13 @@ public class SiteStatIndexer {
 			Set<Integer> oppositeSet = new HashSet<Integer>();
 			long numFound = 0;
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					String value[] = {"", ""};
@@ -444,7 +444,7 @@ public class SiteStatIndexer {
 							//System.out.print(scales[fire]);
 							value[index++] = scales[fire];
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -458,7 +458,7 @@ public class SiteStatIndexer {
 						XSSFCell cell = row.getCell(22, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 						cell.setCellValue(value[1]);
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					scalesSet.clear();
 					oppositeSet.clear();
@@ -491,13 +491,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			int pos = -1;
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					boolean found = false;
 					int value = 0;
 					// Values
@@ -513,7 +513,7 @@ public class SiteStatIndexer {
 							found = true;
 							value = new BigInteger(new byte[]{c[1], c[0]}).intValue();
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -529,7 +529,7 @@ public class SiteStatIndexer {
 						cell2.setCellValue("");
 					}
 					
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					pos = -1;
 					rit = "";
@@ -591,13 +591,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			Set<Integer> posSet = new HashSet<Integer>();
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
@@ -615,7 +615,7 @@ public class SiteStatIndexer {
 							//System.out.print(fire);
 							values.add(fire);
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -627,7 +627,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(mon);
 						ind++;
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;
@@ -655,13 +655,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			posSet = new HashSet<Integer>();
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
@@ -679,7 +679,7 @@ public class SiteStatIndexer {
 							//System.out.print(fire);
 							values.add(fire);
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -691,7 +691,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(mon);
 						ind++;
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;
@@ -719,13 +719,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			posSet = new HashSet<Integer>();
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
@@ -743,7 +743,7 @@ public class SiteStatIndexer {
 							//System.out.print(fire);
 							values.add(fire);
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -755,7 +755,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(mon);
 						ind++;
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*4l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;
@@ -783,13 +783,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			posSet = new HashSet<Integer>();
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
@@ -807,7 +807,7 @@ public class SiteStatIndexer {
 							//System.out.print(fire);
 							values.add(fire);
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -819,7 +819,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(mon);
 						ind++;
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;
@@ -847,13 +847,13 @@ public class SiteStatIndexer {
 			numFound = 0;
 			posSet = new HashSet<Integer>();
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
@@ -871,7 +871,7 @@ public class SiteStatIndexer {
 							//System.out.print(fire);
 							values.add(fire);
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 					
 					//System.out.println("");
@@ -883,7 +883,7 @@ public class SiteStatIndexer {
 						cell.setCellValue(mon);
 						ind++;
 					}
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*4l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;
@@ -1037,13 +1037,13 @@ public class SiteStatIndexer {
 			int sum4count = 0;
 			numFound = 0;
 			c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					// Values
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -1065,7 +1065,7 @@ public class SiteStatIndexer {
 								sum4count++;
 							}
 						}
-						stream.skip(2);
+						stream.skip(6);
 					}
 
 					XSSFRow row = sheet.getRow(rowNumber);
@@ -1101,7 +1101,7 @@ public class SiteStatIndexer {
 						cell2.setCellValue(sum4count);
 					}
 					//System.out.println(sum);
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					posSet.clear();
 					k = 0;

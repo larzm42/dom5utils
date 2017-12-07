@@ -27,8 +27,8 @@ public class Starts {
 	
 	public static final long MONSTER_TRS_INDEX = 0x001ef4al;
 	
-	public static final long SITE = 0x00f0b288l;
-	public static final int SITE_COUNT = 1052;
+	public static final long SITE = 0x0113dc60l;
+	public static final int SITE_COUNT = 1157;
 	
 	public static final long NAMES = 0x00b049acl;
 	public static final long FIXED_NAMES = 0x00c49b94l;
