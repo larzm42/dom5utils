@@ -317,21 +317,29 @@ public class SiteStatIndexer {
 			rowNumber = 1;
 			// path
 			String[] paths = {"Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Blood", "Holy"};
+			int[] spriteOffset = {1, 9, 18, 26, 35, 42, 50, 59, 68};
 			i = 0;
 			c = new byte[1];
-			stream.skip(38);
+			byte[] d = new byte[1];
+			stream.skip(36);
+			stream.read(d, 0, 1);
+			stream.skip(1);
 			while ((stream.read(c, 0, 1)) != -1) {
 				XSSFRow row = sheet.getRow(rowNumber);
 				rowNumber++;
 				XSSFCell cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+				XSSFCell cell2 = row.getCell(105, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				if (c[0] == -1) {
 					//System.out.println("");
 					cell.setCellValue("");
 				} else {
 					//System.out.println(paths[c[0]]);
 					cell.setCellValue(paths[c[0]]);
+					cell2.setCellValue(spriteOffset[c[0]] + d[0]);
 				}
-				stream.skip(215l);
+				stream.skip(213l);
+				stream.read(d, 0, 1);
+				stream.skip(1);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;
