@@ -2143,6 +2143,9 @@ public class MonsterStatIndexer {
 			// landdamage
 			doit2(sheet, "0E02", 302);
 			
+			// rpcost
+			doit1(240, 303, sheet);
+
 			// fixedname
 			/*File heroesFile = new File("heroes.txt");
 			Set<Integer> heroes = new HashSet<Integer>();

@@ -83,6 +83,7 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("niefel 1", new ArrayList<String>(Arrays.asList(new String[]{"8C"})));
 		indexToInt.put("jotun 2", new ArrayList<String>(Arrays.asList(new String[]{"90"})));
 		indexToInt.put("utg 3", new ArrayList<String>(Arrays.asList(new String[]{"94"})));
+		indexToInt.put("rus 1", new ArrayList<String>(Arrays.asList(new String[]{"98"})));
 		indexToInt.put("rus 2", new ArrayList<String>(Arrays.asList(new String[]{"9C"})));
 		indexToInt.put("rus 3", new ArrayList<String>(Arrays.asList(new String[]{"A0"})));
 		indexToInt.put("mict 1", new ArrayList<String>(Arrays.asList(new String[]{"A4"})));
@@ -111,6 +112,7 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("ashdod 2", new ArrayList<String>(Arrays.asList(new String[]{"FD", "FE"})));
 		indexToInt.put("gath 3", new ArrayList<String>(Arrays.asList(new String[]{"01", "02"})));
 		indexToInt.put("ur", new ArrayList<String>(Arrays.asList(new String[]{"05", "06"})));
+		indexToInt.put("ur 2", new ArrayList<String>(Arrays.asList(new String[]{"09"})));
 		indexToInt.put("asp 2", new ArrayList<String>(Arrays.asList(new String[]{"11"})));
 		indexToInt.put("lem 3", new ArrayList<String>(Arrays.asList(new String[]{"15"})));
 		indexToInt.put("berytos", new ArrayList<String>(Arrays.asList(new String[]{"1D"})));
@@ -141,10 +143,9 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("xib 3", new ArrayList<String>(Arrays.asList(new String[]{"96"})));
 		indexToInt.put("ther 1", new ArrayList<String>(Arrays.asList(new String[]{"19"})));
 		indexToInt.put("ys", new ArrayList<String>(Arrays.asList(new String[]{"9A"})));
+		indexToInt.put("ery 3", new ArrayList<String>(Arrays.asList(new String[]{"53", "54"})));
 		/*
 		macha 3: 1975
-		rus 1: 3047
-		ur 2: 5005
 		empty: 5023
 		muspel: 5173
 		ocean 3: 5838
@@ -275,6 +276,14 @@ public class MonsterSpriteIndexer {
 								}
 							} else if (entry.getValue().equals("gath 3")) {
 								if (sortedByOffset.getIntValue() > 460) {
+									sortedSet.add(new SortedByOffset(myList));
+								}
+							} else if (entry.getValue().equals("gods")) {
+								if (sortedByOffset.getIntValue() < 2465) {
+									sortedSet.add(new SortedByOffset(myList));
+								}
+							} else if (entry.getValue().equals("ur 2")) {
+								if (sortedByOffset.getIntValue() > 2465) {
 									sortedSet.add(new SortedByOffset(myList));
 								}
 							} else {

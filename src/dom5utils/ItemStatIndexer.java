@@ -948,7 +948,7 @@ public class ItemStatIndexer {
 			doit(sheet, "BE00", 106);
 
 			// aging
-			doit(sheet, "2F01", 145);
+			doit(sheet, "2F01", 148);
 
 			// crossbreeder
 			doit(sheet, "AF01", 125);
@@ -975,31 +975,31 @@ public class ItemStatIndexer {
 			doit(sheet, "6F00", 48);
 
 			// corpselord
-			doit(sheet, "9A00", 146);
+			doit(sheet, "9A00", 149);
 
 			// lictorlord
-			doit(sheet, "6600", 147);
+			doit(sheet, "6600", 150);
 
 			// sumauto
 			doit(sheet, "8B00", 134);
 
 			// bloodsac
-			doit(sheet, "D800", 148);
+			doit(sheet, "D800", 151);
 
 			// mastersmith
-			doit(sheet, "6B01", 149);
+			doit(sheet, "6B01", 152);
 
 			// alch
 			doit(sheet, "8400", 21);
 
 			// eyeloss
-			doit(sheet, "7E00", 150);
+			doit(sheet, "7E00", 153);
 
 			// armysize
-			doit(sheet, "A301", 151);
+			doit(sheet, "A301", 154);
 
 			// defender
-			doit(sheet, "8900", 152);
+			doit(sheet, "8900", 155);
 
 			// Hack for Forbidden Light
 			doit(sheet, "7700", 73, new CallbackAdapter() {
@@ -1024,13 +1024,13 @@ public class ItemStatIndexer {
 			});
 
 			// cannotwear
-			doit(sheet, "C701", 153, new CallbackAdapter() {
+			doit(sheet, "C701", 156, new CallbackAdapter() {
 				@Override
 				public String notFound() {
 					return null;
 				}
 			});
-			doit(sheet, "C801", 153, new CallbackAdapter() {
+			doit(sheet, "C801", 156, new CallbackAdapter() {
 				@Override
 				public String notFound() {
 					return null;
@@ -1112,16 +1112,19 @@ public class ItemStatIndexer {
 			doit(sheet, "2500", 105);
 
 			// reanimation bonus priest
-			doit(sheet, "6C01", 154);
+			doit(sheet, "6C01", 157);
 			
 			// reanimation bonus death
-			doit(sheet, "6D01", 155);
+			doit(sheet, "6D01", 158);
 			
 			// dragon mastery
-			doit(sheet, "0E01", 156);
+			doit(sheet, "0E01", 159);
 			
 			// patience
-			doit(sheet, "CD01", 157);
+			doit(sheet, "CD01", 160);
+			
+			// retinue
+			doit(sheet, "B401", 161);
 			
 			// restricted
 			stream = new FileInputStream("Dominions5.exe");			
