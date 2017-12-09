@@ -35,8 +35,8 @@ public class Starts {
 	
 	public static final int NAMES_COUNT = 161;
 	
-	public static final long SPELL_DESC = 0x002c68a8l;
-	public static final long SPELL_DESC_INDEX = 0x00304fd8l;
+	public static final long SPELL_DESC = 0x0031da30l;
+	public static final long SPELL_DESC_INDEX = 0x0035f440l;
 
 	public static final long EVENT = 0x0030adc8l;
 	
@@ -51,4 +51,8 @@ public class Starts {
 	
 	public static final long NATION = 0x00c2fe60l;
 	public static final int NATION_COUNT = 112;
+	
+	public static final long SPELL = 0x011a7aa0l;
+	public static final int SPELL_COUNT = 1128;
+	
 }

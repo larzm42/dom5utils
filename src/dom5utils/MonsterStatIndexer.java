@@ -2344,6 +2344,9 @@ public class MonsterStatIndexer {
 							cell = row.getCell(60 + count*4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 							cell.setCellValue(magicStrip(ranMag.mask));
 							count++;
+							if (count == 4) {
+								count = 62;
+							}
 							//System.out.print(ranMag.rand + "\t" + ranMag.nbr + "\t" + ranMag.link + "\t" + ranMag.mask + "\t");
 						}
 					}
