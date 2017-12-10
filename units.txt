@@ -1,0 +1,3085 @@
+2	Standard
+3	Serpent Cataphract
+4	Serpent
+5	Serpent Lord
+6	Emerald Lord
+7	Emerald Guard
+11	Retiarius
+12	Gladiator
+13	Hoplite Commander
+14	Hoplite
+15	Hypaspist Commander
+16	Hypaspist
+17	Archer
+18	Militia
+19	Heavy Cavalry
+20	Heavy Cavalry
+21	Heavy Cavalry
+22	Knight
+23	Knight Commander
+24	Light Cavalry
+25	Light Cavalry
+26	Light Cavalry
+27	Centaur
+28	Light Infantry
+29	Light Infantry
+30	Militia
+31	Militia
+32	Archer
+33	Archer
+34	Commander
+35	Commander
+36	Commander
+37	Master of the Games
+38	Heavy Infantry
+39	Heavy Infantry
+40	Heavy Infantry
+41	Arch Theurg
+42	Theurg
+43	Theurg Acolyte
+44	Mounted Commander
+45	Mounted Commander
+46	Mounted Commander
+47	Crossbowman
+48	Crossbowman
+49	Crossbowman
+50	Slinger
+51	Battle Vestal
+52	Battle Deacon
+53	Logrian Warrior
+54	Castellan
+55	Longbowman
+56	Royal Forester
+57	Knight of Man
+58	Knight of the Stone
+59	Longbowman
+60	Monk
+61	Spearman
+62	Longspear
+63	Tower Guard
+64	Knight of Avalon
+65	Warden of Avalon
+66	Guardian
+67	Infantry of Ulm
+68	Black Plate Infantry
+69	Black Knight
+70	Black Lord
+71	Infantry of Ulm
+72	Black Plate Infantry
+73	Infantry of Ulm
+74	Black Plate Infantry
+75	Infantry of Ulm
+76	Black Plate Infantry
+77	Infantry of Ulm
+78	Black Plate Infantry
+79	Pikeneer
+80	Black Plate Pikeneer
+81	Abysian Infantry
+82	Abysian Infantry
+83	Abysian Infantry
+84	Abysian Infantry
+85	Anathemant Salamander
+86	Anathemant Dragon
+87	Demonbred
+88	Fiend of Darkness
+89	Warlock
+90	Lava Warrior
+92	Cloud Mage
+93	Wind Master
+94	Conjurer
+95	Circle Master
+96	Azure Initiate
+97	Azure Mage
+98	Pyromancer
+99	Adept of Pyriphlegeton
+100	Adept of the Silver Order
+101	Adept of the Golden Order
+102	Initiate of the Deep
+103	Hydromancer
+104	Deep Seer
+105	Woodhenge Druid
+106	Shadow Seer
+107	Atlantian Light Infantry
+108	Coral Guard
+109	Dagon
+110	Atlantian Militia
+111	Atlantian Shield Bearer
+112	Coral Queen
+113	Lord Guardian
+114	Commander of Ulm
+115	Commander of Ulm
+116	Commander of Ulm
+117	Commander of Ulm
+118	War Master
+119	Warlord
+120	Moloch
+121	Demonbred
+122	Bloodhenge Druid
+123	Wolf Tribe Archer
+124	Wolf Tribe Warrior
+125	Woodsman Blowpipe
+126	Woodsman
+127	Blizzard Warrior
+128	Spire Horn Archer
+129	Spire Horn Militia
+130	Airya Light Infantry
+131	Spire Horn Warrior
+132	Iceclad
+133	Man at Arms
+134	Royal Guard
+135	Knight of the Chalice
+136	Horse Tribe Chief
+137	Horse Tribe Cavalry
+138	Gorgon
+139	Barbarian
+140	Barbarian
+141	Barbarian Chief
+142	Huskarl
+143	Huskarl
+144	Hirdman
+145	Hirdman
+146	Einhere
+147	Barbarian Lord
+148	Friar
+149	Inquisitor
+150	War Elephant
+151	Daughter of Avalon
+152	Mother of Avalon
+153	Crone of Avalon
+154	Witch
+155	Velite
+156	Cyclops
+157	Mother of Monsters
+158	Oracle
+159	Monument
+160	High Priest of C'tis
+161	Sauromancer
+162	Lizard Lord
+163	Commander of C'tis
+164	Swamp Guard
+165	Heavy Infantry
+166	City Guard
+167	Light Infantry
+168	Militia
+169	Taskmaster
+170	Shaman
+171	Slave Warrior
+172	Elite Warrior
+173	Runner
+174	Triton
+175	Triton Guard
+176	Triton
+177	Lizard King
+178	Lich
+179	Master Lich
+180	Demilich
+181	Wraith Lord
+182	Wraith Lord
+183	Wraith Lord
+184	Knight of the Unholy Sepulchre
+185	Bane
+186	Longdead Velite
+187	Longdead Legionnaire
+188	Mound King
+189	Longdead Horseman
+190	Mound King
+191	Longdead
+192	Longdead
+193	Longdead
+194	Longdead
+195	Longdead
+196	Longdead
+197	Soulless
+198	Ghoul
+199	Cardaces
+200	Chariot
+201	Peltast
+202	Caelian Seraph
+203	High Seraph
+204	Seraphine
+205	Raptor
+206	Shambler
+207	Shambler Chief
+208	War Shambler
+209	Mother Guard
+210	Giant Lobster
+211	War Lobster
+212	Lord Warden
+213	Salamander
+214	Beast Trainer
+215	Virtue
+216	Dragon
+217	Flagellant
+218	Crossbowman
+219	Swordsman
+220	Halberdier
+221	Pikeneer
+222	High Inquisitor
+223	Grand Master
+224	Witch Hunter
+225	Initiate
+226	Arch Mage
+227	Satyr Sneak
+228	Satyr
+229	Satyr
+230	Satyr Hoplite
+231	Centaur Hierophant
+232	Centaur Commander
+233	Centaur Cataphract
+234	Minotaur
+235	War Minotaur
+236	Minotaur Lord
+237	Dryad
+238	Pan
+239	Harpy
+240	Priest
+241	High Priest
+242	Priestess
+243	Crab Hybrid
+244	Arch Mage
+245	Master Enchanter
+246	Freak Lord
+247	Freak
+248	Arch Mage
+249	Crone
+250	Frost Father
+251	Great Sage
+252	Harab Seraph
+253	Dusk Elder
+254	Spectator
+255	Wailing Lady
+256	Acolyte of Eldregate
+257	Bishop of Eldregate
+258	Arch Bishop of Eldregate
+259	Lictor
+260	Censor
+261	Valkyrie
+262	Van
+263	Vanherse
+264	Vanjarl
+265	Dragon
+266	Dragon
+267	Frost Father
+268	Master Enchanter
+269	Wyrm
+270	Arch Druid
+271	Burgmeister Guard
+272	Hoburg Champion
+273	Hoburg Crossbow
+274	Jotun Jarl
+275	Jotun Gode
+276	Jotun Javelinist
+277	Jotun Militia
+278	Jotun Spearman
+279	Jotun Axeman
+280	Seithkona
+281	Norna
+282	Wolf Rider
+283	Chief
+284	Wolf
+285	Spearman
+286	Maceman
+287	Swordsman
+288	Heavy Crossbowman
+289	Pikeneer
+290	Crossbowman
+291	Captain
+292	Heavy Cavalry
+293	Captain
+294	Nerid
+295	Sacred Serpent
+296	Hydra Tamer
+297	Phantasmal Warrior
+298	Phantasmal Wolf
+299	Wight Mage
+300	Jotun Hurler
+301	Astrologer
+302	Wizard
+303	Imp
+304	Devil
+305	Arch Devil
+306	Ice Devil
+307	Lesser Horror
+308	Horror
+309	Ice Druid
+310	Necromancer
+311	Mystic
+312	Wizard
+313	Manikin
+314	Mandragora
+315	Soulless Giant
+316	Longdead Giant
+317	Soulless
+318	Soulless of Atlantis
+319	Soulless of C'tis
+320	Saurolich
+321	Shaman
+322	King of the Deep
+323	Dwarven Smith
+324	Dwarf Elder
+325	Master Smith
+326	Blood Slave
+327	Anathemant
+328	Lizard King
+329	Spectral Mage
+330	Dark Vines
+331	Illithid
+332	Starspawn
+333	Starspawn
+334	Golden Naga
+335	Slave Trooper
+336	Slave Guardian
+337	Lobo Guard
+338	Enchanter
+339	Sorcerer
+340	Crystal Mage
+341	Illusionist
+342	Moon Mage
+343	Sorceress
+344	Sorceress
+345	Gnome
+346	Crystal Sorceress
+347	Crystal Priestess
+348	Amazon
+349	Garnet Sorceress
+350	Garnet Priestess
+351	Amazon
+352	Jade Sorceress
+353	Jade Priestess
+354	Amazon
+355	Onyx Sorceress
+356	Onyx Priestess
+357	Amazon
+358	Temple Guard
+359	Queen of the Sea
+360	Undine
+361	Vine Man
+362	Vine Ogre
+363	Enchantress
+364	Enchantress
+365	Centaur Chariot
+366	Eternal Knight
+367	Pegasus Rider
+368	Gryphon
+369	Nightmare
+370	Jade Maiden
+371	Hero
+372	Humanbred
+373	Coral Prince
+374	Queen Mother
+375	Jotun Jarl
+376	Green Knight
+377	Hero
+378	Hero
+379	Lizard Hero
+380	Lizard Hero
+381	Heroine
+382	Mystic
+383	Prince of Death
+384	Neter of Crafts
+385	Neteret of Joy
+386	Neter of the Sun
+387	Neteret of Many Names
+388	Neter of Chaos
+389	Fire Lord
+390	Grey Knight
+391	Grey Lord
+392	Ashen Angel
+393	Lammashta
+394	Lamia
+395	Lich Queen
+396	Revenant
+397	Black Serpent
+398	Mummy
+399	Werewolf
+400	Skinshifter
+401	Bitch Queen
+402	Crone
+403	Horned Serpent
+404	Vampire Lord
+405	Vampire
+406	Triton Commander
+407	Illithid Soldier
+408	Water Elemental
+409	Water Elemental
+410	Water Elemental
+411	Water Elemental
+412	Water Elemental
+413	Water Elemental
+414	Wingless
+415	High Seraph
+416	Seraphine
+417	Crossbowman
+418	Storm General
+419	Mammoth
+420	Airya Infantry
+421	Storm Guard
+422	Herse
+423	Lizard Warrior
+424	Meteorite Guard
+425	Shambler Thrall
+426	Scout
+427	Spy
+428	Assassin
+429	Slayer
+430	Black Harpy
+431	Scout
+432	Scout
+433	Bone Fiend
+434	Black Servant
+435	Maenad
+436	Jotun Jarl
+437	Jotun Herse
+438	Kraken
+439	Mound Fiend
+440	Paladin
+441	Consort
+442	Shade Beast
+443	Star Child
+444	Traitor Prince
+445	Illithid Lord
+446	Lord of the Plague Wind
+447	Troglodyte
+448	False Horror
+449	Frost Fiend
+450	Horse Brother
+451	Horse Brother
+452	Behemoth
+453	Foul Spawn
+454	Foul Spawn
+455	Foul Spawn
+456	Foul Spawn
+457	Foul Spawn
+458	Foul Spawn
+459	Foul Spawn
+460	Foul Spawn
+461	Foul Spawn
+463	Fay Boar
+464	Harbinger
+465	Arch Angel
+466	Cockatrice
+467	Foul Beast
+468	Foul Spawn
+469	King of Mountains
+470	Father Illearth
+471	Golem
+472	Statue of Order
+473	Telestic Animate
+474	Living Statue
+475	Crusher
+476	Lumber Construct
+477	Adept of the Iron Order
+478	Sage
+479	Lore Master
+480	Magus
+481	High Magus
+482	Villain
+483	Hoburg Militia
+484	Caelian Scout
+485	Great Enchantress
+486	Great Warlock
+487	Chimera
+488	Ettin
+489	Demon Knight
+490	Djinn
+491	Harvester of Sorrows
+492	Heliophagus
+493	Earth Elemental
+494	Earth Elemental
+495	Earth Elemental
+496	Earth Elemental
+497	Earth Elemental
+498	Earth Elemental
+499	Nataraja
+500	Skratti
+501	Allfather
+502	Empoisoner
+503	Poison Slinger
+504	Falchioneer
+505	Hero
+506	Hero
+507	Heroine
+508	Wolf Lord
+509	Arch Seraph
+510	Hierodule
+511	Winter Wolf
+512	Fall Bear
+513	Spring Hawk
+514	Kithaironic Lion
+515	Summer Lion
+516	Pandemoniac
+517	Black Hawk
+518	Troll
+519	Troll King
+520	Wyvern
+521	Abomination
+522	Cave Drake
+523	Fire Drake
+524	Scorpion Beast
+525	Couatl
+526	Serpent Fiend
+527	Will o' the Wisp
+528	Corpse Candle
+529	Sea Father
+530	Foul Spawn
+531	Iron Dragon
+532	Mechanical Man
+533	Wight
+534	Corpse Construct
+535	Longdead Archer
+536	Damned Buccaneer
+537	Forgotten King
+538	Theurg Communicant
+539	Rage Lord
+540	White Minotaur
+541	Vaetti
+542	Stone Monstra
+543	Angel of the Host
+544	Einhere
+545	Shark Knight
+546	Void Lurker
+547	Dead One
+548	Hoburg Hero
+549	Boar
+550	Master Alchemist
+551	Alchemist
+552	Animist
+553	Jotun Skratti
+554	Ermorian Cultist
+555	Arch Censor
+556	Sacred One
+557	Harab Seraphine
+558	Seer King
+559	Sleeper
+560	Stargazer
+561	Earth Gnome
+562	Sylph
+563	Queen of Storms
+564	Sea Troll
+565	Sea Serpent
+566	Ghost
+567	Air Elemental
+568	Air Elemental
+569	Air Elemental
+570	Air Elemental
+571	Air Elemental
+572	Air Elemental
+573	Amber Clan Guard
+574	Amber Clan Triton
+575	Amber Clan Mage
+576	Amber Clan Priest
+577	Triton Trooper
+578	Bog Beast
+579	Ice Drake
+580	Sea King
+581	Anathemant Warlock
+582	Blind One
+583	Cardinal
+584	Patriarch
+585	Guild Master
+586	Great Hag
+587	Hierophant
+588	Heroine
+589	Witch Hunter General
+590	Vanadrott
+591	Dragonfly
+592	Sprite
+593	Draconian
+594	Fire Elemental
+595	Fire Elemental
+596	Fire Elemental
+597	Fire Elemental
+598	Fire Elemental
+599	Fire Elemental
+600	Titan of War and Wisdom
+601	Devi of Fortunes
+602	Titan of Heaven
+603	Teotl of Rain
+604	Teotl of the Night
+605	Son of Niefel
+606	Great Mother
+607	Baphomet
+608	Phoenix
+609	Lamia Queen
+610	Serpent Queen
+611	Black Bull
+612	Gryphon Rider
+613	Damned Admiral
+614	Harpy Queen
+615	Longdead of C'tis
+616	Longdead of C'tis
+617	Longdead of C'tis
+618	Longdead Warrior
+619	Longdead Warrior
+620	Draconian Chief
+621	Treelord
+622	Traitor King
+623	King of the World
+624	Old King
+625	Mummy
+626	Fallen Angel
+627	Faery Queen
+628	Great Lion
+629	Stalker
+630	Elludian Moon Mage
+631	King of Flames
+632	Storm Demon
+633	Werewolf
+634	Handmaiden of Death
+635	Ancient Shaman
+636	Basilisk
+637	Draco Lion
+638	Spine Devil
+639	Kraken King
+640	Magma Child
+641	Ancient Mandragora
+642	Giant Lobster
+643	Bog Mummy
+644	Dracolich
+645	Bog Mummy
+646	Troll Raider
+647	Dark Knight
+648	Troll Archer
+649	Troll Mage
+650	Warrior Mage
+651	Eater of Dreams
+652	Void Lord
+653	Serpent King
+654	Serpent King
+655	Scorpion King
+656	Fountain of Blood
+657	Monolith
+658	Bard
+659	Grotesque
+660	Aboleth
+661	Shedu
+662	Velite
+663	Alae Legionnaire
+664	Hastatus
+665	Principe
+666	Triarius
+667	Praetorian Guard
+668	Standard
+669	Thaumaturg
+670	Grand Thaumaturg
+671	Centurion
+672	Spectral Velite
+673	Spectral Hastatus
+674	Dispossessed Spirit
+675	Shadow Soldier
+676	Shade
+677	Apparition
+678	Lemur Centurion
+679	Lemur Consul
+680	Lemur Senator
+681	Shadow Tribune
+682	Spectral Standard
+683	Centurion
+684	Velite
+685	Alae Legionnaire
+686	Hastatus
+687	Principe
+688	Triarius
+689	Standard
+690	Grave Consort
+691	Tomb Priest
+692	Tomb King
+693	Tomb Wyrm
+694	Great Bear
+695	Phantasmal Beast
+696	Phantasmal Knight
+697	Satyr Hoplite
+698	Centaur Cataphract
+699	Cataphract Commander
+700	Minotaur Soldier
+701	Minotaur Commander
+702	Grove Guard
+703	Keeper of Traditions
+704	Dryad Hoplite
+705	Dryad
+706	Pan
+707	Centaur Warrior
+708	Reveler
+709	Panic Apostate
+710	Carrion Lord
+711	Carrion Lady
+712	Satyr Manikin
+713	Harpy Manikin
+714	Carrion Centaur
+715	Carrion Beast
+716	Carrion Beast
+717	Carrion Beast
+718	Carrion Beast
+720	Slave
+721	Warrior
+722	Warrior
+723	Warrior
+724	Warrior
+725	Sun Warrior
+726	Eagle Warrior
+727	Jaguar Warrior
+728	Were Jaguar
+729	Scout
+730	Tribal King
+731	Mictlan Priest
+732	Priest King
+733	Rain Priest
+734	Moon Priest
+735	High Priest of the Sun
+736	Ether Warrior
+737	Ether Lord
+738	Black Templar
+739	Black Acolyte
+740	Black Priest
+741	Giant Mummy
+742	Giant Mummy
+743	Mummy
+744	Diabolist
+745	Goetic Master
+746	Strategos
+747	Heart Companion
+748	Master Mason
+749	Sapper
+750	Thing From Beyond
+751	Thing That Should Not Be
+752	Elder Thing
+753	Thing From The Void
+754	Greater Otherness
+755	Otherness
+756	Lesser Otherness
+757	Vile Thing
+758	Thing Of Many Eyes
+759	Dweller-In-The-Deep
+760	Siege Golem
+761	Serpent Priest
+762	Vastness
+763	Serpent Cataphract
+764	Serpent
+765	Serpent Lord
+768	Watcher
+769	White Centaur
+770	White Satyr
+771	Tartarian Cyclops
+772	Tartarian Cyclops
+773	Tartarian Spirit
+774	Tartarian Titan
+775	Tartarian Titan
+776	Tartarian Monstrum
+777	Tartarian Monstra
+778	Divine Mummy
+779	Rams-Headed Serpent
+780	Lord of the Hunt
+781	Juggernaut
+782	Giant Spider
+783	Serpent Dancer
+784	Garmhirding
+785	Gygja
+786	Jotun Scout
+787	Black Centaur
+788	Horseman
+789	Heavy Horseman
+790	Imperial Horseman
+791	Red Guard
+792	General
+793	Prince General
+794	Footman
+795	Footman
+796	Footman
+797	Archer
+798	Imperial Guard
+799	Imperial Footman
+800	Imperial Footman
+801	Imperial Archer
+802	Imperial Crossbowman
+803	Celestial Master
+804	Minister of Rituals
+805	Eunuch
+806	Master of the Dead
+807	Ceremonial Master
+808	Master of the Way
+809	Shadow Vestal
+810	Lord of Hell
+811	Succubus
+812	Lord of the Wild
+813	Imperial Consort
+814	Fire Snake
+815	Small Shark
+816	Shark
+817	Clayman
+818	Heliophagus
+819	Heliophagus
+820	Heliophagus
+821	Ice Devil
+822	Ice Devil
+823	Ice Devil
+824	Ice Devil
+825	Ice Devil
+826	Arch Devil
+827	Arch Devil
+828	Arch Devil
+829	Arch Devil
+830	Serpent Acolyte
+831	Ice Elemental
+832	Ice Elemental
+833	Ice Elemental
+834	Ice Elemental
+835	Ice Elemental
+836	Ice Elemental
+837	Huskarl
+838	Huskarl
+839	Herse
+840	Jotun Huskarl
+841	Jotun Huskarl
+842	Jotun Hirdman
+843	Shade Lord
+844	Niefel Jarl
+845	Niefel Giant
+846	Galderman
+847	Hangadrott
+848	Sidhe Lord
+849	Daoine Sidhe
+850	Sidhe Champion
+851	Cu Sidhe
+852	Werewolf
+853	Skinshifter
+854	Werewolf
+855	Valkyrie
+856	Tuatha
+857	Smoking Mirror
+858	Jaguar
+859	Jaguar
+860	Feathered Warrior
+861	Ettin Mandragora
+862	Vampire Queen
+863	Apostatic Warrior
+864	First King
+865	Pontifex Serpentus
+866	Hero
+867	Slayer
+868	Scythe Wielder
+869	Navigator
+870	Captain
+871	Pirate
+872	Ghost King
+873	Great Seer of the Deeps
+874	Divine Emperor
+875	Warrior Mage
+876	Spider Warrior
+877	Bane Spider
+878	Machaka Militia
+879	Machaka Archer
+880	Machaka Warrior
+881	Machaka Chief
+882	Machaka Hoplite
+883	Machaka Commander
+884	Great Spider
+885	Spider Rider
+886	Spider Knight
+887	Spider Lord
+888	Hunter Spider
+889	Black Hunter
+890	Hunter Lord
+891	Sorceress
+892	Witch Doctor
+893	Sorcerer
+894	Black Sorcerer
+895	Ear of the Lord
+896	Eye of the Lord
+897	Voice of the Lord
+898	Great Spider
+899	Hunter Spider
+900	Lord of Corruption
+901	Black Dryad
+902	Celestial Soldier
+903	Celestial Servant
+904	Demon of Heavenly Rivers
+905	Jade Emperor
+906	King of Deeper Earth
+907	Queen of the Deeps
+908	Queen of the Lake
+909	King of Banefires
+910	King of Magma
+911	Queen of Thunder
+912	Queen of Clouds
+913	Vaetti Hag
+914	Soulless Warrior
+915	Soulless Warrior
+916	Soulless Warrior
+917	Soulless Warrior
+918	Soulless Warrior
+919	Soulless Warrior
+920	Soulless Warrior
+921	Soulless Warrior
+922	Soulless Warrior
+923	Warlock Apprentice
+924	Iron Pig
+925	Tarrasque
+926	Demon of Heavenly Fires
+927	Noble
+928	Heavy Footman
+929	Heavy Footman
+930	Khan
+931	Ivy King
+932	Woodland Spirit
+933	King of Legends
+934	Feathered Serpent
+935	Priest King
+936	Eagle Priest
+937	Marshmaster
+938	Barbarian Horseman
+939	Barbarian Heavy Horseman
+940	Master of the Five Elements
+941	Celestial Master
+942	Immortal
+943	Immortal
+944	Master With The Iron Crutch
+945	Shade King
+946	Lady of Spiders
+947	Great Spider
+948	Vanadrott
+949	Raven Guard
+950	Völva
+951	Harab Seraph
+952	Hero
+953	King Triumphant
+954	Son of Titans
+955	Asynja
+956	Mother of Tuathas
+957	Lord of The Desert Sun
+958	Colossal Head
+959	Pocket Knight
+960	Pocket Lich
+961	Titan of the Sea
+962	Madman
+963	Mad Priest
+964	Lord of Fertility
+965	Lord of Fertility
+966	Formless Spawn
+967	Hybrid
+968	Hybrid
+969	Hybrid
+970	Hybrid
+971	Hybrid Trooper
+972	Hybrid Soldier
+973	Ancient Kraken
+974	Ichtyid
+975	Ichtyid Warrior
+976	Ichtyid Lord
+977	Grand Thaumaturg
+978	Great Black Bull
+979	Great White Bull
+980	Treelord
+981	Dying Treelord
+982	Clockwork Horror
+983	Humanbred
+984	Abysian Light Infantry
+985	Abysian Light Infantry
+986	Abysian Heavy Infantry
+987	Abysian Heavy Infantry
+988	Abysian Heavy Infantry
+989	Abysian Heavy Infantry
+990	Guardian of the Pyre
+991	Newt
+992	Abysian Commander
+993	Slave of Belphegor
+994	Eater of the Dead
+995	Eater of the Dead
+996	Eater of the Dead
+997	Unfettered
+998	Bane Lord
+999	Wizard of the Crescent Moon
+1000	Demon Jester
+1001	Asmeg
+1002	Asmeg Jarl
+1003	Harab Elder
+1004	Caelian Seraph
+1005	Minotaur Manikin
+1006	Carrion Beast
+1007	Mad Deep One
+1008	Fanatic Deep One
+1009	Holy Deep One
+1010	Svartalf
+1011	Fortune Teller
+1012	Member of the Second Tier
+1013	Pikeneer
+1014	Halberdier
+1015	Infantry of Ulm
+1016	Commander of Ulm
+1017	Ranger of Ulm
+1018	Ranger Captain
+1019	Vampire Count
+1020	Ghoul Guardian
+1021	Ghoul Baron
+1022	Thrall
+1023	Illuminated One
+1024	Member of the Third Tier
+1025	Divine Glyph
+1026	Carrion Dragon
+1027	Carrion Lord
+1028	Wolfherd
+1029	Captain
+1030	Admiral
+1031	Chartmaker
+1032	Royal Navigator
+1033	Missionary
+1034	Zweihander
+1035	Blood Marshal
+1036	Sauromancer
+1037	War Troll
+1038	Capricorn
+1039	Capricorn
+1040	Bishop Fish
+1041	Ichtysatyr
+1042	Ichtysatyr
+1043	Ichtysatyr Soldier
+1044	Ichtysatyr Soldier
+1045	Mermidon
+1046	Merman
+1047	Merman
+1048	Wave Warrior
+1049	Wave Warrior
+1050	Merman Scout
+1051	Merman Scout
+1052	Wave Lord
+1053	Wave Lord
+1054	Siren
+1055	Siren
+1056	Pelagian Militia
+1057	Pelagian Soldier
+1058	Hippocampus
+1059	Knight of the Deeps
+1060	Triton Knight
+1061	Triton Prince
+1062	Sea Stag
+1063	Leocampus
+1064	Sea Dog
+1065	Merman
+1066	Merman
+1067	Merman Captain
+1068	Merman Captain
+1069	Pelagian Captain
+1070	Philosopher
+1071	Sceptic
+1072	Engineer
+1073	Maker of the Maze
+1074	Wind Rider
+1075	Wind Lord
+1076	Myrmidon Champion
+1077	Myrmidon
+1078	Chariot
+1079	Chariot Archer
+1080	Archerless Chariot
+1081	Chariot Commander
+1082	Icarid
+1083	Icarid Champion
+1084	Moose
+1085	Moose Riders
+1086	Troll Moose Knight
+1087	Large Ant
+1088	Triton King
+1089	Monster in the Maze
+1090	Abysian Axe Thrower
+1091	Sanguine Acolyte
+1092	Sanguine Anathemant
+1093	Sagittarian Carcass
+1094	Desert Ranger
+1095	Keeper of the Tombs
+1096	Destroyer of Worlds
+1097	Lord of The Summer Plague
+1098	Asynja
+1099	Poison Golem
+1100	Leve
+1101	Accensus
+1102	Rorarus
+1103	Hastatus
+1104	Principe
+1105	Triarius
+1106	Lizard Auxiliare
+1107	Equite
+1108	Equite of the Sacred Shroud
+1109	Flamen
+1110	Pontifex
+1111	Arch Bishop of the Sacred Shroud
+1112	Bishop of the Sacred Shroud
+1113	Acolyte
+1114	Augur
+1115	Augur Elder
+1116	Markata
+1117	Vanara
+1118	Markata
+1119	Markata Scout
+1120	Markata Archer
+1121	Atavi Archer
+1122	Atavi Infantry
+1123	Vanara Archer
+1124	Vanara Chakram Thrower
+1125	Vanara Infantry
+1126	Vanara Swordsman
+1127	Atavi Chieftain
+1128	Vanara Captain
+1129	Bandar
+1130	Light Bandar Archer
+1131	Bandar Archer
+1132	Bandar Warrior
+1133	Bandar Warrior
+1134	Royal Swordsman
+1135	Bandar Commander
+1136	Bandar Noble
+1139	Headless Hoburg Hero
+1140	Tiger
+1141	Tiger Rider
+1142	White One
+1143	Guru
+1144	Rishi
+1145	Yogi
+1146	Brahmin
+1147	War Elephant
+1148	Eater of Gods
+1149	Eater of Gods
+1150	Eater of Gods
+1151	Slave to Unreason
+1152	Axe Warrior
+1153	Warrior
+1154	Forest Warrior
+1155	Mountain Warrior
+1156	Iron Warrior
+1157	Steel Warrior
+1158	Warrior Chief
+1159	Warrior Smith
+1160	Shaman
+1161	Antlered Shaman
+1162	Archer
+1163	Warrior Maiden
+1164	Steel Maiden
+1165	Shield Maiden
+1166	Tomb Guard
+1167	Lancer
+1168	Raider
+1169	Chieftain
+1170	Sauromatian Lancer
+1171	Sauromatian Raider
+1172	Sauromatian Cataphract
+1173	Sauromatian Manflayer
+1174	Warrior Priestess
+1175	Warrior Queen
+1176	Androphag
+1177	Manflayer
+1178	Witch King
+1179	Serpent
+1180	Spirit Guide
+1181	Enarie
+1182	Hedge Wizard
+1183	Androphag Archer
+1184	Sauromatian Archer
+1185	Oiorpata
+1186	Warrior Sorceress
+1187	Cataphract
+1188	Soothsayer
+1189	Mictlan Priest
+1190	Priest King
+1191	Rain Priest
+1192	Moon Priest
+1193	Sun Priest
+1194	Couatl
+1195	Hoburg Priest
+1196	Hog Knight
+1197	Burgmeister
+1198	Horticulturist
+1199	Winged Monkey
+1200	Unfrozen Mage
+1201	Unfrozen Lord
+1202	Unfrozen Warrior
+1203	Unfrozen
+1204	Elder Druid
+1205	Gutuater
+1206	Vergobret
+1207	Eponi Chieftain
+1208	Eponi Knight
+1209	Marverni Scout
+1210	Marverni Horn Blower
+1211	Marverni Slinger
+1212	Marverni Javelineer
+1213	Marverni Bare Chested Warrior
+1214	Marverni Noble Warrior
+1215	Marverni Chieftain
+1216	Ambibate Bare Chested Warrior
+1217	Ambibate Noble Warrior
+1218	Ambibate Chieftain
+1219	Carnute Bare Chested Warrior
+1220	Carnute Noble Warrior
+1221	Carnute Chieftain
+1222	Boar Warrior
+1223	Boar Lord
+1224	Dire Wolf
+1225	Sequani Stargazer
+1226	Naiad
+1227	Kydnid
+1228	Pharmakeia
+1229	Son of Fenrer
+1230	Forge Lord
+1231	Drakaina
+1232	Old Man of the Sea
+1233	Lord of the Waves
+1234	Asp Turtle
+1235	Leviathan
+1236	Leviathan
+1237	Hochmeister
+1238	Ashigaru
+1239	Samurai Archer
+1240	Samurai
+1241	Samurai
+1242	Samurai
+1243	O-ban
+1244	Go-Hatamoto
+1245	Aka-Oni Samurai
+1246	Samurai Cavalry
+1247	Sohei
+1248	Yamabushi
+1249	Gokenin
+1250	Mounted Gokenin
+1251	Hatamoto
+1252	Daimyo
+1253	Daimyo
+1254	Shugenja
+1255	Master Shugenja
+1256	Shura
+1257	Ninja
+1258	Kannushi
+1259	Onmyo-ji
+1260	Ko-Oni
+1261	Oni spirit
+1262	Oni
+1263	Oni Spirit
+1264	Ao-Oni
+1265	Oni Spirit
+1266	Aka-Oni
+1267	Oni Spirit
+1268	Kuro-Oni
+1269	Oni Spirit
+1270	Ronin
+1271	Maker of Ruins
+1272	Oni
+1273	Oni Spirit
+1274	Kuro-Oni
+1275	Oni Spirit
+1276	Oni Shugo
+1277	Oni Spirit
+1278	Raptorian Warrior
+1279	Iron Crow
+1280	Earthbound
+1281	Iron Crafter
+1282	Caretaker
+1283	Ice Crafter
+1284	Spire Horn Seraph
+1285	Iceclad
+1286	Eagle King
+1287	Tempest Warrior
+1288	Sastar
+1289	Airya Temple Guard
+1290	Catoblepas
+1291	Turtle Warrior
+1292	Turtle Warrior
+1293	Turtle Chief
+1294	Turtle Chief
+1295	Mermidon
+1296	Erinya
+1297	Erinya
+1298	Erinya
+1299	Jotun Jarl
+1300	Jotun Gode
+1301	Jotun Herse
+1302	Jotun Militia
+1303	Jotun Spearman
+1304	Jotun Javelinist
+1305	Jotun Hurler
+1306	Jotun Huskarl
+1307	Jotun Huskarl
+1308	Jotun Hirdman
+1309	Jotun Wolf
+1310	Jotun Skinshifter
+1311	Bandit
+1312	Bandit
+1313	Bandit Leader
+1314	Demon General
+1315	Sorcerer
+1316	Dai Oni
+1317	Oni Spirit
+1318	Naga
+1319	Naga Warrior
+1320	Nagaraja
+1321	Nagarishi
+1322	Nagini
+1323	Nagaraja
+1324	Nagarishi
+1325	Nagini
+1326	Guhyaka
+1327	Yavana
+1328	Yavana Archer
+1329	Yaksha
+1330	Yakshini
+1331	Kinnara
+1332	Apsara
+1333	Bandar Warrior
+1334	Bandar Commander
+1335	Gandharva
+1336	Devata
+1337	Siddha
+1338	Celestial Hound
+1339	Nyorai
+1340	Tiwaz of War
+1341	Devi of Darkness
+1342	Titan of Rivers
+1343	Titan of Love
+1344	Devi of Good Fortunes
+1345	Celestial General
+1346	Colossal Fetish
+1347	Sirrush
+1348	Titan of Serpents and Medicine
+1349	Devourer of Souls
+1350	Bandar Swordsman
+1351	Light Bandar Warrior
+1352	Entrance Guard
+1353	Blood Guard
+1354	Agarthan Heavy Infantry
+1355	Agarthan Infantry
+1356	Ozelotl
+1357	Beast Bat
+1358	Monster Toad
+1359	Jaguar Toad
+1360	Onaqui
+1361	Nahualli
+1362	Turkey
+1363	Ancestral Spirit
+1364	Jade Lizard
+1365	Lizard Chariot
+1366	Lizard Heir
+1367	Angel of the Heavenly Choir
+1368	Seraph
+1369	Angel of Fury
+1370	Volla of the Bountiful Forest
+1371	Titan of Death and Rebirth
+1372	Annunaki of the Sky
+1373	Annunaki of Sweet Waters
+1374	Annunaki of the Morning Star
+1375	Spenta of Sky and Metals
+1376	Spenta of Animals
+1377	Spenta of Fire
+1378	Lord of the Forest
+1379	Keeper of the Bridge
+1380	Great Hawk
+1381	Great Eagle
+1382	Abductor
+1383	Great Eagle
+1384	Solar Disc
+1385	Legatus Legionis
+1386	Legatus Legionis
+1387	Reborn
+1388	Ziz
+1389	Blood Lord
+1390	Bakemono-Sho
+1391	Bakemono Archer
+1392	Bakemono Warrior
+1393	Bakemono-Sho
+1394	Bakemono-Sho
+1395	Bakemono Archer
+1396	Dai Bakemono
+1397	Dai Bakemono
+1398	Bakemono General
+1399	O-bakemono
+1400	Defender
+1401	Polypal Mother
+1402	Polypal Queen
+1403	Giboleth
+1404	Polypal Spawn
+1405	Goat Sun
+1406	Visitor
+1407	Hunter of Heroes
+1408	Ichtycentaur
+1409	Ichtycentaur
+1410	Ichtycentaur Cataphract
+1411	Ichtycentaur Cataphract
+1412	Amphiptere
+1413	Trident Lord
+1414	Trident Lord
+1415	Pelagian Mermage
+1416	Pelagian Mermage
+1417	Amber Clan Mage
+1418	Amber Clan Priest
+1419	Amber Clan Guard
+1420	King of Rain
+1421	Rain Priest
+1422	Civateteo
+1423	Rain Warrior
+1424	Sun Priest
+1425	Troll Guard
+1426	Crowned Ape
+1427	Bakemono Sorcerer
+1428	Bakemono Kunshu
+1429	Uba
+1430	Ghost Cat
+1431	Nushi
+1432	Hannya
+1433	Kitsune
+1434	Kitsune
+1435	Swamp Serpent
+1436	Mujina
+1437	Blindfighter
+1438	Ktonian Necromancer
+1439	Iron Corpse
+1440	Iron Ancestor
+1441	Flame Corpse
+1442	Attendant of the Dead
+1443	Servant of the Oracles
+1444	Blindlord
+1445	Cave Captain
+1446	Gate Lord
+1447	Agarthan Light Infantry
+1448	Agarthan Scout
+1449	Agarthan Sapper
+1450	Cave Knight
+1451	Drake Lord
+1452	Pale One Militia
+1453	Pale One Warrior
+1454	Unused Ancient One
+1455	Ancient Wet One
+1456	Seal Guard
+1457	Oracle of Subterranean Waters
+1458	Earth-Blooded
+1459	Oracle of the Ancients
+1460	Earth Reader
+1461	Troglodyte Lord
+1462	Cavern Guard
+1463	Pale One Commander
+1464	Pale One Warrior
+1465	Pale One
+1466	Pale One Scout
+1467	Oracle of Subterranean Fires
+1468	Oracle of the Dead
+1469	Ancient One
+1470	Ancient Lord
+1471	Pale One Captain
+1472	Pale One Soldier
+1473	Earth Reader
+1474	Golem Crafter
+1475	Attendant of the Oracles
+1476	Tomb Oracle
+1477	Kokythiad
+1478	Karasu Tengu
+1479	Konoha Tengu
+1480	Dai Tengu
+1481	Tengu Warrior
+1482	Kappa
+1483	Tzitzimitl
+1484	Tlaloque of the East
+1485	Tlaloque of the South
+1486	Tlaloque of the West
+1487	Tlaloque of the North
+1488	Ancient Stone Hurler
+1489	Wet One
+1490	Umbral
+1491	Wet One
+1492	Spenta of Plants
+1493	Spenta of Waters
+1494	Spenta of the Earth
+1495	Ancient Stone Hurler
+1496	Sentinel
+1497	Attentive Statue
+1498	Granite Guardian
+1499	Marble Oracle
+1500	Sepulchral
+1501	Cavern Wight
+1502	Helkarl
+1503	Helhirding
+1504	Mounted Hirdman
+1505	Vanherse
+1506	Vanjarl
+1507	Dis
+1508	Huskarl
+1509	Huskarl
+1510	Hirdman
+1511	Vanadis
+1512	Van Scout
+1513	Vanhere
+1514	Shaman
+1515	Slave Trooper
+1516	Slave Trooper
+1517	Slave Trooper
+1518	Slave Mage
+1519	Slave Mage
+1520	Aboleth
+1521	Mind Lord
+1522	Gibodai
+1523	Slave Prince
+1524	Slave Guardian
+1525	Slave Guardian
+1526	Slave Guardian
+1527	Slave Priest
+1528	Slave Priest
+1529	Slave Troll
+1530	Kappa Mage
+1531	Kappa Chief
+1532	Satyr Warrior
+1533	Minotaur Warrior
+1534	Minotaur Lord
+1535	Pan
+1536	Anointed of Rhuax
+1537	Demonbred
+1538	Warlock
+1539	Ghost Mage
+1540	Ghost Mage
+1541	Ghost Champion
+1542	Warlock Apprentice
+1543	Burning One
+1544	Warrior of the Five Elements
+1545	Warrior
+1546	Warrior
+1547	Warrior
+1548	Feathered Warrior
+1549	Shuten-doji
+1550	Kappa
+1551	Phalangite
+1552	Phalangite Commander
+1553	Agema Companion
+1554	Agema Commander
+1555	War Elephant
+1556	Cerulean Warrior
+1557	Sibyl
+1558	Tlahuelpuchi
+1559	Dog
+1560	Dog
+1561	Father of Winters
+1562	Void Spectre
+1563	Void Cultist
+1564	Mad Cultist
+1565	Peasant
+1566	Mad One
+1567	Mad Merman
+1568	Mad Merman
+1569	Mad Triton
+1570	Human Dreamer
+1571	Deep One Dreamer
+1572	Merman Dreamer
+1573	Merman Dreamer
+1574	Triton Dreamer
+1575	Hybrid Cultist
+1576	Mad Hybrid
+1577	Ancestor Vessel
+1578	Axeman
+1579	Red Devil
+1580	Son of the Dragon King
+1581	Risen Oracle
+1582	Guardian of the Tree
+1583	Maker of Heroes
+1584	Son of Steel
+1585	Fallen
+1586	Pontifex Maximus
+1587	Primate
+1588	Wanderer
+1589	Man Eater
+1590	Ageless Olm
+1591	Spy
+1592	Bear Tribe Warrior
+1593	Bear Tribe Warrior
+1594	Deer Tribe Warrior
+1595	Deer Tribe Archer
+1596	Wolf Tribe Shaman
+1597	Bear Tribe Shaman
+1598	Deer Tribe Shaman
+1599	Machaka Warrior
+1600	Lion Tribe Warrior
+1601	Lion Tribe Archer
+1602	Lion Tribe Witch Doctor
+1603	Human Huskarl
+1604	Human Huskarl
+1605	Herse
+1606	Mage Engineer
+1607	Yazad
+1608	Bakemono Shaman
+1609	Demon Priest
+1610	Jaguar Tribe Slinger
+1611	Jaguar Tribe Warrior
+1612	Jaguar Tribe Priest
+1613	Toad Tribe Warrior
+1614	Toad Tribe Shaman
+1615	Caveman
+1616	Caveman Champion
+1617	Seal Hunter
+1618	Angakok
+1619	Slave Guardian
+1620	Reef Warrior
+1621	Atlantian Infantry
+1622	Coral Guard
+1623	Tungalik
+1624	Tupilak
+1625	Snow Warrior
+1626	Snow Warrior
+1627	Ice Warrior
+1628	Ice Guard
+1629	Ice Guard
+1630	Arssartut
+1631	Tent Owner
+1632	Snow Captain
+1633	Ice Captain
+1634	Kivigtok
+1635	Wet One
+1636	Wet One
+1637	Wet One Captain
+1638	Wet One Captain
+1639	Cultist
+1640	Cultist
+1641	Tower Knight
+1642	Tower Guard
+1643	Magister of Theology
+1644	Magister
+1645	Judge
+1646	Magister Arcane
+1647	Bishop
+1648	Warden
+1649	Scorpion Man
+1650	Oreiad
+1651	Jotun Werewolf
+1652	Jotun Werewolf
+1653	Jotun Wolf
+1654	Lictor
+1655	Censor
+1656	Smoulderghost
+1657	Longdead Triarius
+1658	Longdead Principe
+1659	Tomb Chariot
+1660	Reassembled Prince
+1661	Misbred
+1662	Disease Demon
+1663	Harab Seraph
+1664	Monster Fish
+1665	Noble Commander
+1666	Lord Warden
+1667	Warlock
+1668	Corruptor
+1669	Sauromatian Amazon
+1670	Heart Hider
+1671	Ghost General
+1672	Master of the Shadow Blossom
+1673	Devourer of Demons
+1674	Unwinged
+1675	Agarthan Light Crossbowman
+1676	Agarthan Crossbowman
+1677	Agarthan Heavy Crossbowman
+1678	Ancient Olm
+1679	Serf Warrior
+1680	Scout
+1681	Atlantian Spearman
+1682	Reef Dweller
+1683	Shambler
+1684	War Shambler
+1685	Coral Guard
+1686	Deep One
+1687	Deep One Spearman
+1688	Shambler of the Deep
+1689	Warrior of the Deep
+1690	Living Pillar
+1691	Mind Lord
+1692	Mage of the Deep
+1693	Mother of the Deep
+1694	Coral Priest
+1695	Basalt Queen
+1696	Merman Priest
+1697	Merman Priest
+1698	Anathemant Salamander
+1699	Anathemant Dragon
+1700	Shambler Chief
+1701	Coral Commander
+1702	Basalt King
+1703	Mournful
+1704	Centaur Warrior
+1705	Great Ape
+1706	Ape Oracle
+1707	Raptorian Militia
+1708	Consort of the Dead
+1709	Ancestor Smith
+1710	Spirit Master
+1711	Ancestor Guide
+1712	Celestial Master
+1713	Devala
+1714	Dakini
+1715	Pisacha
+1716	Soulless Bandar
+1717	Soulless Bandar Warrior
+1718	Soulless Bandar Warrior
+1719	Longdead Bandar
+1720	Longdead Bandar
+1721	Longdead Bandar Warrior
+1722	Longdead Bandar Warrior
+1723	Longdead Raja
+1724	Soulless Vanara
+1725	Soulless Vanara Warrior
+1726	Soulless Vanara Warrior
+1727	Longdead Vanara
+1728	Longdead Vanara Warrior
+1729	Longdead Vanara Warrior
+1730	Longdead Vanara Commander
+1731	Soulless Markata
+1732	Longdead Markata
+1733	Raktapata
+1734	Yogini
+1735	Kala-Mukha
+1736	Rakshasa
+1737	Rakshasa Warrior
+1738	Raksharaja
+1739	Rakshasi
+1740	Manushya Rakshasi
+1741	Asrapa
+1742	Praghasa
+1743	Sandhyabala
+1744	Samanishada
+1745	Asara
+1746	Anusara
+1747	Palankasha
+1748	Mandeha
+1749	Fir Bolg Militia
+1750	Fir Bolg Champion
+1751	Sidhe Warrior
+1752	Sidhe Champion
+1753	Tuatha Warrior
+1754	Ri
+1755	Fir Bolg Scout
+1756	Fir Bolg Warrior
+1757	Fir Bolg Warrior
+1758	Fir Bolg Slinger
+1759	Sidhe Lord
+1760	Bandaraja
+1761	Bandar Commander
+1762	Bandar Warrior
+1763	Kala-Mukha Warrior
+1764	Gana
+1765	Possessed Corpse
+1766	Vetala
+1767	Danava
+1768	Barghest
+1769	Black Dog
+1770	Cu Sidhe
+1771	Mounted Scout
+1772	Olm Spawn
+1773	Tuatha Sorceress
+1774	Bean Sidhe
+1775	Baobhan Sidhe
+1776	Bean Sidhe
+1777	Fir Bolg Hero
+1778	Hero
+1779	Milesian Slinger
+1780	Milesian Spearman
+1781	Milesian Longspear
+1782	Milesian Swordsman
+1783	Milesian Champion
+1784	Milesian Monk
+1785	Fir Bolg Slinger
+1786	Fir Bolg
+1787	Fir Bolg
+1788	Fir Bolg Champion
+1789	Milesian Scout
+1790	Nemedian Warrior
+1791	Nemedian Champion
+1792	Nemedian Sorceress
+1793	Nemedian Queen
+1794	Last Partholonian
+1795	Partholonian Sorceress
+1796	Fomorian Militia
+1797	Fomorian Javelinist
+1798	Fomorian Spearman
+1799	Fomorian Warrior
+1800	Fomorian Champion
+1801	Fomorian Giant
+1802	Fomorian King
+1803	Uncursed
+1804	High King
+1805	Long Handed
+1806	Fianna
+1807	Great Boar
+1808	Iron Boar
+1809	Great Boar of Carnutes
+1810	Longdead Partholonian
+1811	Fir Bolg Scout
+1812	Fir Bolg Warrior
+1813	Fir Bolg Warrior
+1814	Fir Bolg Slinger
+1815	Fir Bolg Champion
+1816	Fomorian Scout
+1817	Unmarked
+1818	Unmarked Champion
+1819	Fomorian Druid
+1820	Fir Bolg Militia
+1821	Morrigan
+1822	Daughter of Typhon
+1823	Daughter of Typhon
+1824	Daughter of Typhon
+1825	Daughter of Typhon
+1826	Daughter of Typhon
+1827	Daughter of Typhon
+1828	Daughter of Typhon
+1829	Daughter of Typhon
+1830	Daughter of Typhon
+1831	Hydra
+1832	Hydra
+1833	Hydra
+1834	Hydra
+1835	Hydra
+1836	Ko-Oni
+1837	Oni spirit
+1840	Hydra Hatchling
+1841	Hydra Hatchling
+1842	Hydra Hatchling
+1843	Antlered One
+1844	Trainer of Heroes
+1845	Bakemono Chief
+1846	Onyx Oracle
+1847	Decrepit
+1848	Mason of the Underworld
+1849	Blinded
+1850	Hydra
+1851	Hydra
+1852	Hydra
+1853	Hydra
+1854	Hydra
+1859	Hydra Hatchling
+1860	Hydra Hatchling
+1861	Hydra Hatchling
+1862	Milite
+1863	Limitane
+1864	Limitane Primani
+1865	Limitane Solaris
+1866	Primani Solaris
+1867	Comitatense
+1868	Palatine
+1869	Centurion
+1870	Tribuni
+1871	Magister Militum
+1872	Leo
+1873	Heliodromus
+1874	Theurg
+1875	Epoptes
+1876	Mystes
+1877	Renata
+1878	Renatus
+1879	Serpent Assassin
+1880	Reveler
+1881	Satyr
+1882	Moon Warrior
+1883	Moon Warrior
+1884	Priest King
+1885	Feathered Serpent
+1886	Priest King
+1887	Feathered Serpent
+1888	Sky Priest
+1889	Jade Serpent
+1890	Apothecary
+1891	Alchemist of the Five Elements
+1892	Imperial Alchemist
+1893	Imperial Geomancer
+1894	Minister of Magic
+1895	Ceremonial Master
+1896	Lawgiver
+1897	Feathered Serpent
+1898	Fomorian Sorcerer
+1899	Fomorian God King
+1900	Imperial City Guard
+1901	Medium Footman
+1902	Ministry Guardsman
+1903	Ministry Footman
+1904	Medium Footman
+1905	Great Sorceress
+1906	Rudra
+1907	High Priest of the Sky
+1908	Huli Jing
+1909	Huli Jing
+1910	Monster Boar
+1911	Defiler of Dreams
+1912	Brigand Leader
+1913	Abomination of Desolation
+1914	Apostate Raja
+1915	Red Tengu
+1916	Veliki Knyaz
+1917	Knyaz
+1918	Voivode
+1919	Fivefold Angel
+1920	Skopets
+1921	Khlyst
+1922	Grid Druzhina
+1923	Malaia Druzhina
+1924	Styag
+1925	Black Hood
+1926	Peshtsi City Guard
+1927	Peshtsi Axeman
+1928	Peshtsi Spearman
+1929	Voi Spearman
+1930	Voi Axeman
+1931	Voi Archer
+1932	Alchemist
+1933	Kalendologist
+1934	Occultist
+1935	Astrapelagist
+1936	Master of Names
+1937	Starets
+1938	Vyedun
+1939	Vyedma
+1940	Zmey
+1941	Cloud Vila
+1942	Mountain Vila
+1943	Alkonost
+1944	Gamayun
+1945	Sirin
+1946	Firebird
+1947	Simargl
+1948	Bukavac
+1949	Leshiy
+1950	Leshiy
+1951	Great Forest Bear
+1952	Likho
+1953	Vodyanoy
+1954	Rusalka
+1955	Beregina
+1956	Lady Midday
+1957	Bogatyr
+1958	Hag
+1959	Deathless
+1960	Exarch
+1961	Eparch
+1962	Patriarch
+1963	Bakemono Scout
+1964	Slayer Newt
+1965	Slayer Worm
+1966	Slayer Anathemant
+1967	Slayer Sanguine
+1968	Slayer Dragon
+1969	Anathemant Salamander
+1970	Anathemant Dragon
+1971	Smoulderghost
+1972	Warbred
+1973	Black Priest
+1974	Black Acolyte
+1975	Iron Angel
+1976	Longdead Giant
+1977	Fossilized Giant
+1978	Dust Priest
+1979	Dust King
+1980	Dust Warrior
+1981	Dust Walker
+1982	Priest Smith
+1983	Green Lion
+1984	Levite Priest
+1985	Nabi
+1986	Kohen
+1987	Kohen Gadol
+1988	Yeddeoni
+1989	Levite Zealot
+1990	Asherite Soldier
+1991	Gadite Swordsman
+1992	Zebulunite Soldier
+1993	Naphtali Spearman
+1994	Reubenite Archer
+1995	Iassacharite Scout
+1996	Benjaminite Slinger
+1997	Iassacharite Sage
+1998	Fossil Warrior
+1999	Gittite Soldier
+2000	Gibbor
+2001	Seren
+2002	Gittite Commander
+2003	Human Slinger
+2004	Human Slave
+2005	Edomite
+2006	Amorite
+2007	Gileadite
+2008	Bashanite
+2009	Rephaite Commander
+2010	Edomite Scout
+2011	Zamzummite
+2012	Abba
+2013	Acha
+2014	Ammi
+2015	Avvite Spearman
+2016	Qedesim
+2017	Qedesot
+2018	Horite
+2019	Horite Champion
+2020	Horite Shaman
+2021	Avvite Light Infantry
+2022	Avvite Swordsman
+2023	Avvite Commander
+2024	Avvite Scout
+2025	Sheshai Anakite
+2026	Ahiman Anakite
+2027	Adon
+2028	Talmai Elder
+2029	Kohen
+2030	Rephaite Warrior
+2031	Melqart
+2032	Ba'al
+2033	Kohen
+2034	Horite Hunter
+2035	Avvite Charioteer
+2036	Avvite Horn Blower
+2037	Dawn Guard
+2038	Emite
+2039	Malik
+2040	Longdead Rephaite
+2041	Longdead Rephaite
+2042	Longdead Rephaite
+2043	Longdead Rephaite
+2044	Longdead Rephaite
+2045	Ditanu
+2046	Malik
+2047	First Son of Anak
+2048	Second Son of Anak
+2049	Third Son of Anak
+2050	Zebulunite Horn Blower
+2051	Ophan
+2052	Chayot
+2053	Chayot
+2054	Chayot
+2055	Chayot
+2056	Malakh
+2057	Hashmal
+2058	Arel
+2059	Avvite Heavy Archer
+2060	Rephaite Sage
+2061	Gileadite Archer
+2062	Grigori
+2063	Grigori
+2064	Grigori
+2065	Grigori
+2066	Grigori
+2067	Grigori
+2068	Dusk Elder
+2069	Iassacharite Sibyl
+2070	Sibyl of Hermon
+2071	Lilot
+2072	Mazzik
+2073	Shed
+2074	Se'ir
+2075	Nephil
+2076	Son of Azazel
+2077	Son of Semyaza
+2078	Son of Ezekiel
+2079	Son of Shamshiel
+2080	Son of Kokabel
+2081	Son of Arakiel
+2082	Son of the Fallen
+2083	Forgiving Father
+2084	Merciful Mother
+2085	Once and Future Queen
+2086	Sleeping Pillar
+2087	Unsleeping
+2088	Unsleeping Consort
+2089	Jigami
+2090	Horse-face
+2091	Ox-head
+2092	Shikigami
+2093	Mori-no-kami
+2094	Mori-no-kami
+2095	Ujigami
+2096	Kenzoku
+2097	Yama-no-kami
+2098	Monk of the Fivefold Path
+2099	Tatsu
+2100	Shikome
+2101	Shrimp Soldier
+2102	Crab General
+2103	Shark Warrior
+2104	Ryujin
+2105	Ryujin
+2106	Kaijin
+2107	Troubadour
+2108	Crossbowman
+2109	City Guard
+2110	Pikeneer
+2111	Halberdier
+2112	Swordsman
+2113	Palace Guard
+2114	Hand of Justice
+2115	Royal Guard
+2116	Lieutenant
+2117	Imperial Commander
+2118	Satyr Commander
+2119	Soulless Warrior
+2120	Longdead
+2121	Longdead
+2122	Longdead Hoplite
+2123	Longdead
+2124	Longdead
+2125	Shadow
+2126	Pygmy
+2127	Forester
+2128	Knight Commander of Avalon
+2129	Logrian Cavalry
+2130	Manticore
+2131	Gryphon
+2132	Leogryph
+2133	Lioness
+2134	Terracotta Soldier
+2135	Ogre
+2136	Great Boar
+2137	Urmahlullu
+2138	Sphinx
+2139	Jarl
+2140	Gode
+2141	Ergi
+2142	Nithing
+2143	Werewolf
+2144	Galdramathr
+2145	Werewolf
+2146	Seithberender
+2147	Seithmathr
+2148	Archer
+2149	Gode
+2150	Herse
+2151	Battle Deacon
+2152	Limitane Standard
+2153	War Dog
+2154	Satyr Commander
+2155	Stymphalian Bird
+2156	Centauride
+2157	Centauride Warrior
+2158	Centauride Hierophantide
+2159	Gelatinous Cube
+2160	Enkidu
+2161	Enkidu Scout
+2162	Enkidu
+2163	Enkidu Archer
+2164	Enkidu Warrior
+2165	Enkidu Warrior
+2166	Enkidu Chief
+2167	Enkidu Shaman
+2168	Enkidu Hunter
+2169	Enkidu Hunter Chief
+2170	Enkidu Head Hunter
+2171	Enkidu Bone Reader
+2172	Enkidu Soldier
+2173	Enkidu Horn Blower
+2174	Enkidu Spear Guard
+2175	Ur-Guard
+2176	Enki's Chosen
+2177	Enkidu Commander
+2178	Enkidu Elder
+2179	Sal-Me
+2180	Ishib
+2181	Ensi
+2182	Gala
+2183	Enkidu Reaver
+2184	Enkidu Slave
+2185	Crocodile
+2186	Sacred Crocodile
+2187	Dryad
+2188	Ancient One
+2189	Ancient Stone Hurler
+2190	Draug
+2191	Draug
+2192	Draug
+2193	Draug
+2194	Draugadrott
+2195	Flayed Bull
+2196	Swamp Drake
+2197	Assassin
+2198	Inquisitor
+2199	High Inquisitor
+2200	Goetic Adept
+2201	Niefel Shaman
+2202	Great Siddha
+2203	Oni Kunshu
+2204	Oni Spirit
+2205	Great Sauromancer
+2206	Eldest Dwarf
+2207	Great Sorcerer
+2208	Hunter Spider
+2209	Horror Mantis
+2210	Float Cat Horror
+2211	Mind Slime Horror
+2212	Soultorn
+2213	Gore Tide Horror
+2214	Spine Membrane Horror
+2215	Belly Maw Horror
+2216	Brass Claw Horror
+2217	Worm Mage
+2218	Large Beetle
+2219	Forest Troll
+2220	Troll Shaman
+2221	Troll Seithberender
+2222	Frog
+2223	Large Spider
+2224	Red Ant
+2225	Fire Ant
+2226	Killer Mantis
+2227	Goat
+2228	Deer
+2229	Forest Giant
+2230	Hill Giant
+2231	Yeti
+2232	Large Scorpion
+2233	Giant Scorpion
+2234	Irminsul
+2235	Rephaite Scholar
+2236	Sobek Warrior
+2237	Sobek Sacred Guard
+2238	Sobek General
+2239	Asynja
+2240	Damned Captain
+2241	Damned Boatswain
+2242	Soulless Warrior
+2243	Soulless Warrior
+2244	Scelerian Cultist
+2245	Sorcerer of the Sands
+2246	Blessed Couple
+2247	Grieving Dryad
+2248	Sister
+2249	Nun
+2250	Abbess
+2251	Ancient Presence
+2252	Berytian Scout
+2253	Berytian Captain
+2254	Berytian Militia
+2255	Berytian Archer
+2256	Berytian Spearman
+2257	Berytian Soldier
+2258	Berytian Heavy Spearman
+2259	Berytian Elite Soldier
+2260	Berytian Lancer
+2261	War Elephant
+2262	Colossi Warrior
+2263	Mage Pilot
+2264	Storm Caller
+2265	Berytian Priest
+2266	Bride-in-Waiting
+2267	Melqart
+2268	Gudu
+2269	Entu
+2270	Tathagata
+2271	Seeker of Truths
+2272	Sobek High Priest
+2273	Large Lobster
+2274	Soulless Bandar Warrior
+2275	False Prophet
+2276	Heretic
+2277	Monster of Fraud
+2278	Prince of Lust
+2279	Warrior Scout
+2280	Illearth
+2281	Illearth
+2282	Illearth
+2283	Illearth
+2284	Illearth
+2285	Illearth
+2286	Fiery Imp
+2287	Shadow Imp
+2288	Machaka Scout
+2289	Rhino Clan Commander
+2290	Lion Clan Commander
+2291	Voice of Lion
+2292	Hyena Clan Witch Doctor
+2293	Bouda
+2294	Werehyena
+2295	Spider Clan Sorcerer
+2296	Lion King
+2297	Lion Queen
+2298	Machaka Militia
+2299	Bird Clan Archer
+2300	Machaka Warrior
+2301	Spider Clan Archer
+2302	Spider Clan Warrior
+2303	Hyena Clan Warrior
+2304	Rhino Clan Warrior
+2305	Lion Clan Warrior
+2306	War Lion
+2307	War Elephant
+2308	Spider Rider
+2309	Lion Warrior
+2310	Voice of Spider
+2311	Centaur Hierophant
+2312	Centauride Hierophantide
+2313	Raven Lord
+2314	Reborn
+2315	Melqart
+2316	Dragon King
+2317	Celestial Bureaucrat
+2318	Celestial Dragon
+2319	Celestial Bureaucrat
+2320	Phantasmal Chief
+2321	Clockwork Soldier
+2322	Shark
+2323	Adventurer
+2324	Adventurer
+2325	Adventurer
+2326	Adventurer
+2327	Adventurer
+2328	Adventurer
+2329	Adventurer
+2330	Adventurer
+2331	Pilgrim
+2332	Adventurer
+2333	Lemur Acolyte
+2334	Lemur Thaumaturg
+2335	Grand Lemur
+2336	Spectral Principe
+2337	Spectral Triarius
+2338	Praetorian Spectre
+2339	Shadow Triton
+2340	Shadow Soldier
+2341	Vanarusian Sage
+2342	Vanabog
+2343	Vanarusian Archer
+2344	Vanarusian Huskarl
+2345	Vanarusian Huskarl
+2346	Vanarusian Hirdman
+2347	Vanarusian Hirdman
+2348	Vanarusian Hirdman
+2349	Oath-Bound
+2350	Chud Hirdman
+2351	Werebear
+2352	Chud Skinshifter
+2353	Scout
+2354	Vanarusian Herse
+2355	Vanarusian Jarl
+2356	Vanarusian Gode
+2357	Chud Jarl
+2358	Wormwood Witch
+2359	Holy Knight
+2360	Soldier of the Faith
+2361	Black Witch
+2362	Blackrose Sorceress
+2363	Gloso
+2364	Soulless Shambler
+2365	Soulless War Shambler
+2366	Soulless War Shambler
+2367	Soulless War Shambler
+2368	Gargoyle
+2369	Large Shrimp
+2370	Ichtysatyr Scout
+2371	Ichtysatyr Scout
+2372	Ichtysatyr Commander
+2373	Ichtysatyr Commander
+2374	Ichtycentaur Commander
+2375	Ichtycentaur Commander
+2376	Ichtysatyr
+2377	Ichtysatyr
+2378	Ichtysatyr Warrior
+2379	Ichtysatyr Warrior
+2380	Ichtytaur
+2381	Ichtytaur
+2382	Turtle Tribe Triton
+2383	Shark Tribe Triton
+2384	Pelagian Militia
+2385	Pelagian Soldier
+2386	Coral Clan Soldier
+2387	Pearl Guard
+2388	Merman Net Thrower
+2389	Merman Net Thrower
+2390	Pelagian Captain
+2391	Triton Rider
+2392	Aphroi Hierophant
+2393	Aphroi Hierophant
+2394	Sobek Sauromancer
+2395	Pearl Clan Priest
+2396	Pearl Mage
+2397	Pearl King
+2398	Elephant
+2399	Aphroi Lord
+2400	Aphroi Lord
+2401	Aphroi
+2402	Aphroi
+2403	Spider Clan Witch Doctor
+2404	Ichtysatyr
+2405	Ichtysatyr
+2406	Ichtysatyr
+2407	Ichtysatyr
+2408	Ichtysatyr Soldier
+2409	Ichtysatyr Soldier
+2410	Ichtycentaur Commander
+2411	Ichtycentaur Commander
+2412	Ichtytaur
+2413	Ichtytaur
+2414	Ichtytaur Warrior
+2415	Ichtytaur Warrior
+2416	Coral Clan Hoplite
+2417	Merman Priest
+2418	Merman Priest
+2419	Mermage
+2420	Mermage
+2421	Amber Clan Noble
+2422	Pearl Clan Priest
+2423	Pearl Mage
+2424	Berytian Sage
+2425	Bard
+2426	Bouda Father
+2427	Werehyena
+2428	Goetic Captain
+2429	Bride of the Gods
+2430	King of the City
+2431	Titan of the Underworld
+2432	Entu of the Moon
+2433	Favored of Enki
+2434	Teteo Inan
+2435	Annunaki of Love and War
+2436	Annunaki of the Moon
+2437	Annunaki of Growth and Rebirth
+2438	Annunaki of the Underworld
+2439	Logrian Wise Man
+2440	Sea Dragon
+2441	Great Seer of the Deeps
+2442	Teotl of War
+2443	Teotl of the Sky
+2444	Teotl of the Underworld
+2445	Neter of the Underworld
+2446	Neter of Kings
+2447	Idol of Men
+2448	Idol of Beasts
+2449	Idol of Sorcery
+2450	Horned One
+2451	Longdead
+2452	Heavy Axeman
+2453	Light Archer
+2454	Crossbowman
+2455	Longbowman
+2456	Ktonian Reanimator
+2457	Bodhisattva of Mercy
+2458	Dragon Girl
+2459	Dragon Girl
+2460	Statue of Fertility
+2461	Statue of the Bloody Mother
+2462	Golden Idol
+2463	Statue of War
+2464	Neter of the Moon
+2465	Statue of War
+2466	Kamadhenu
+2467	Bakemono Chief
+2468	Druid
+2469	Fir Bolg Druid
+2470	Hybrid Commander
+2471	Self Proclaimed Prince
+2472	Shark Tribe Brigand
+2473	Hangadrottning
+2474	White Wolf
+2475	Standard
+2476	Naga Chief
+2477	Ghoul Commander
+2478	Satyr Sniper
+2479	Centaur Sage
+2480	Dryad Hag
+2481	Ettin King
+2482	Troglodyte Slave
+2483	Troglodyte Trainer
+2484	Longdead Giant
+2485	Satyr Commander
+2486	Benjaminite Commander
+2487	Dryad Mother
+2488	Centaur Chariot
+2489	Ancient Wet One
+2490	Ancient Wet One
+2491	Engraver
+2492	Great Olm
+2493	Olm Sage
+2494	Member of the Closed Council
+2495	Member of the Closed Council
+2496	Member of the Closed Council
+2497	Penumbral
+2498	God Vessel
+2499	God Vessel
+2500	God Vessel
+2501	Legion of Gods
+2502	Earth made Flesh
+2503	Golden Pillar
+2504	Zotz
+2505	Camazotz
+2506	Ancient Lord
+2507	Defender of the Halls
+2508	Shard Guard
+2509	Shard Wight
+2510	Lava-born
+2511	Lava-born Commander
+2512	Cave Cow
+2513	Cave Spider
+2514	Cave Crab
+2515	Living Mercury
+2516	Living Mercury
+2517	Living Mercury
+2518	Living Mercury
+2519	Living Mercury
+2520	Flame Barrel Nightmare
+2521	Ktonian Alchemist
+2522	Released Sage
+2523	Released King
+2524	Released Warrior
+2525	Released One
+2526	Cave Grub
+2527	Olm Sage
+2528	Great Olm
+2529	Cave Drake
+2530	Master of Alchemical Secrets
+2531	Huskarl
+2532	Herse
+2533	Hirdman
+2534	Dragon
+2535	Plague Cult Leader
+2536	Fellow
+2537	Monk
+2538	Noble
+2539	Noble
+2540	Blood Mage
+2541	Mountain King
+2542	Guhyaka General
+2543	Mage of Spring
+2544	Mage of Summer
+2545	Mage of Autumn
+2546	Mage of Winter
+2547	Blizzard Warrior
+2548	Iron Hail Archer
+2549	Maharishi
+2550	Raksharani
+2551	Manushya Raksharani
+2552	Ahura of Wisdom
+2553	Ahura of the Oath
+2554	Ahura of the Waters
+2555	Spenta Mainyu
+2556	Celestial Carp
+2557	Airya Seraphine
+2558	Kavi Archer
+2559	Mairya Warrior
+2560	Mairya Ahu
+2561	Raptorian Warrior
+2562	Fravashi
+2563	Ancestral Fravashi
+2564	Spire Horn Militia
+2565	Spire Horn Archer
+2566	Spire Horn Warrior
+2567	Airya Light Infantry
+2568	Airya Infantry
+2569	Spire Horn Seraph
+2570	Airya Seraph
+2571	Raptorian Militia
+2572	Raptorian Warrior
+2573	Raptorian Warrior
+2574	Raptorian Warrior
+2575	Airya Noble
+2576	Iceclad
+2577	Ahu of the Kavi
+2578	Yazad King
+2579	Paighan
+2580	Turan Infantry
+2581	Turan Heavy Infantry
+2582	Turan Horse Archer
+2583	Turan Cavalry
+2584	Savaran Cataphract
+2585	Savaran Guard
+2586	Turan War Elephant
+2587	Zhayedan
+2588	Turan Spahbed
+2589	Airya Archer
+2590	Airya Light Infantry
+2591	Airya Infantry
+2592	Iceclad Zhayedan
+2593	Spire Horn Archer
+2594	Spire Horn Warrior
+2595	Airya Scout
+2596	Airya Spahbed
+2597	Paighan-Salar
+2598	Turan Usij
+2599	Karapan
+2600	Dastur
+2601	Turan Sorcerer
+2602	Athravan
+2603	Zaotar
+2604	Airya Seraph
+2605	Turan Shah
+2606	Airya Shah
+2607	Turan Athravan
+2608	Azi
+2609	Great Warlock
+2610	Angra Mainyu
+2611	Gannag Menog
+2612	Daeva of Evil Intentions
+2613	Daeva of Frozen Minds
+2614	Daeva of Oppression
+2615	Daeva of Discontent
+2616	Daeva of Destruction
+2617	Daeva of Aging
+2618	Renegade Harab Seraph
+2619	Harab Seraph
+2620	Yazad of Fire
+2621	Yazad of Justice
+2622	Yazad of the Stars
+2623	Yazad of the Sky
+2624	Yazad of Water
+2625	Yazad of the Earth
+2626	Flame Spirit
+2627	Daeva of Wrath
+2628	Turan Gryphon
+2629	Zhayedan Spahbed
+2630	Daeva
+2631	Jahi
+2632	Daeva of Shooting Stars
+2633	Yata
+2634	Daeva of Frost and Snow
+2635	Ahu
+2636	Pairika
+2637	Ahurani
+2638	Turan Gryphon
+2639	Fatherslayer
+2640	Giant Shaman
+2641	Giant Sorcerer
+2642	Yeti Shaman
+2643	Human Warrior
+2644	Human Warrior
+2645	Human Warrior
+2646	Human Warrior
+2647	Kuraka
+2648	Hatun Runa
+2649	Aucac Runa Spearman
+2650	Aucac Runa Maceman
+2651	Aucac Runa Axeman
+2652	Aucac Runa Archer
+2653	Sun Guard
+2654	Apu
+2655	Apusqispay
+2656	Aclla
+2657	Hurin Priest
+2658	Inca
+2659	Coya
+2660	Mallqui
+2661	Mallqui Priestess
+2662	Mallqui Priest
+2663	Royal Mallqui
+2664	Paqo of the Mountain Spirits
+2665	Paqo of the Earth Mother
+2666	Runancha
+2667	Condor Warrior
+2668	Xibalban Warrior
+2669	Xibalban Warrior
+2670	Xibalban Dart Thrower
+2671	Xibalban Guard
+2672	Sun Guide
+2673	Xibalban Scout
+2674	Batab
+2675	Ajaw
+2676	Ajaw Kan Ek'
+2677	Ah K'in
+2678	Chilan
+2679	Ah Nakom
+2680	Ah Itz
+2681	Camazotz
+2682	Way
+2683	Jaguar
+2684	Ah K'in Kan Ek'
+2685	Viracocha
+2686	Apu Inti
+2687	Large Scorpion
+2688	Giant Scorpion
+2689	Xibalban Scorpion
+2690	Sacred Scorpion
+2691	Xibalban Scorpion Trainer
+2692	Halach Uinic
+2693	Heavenly Condor
+2694	Condor
+2695	Sapa Inca
+2696	Stone Huaca
+2697	Huaca
+2698	Apu Illapa
+2699	Ayar
+2700	Supaya
+2701	Nazcan Longdead
+2702	Nazcan Longdead
+2703	Caelian Longdead
+2704	Caelian Longdead
+2705	Caelian Longdead
+2706	Caelian Longdead
+2707	Soulless Nazcan
+2708	Soulless Nazcan Warrior
+2709	Soulless Nazcan Warrior
+2710	Soulless Nazcan Warrior
+2711	Soulless Nazcan Warrior
+2712	Apostate Seraph
+2713	First Couple
+2714	Bacab
+2715	Muuch Ajaw
+2716	Muuch K'uhul
+2717	Ah Ha'
+2718	Ah Itz
+2719	Camazotz
+2720	Muuch Scout
+2721	Muuch Militia
+2722	Muuch Dart Thrower
+2723	Muuch Warrior
+2724	Muuch Warrior
+2725	Muuch Warrior
+2726	Muuch Warrior
+2727	Muuch Jungle Warrior
+2728	Muuch Batab
+2729	Wo' Muuch
+2730	Chak Muuch Dart Thrower
+2731	Chak Muuch Obsidian Warrior
+2732	Chak Muuch Assassin
+2733	Zotz Batab
+2734	Zotz Warrior
+2735	Zotz Warrior
+2736	Onaqui
+2737	Immortal Coya
+2738	Zotz Warrior
+2739	Zotz Warrior
+2740	Zotz Dart Thrower
+2741	Zotz Guard
+2742	Zotz Guard
+2743	Obsidian Warrior
+2744	Sak Muuch Dart Thrower
+2745	Sak Muuch Warrior
+2746	Sak Muuch Warrior
+2747	Wo' Muuch
+2748	Ah Ha'
+2749	Bacab
+2750	Chilan
+2751	Way
+2752	Jaguar
+2753	Ah Itz
+2754	Camazotz
+2755	Hun Came
+2756	Bolon-ti-ku
+2757	Demon of the Bone Staff
+2758	Demon of the Skull Staff
+2759	Demon of Pus
+2760	Jaundice Demon
+2761	Sweeping Demon
+2762	Stabbing Demon
+2763	Grandfather Earth
+2764	Hun Balam
+2765	Balam of the North
+2766	Balam of the North
+2767	Balam of the North
+2768	Balam of the East
+2769	Balam of the East
+2770	Balam of the East
+2771	Balam of the South
+2772	Balam of the South
+2773	Balam of the South
+2774	Balam of the West
+2775	Balam of the West
+2776	Balam of the West
+2777	Demon Macaw
+2778	Chaac of the North
+2779	Chaac of the East
+2780	Chaac of the South
+2781	Chaac of the West
+2782	Batab
+2783	Drakon
+2784	Thrice Horned Boar
+2785	Solar Eagle
+2786	Celestial Gryphon
+2787	Celestial Lion
+2788	Man-Eater
+2789	Raven of the Underworld
+2790	Myrmecoleon
+2791	Earth Serpent
+2792	Solar Serpent
+2793	Serpent of Chaos
+2794	Demonic Locust
+2795	Dog of the Underworld
+2796	Hound of Hades
+2797	Hieracosphinx
+2798	Criosphinx
+2799	Wadjet
+2800	Ormr
+2801	Linnormr
+2802	Svartalf Mastersmith
+2803	Linnormr
+2804	Ichtyid Shaman
+2805	Ichtyid Pearl Mage
+2806	Wondrous
+2807	Pelagian Shore Fighter
+2808	Pelagian Shore Fighter
+2809	Sideraspist
+2810	Sideraspist
+2811	Pelagian Shore Commander
+2812	Pelagian Shore Commander
+2813	Pelagian Explorer
+2814	Pelagian Explorer
+2815	Mermage
+2816	Mermage
+2817	Bone Tribe Hunter
+2818	Bone Tribe Beast Hunter
+2819	Bone Tribe Head Hunter
+2820	Bone Reader
+2821	Merman Hoplite
+2822	Merman Hoplite
+2823	Pelagian Mystic
+2824	Pelagian Mystic
+2825	Merman Commander
+2826	Merman Commander
+2827	Therodian Archer
+2828	Therodian Peltast
+2829	Therodian Hoplite
+2830	Therodian Scout
+2831	Therodian Commander
+2832	Strategis
+2833	Melia
+2834	Hekateride
+2835	Kabeiros
+2836	Daktyl
+2837	Korybant
+2838	Saos
+2839	Kourete
+2840	Spectral Archer
+2841	Spectral Peltast
+2842	Spectral Hoplite
+2843	Spectral Kourete
+2844	Spectral Commander
+2845	Ephor
+2846	Spectral Philosopher
+2847	Protogenos of the Sea
+2848	Father of the Sea
+2849	Father of Monsters
+2850	Statue of the Underworld
+2851	Titan of Winds and Waves
+2852	King of Frozen Bones
+2853	Ghost King
+2854	Flame Jelly
+2855	Floating Mind
+2856	Son of the Sea
+2857	Fish
+2858	Large Fish
+2859	Witness of the Deep
+2860	Soldier of the Deep
+2861	Haliade
+2862	Shambler Guard
+2863	Champion of the Closed Realm
+2864	Champion of the Closed Realm
+2865	Conqueror of the Closed Realm
+2866	Conqueror of the Closed Realm
+2867	Daduchos
+2868	Daduchos
+2869	Apostate of the Closed Realm
+2870	Apostate of the Closed Realm
+2871	Kabeiride
+2872	Kabeiride
+2873	Telkhine
+2874	Telkhine
+2875	Queen of the City
+2876	Queen of the City
+2877	Telkhine
+2878	Telkhine
+2879	Telkhine
+2880	Telkhine
+2881	Telkhine God-King
+2882	Telkhine God-King
+2883	Abodai
+2884	Androleth
+2885	Androdai
+2886	Grandmother
+2887	Lakam Ha' Warrior
+2888	Lakam Ha' Warrior
+2889	Lakam Ha' Warrior
+2890	Lakam Ha' Warrior
+2891	Lakam Ha' Batab
+2892	Priest of All Waters
+2893	Warrior of the Deep
+2894	Lord of the Deep
+2895	Mother of All Waters
+2896	Returned
+2897	Kernou Warrior
+2898	Kernou Noble Warrior
+2899	Kernou Cavalry
+2900	Kernou Chieftain
+2901	Kernou Druid
+2902	Merrow Militia
+2903	Merrow
+2904	Merrow
+2905	Merrow Chieftain
+2906	Merrow Druid
+2907	Ysian Militia
+2908	Ysian Spearman
+2909	Ysian Man at Arms
+2910	Knight of Ys
+2911	Knight of Ys
+2912	Ysian Scout
+2913	Ysian Commander
+2914	Ysian Druid
+2915	Morvarc'h Knight
+2916	Morvarc'h Knight
+2917	Morgen Champion
+2918	Morgen Champion
+2919	Morgen Princess
+2920	Morgen Princess
+2921	Morgen Sorceress
+2922	Morgen High Queen
+2923	Ysian Infantry
+2924	Queen of the North
+2925	Queen of the North
+2926	Morgen Queen
+2927	Morgen Queen
+2928	Swanherd
+2929	Swan
+2930	Hooded Spirit
+2931	Knight Commander of Ys
+2932	Knight Commander of Ys
+2933	Enkidu
+2934	Enkidu Scout
+2935	Enkidu Archer
+2936	Enkidu Spearman
+2937	Enkidu Warrior
+2938	Enkidu Heavy Archer
+2939	Enkidu Soldier
+2940	Enkidu Iron Warrior
+2941	Enkidu Royal Guard
+2942	Enkidu Commander
+2943	Ensi
+2944	Nin
+2945	Gala
+2946	Naditu
+2947	Ereshdingir
+2948	Entu
+2949	Gudu
+2950	Ishib
+2951	Ashipu
+2952	Mashmashu
+2953	Maiden of the Moon
+2954	Enkidu Shaman
+2955	Leader of the Closed Council
+2956	Centauride Cataphract
+2957	Centauride Crossbow
+2958	Golden Lion
+2959	Chiranjivi
+2960	Apkallu
+2961	Centauride Enchantress
+2962	Mushussu
+2963	Mushussu Chariot
+2964	Mushussu
+2965	Apkallu
+2966	Umu-apkallu
+2967	Hell Spawn
+2968	Hell Spawn
+2969	Hell Spawn
+2970	Hell Spawn
+2971	Hell Spawn
+2972	Hell Spawn
+2973	Hell Spawn
+2974	Hell Spawn
+2975	Worm Mage
+2976	Algae Man
+2977	Centaur Great Sage
+2978	Master Sorcerer
+2979	Onmyo Hakase
+2980	Uttervast
+2981	Soulless Enkidu
+2982	Soulless Warrior
+2983	Soulless Warrior
+2984	Scout
+2985	Rusian Chieftain
+2986	Rusian Priest
+2987	Rusian Wizard
+2988	Thunder Priest
+2989	Rusian Hunter
+2990	Rusian Warrior
+2991	Rusian Warrior
+2992	Chud Hunter
+2993	Chud Warrior
+2994	Chud Berserker
+2995	Bear Warrior
+2996	Werebear
+2997	Chud Skinshifter
+2998	Werebear
+2999	Perkunu
+3000	Son of Heaven
+3001	Daughter of the Sun
+3002	Chud Chieftain
+3003	Great Bear
+3004	Serf Defender
+3005	Longdead Archer
+3006	Humanbred
+3007	Bug Soul Vessel
+3008	Rusian Chieftain
+3009	Buffalo
+3010	Architect
+3011	Architect
+3012	Shrimp Soul Vessel
+3013	Triton Militia
+3014	Triton Soldier
+3015	Triton Hoplite
+3016	Triton Knight
+3017	Triton Noble
+3018	Thyreophorite
+3019	Thyreophorite
+3020	Erytheian Phalangite
+3021	Erytheian Phalangite
+3022	Erytheian Hoplite
+3023	Erytheian Hoplite
+3024	Machimos
+3025	Machimos Commander
+3026	Erytheian Commander
+3027	Erytheian Commander
+3028	Erytheian Scout
+3029	Erytheian Scout
+3030	Erytheian Crossbowman
+3031	Erytheian Crossbowman
+3032	Daduchos
+3033	Daduchos
+3034	Mermage
+3035	Mermage
+3036	Erytheian Priest
+3037	Erytheian Priest
+3038	Pearl Mage
+3039	Mystic
+3040	Nomarch
+3041	Nomarch
+3042	Prince of the Setting Sun
+3043	Prince of the Setting Sun
+3044	Princess of the Setting Sun
+3045	Princess of the Setting Sun
+3046	King of Both Worlds
+3047	King of Both Worlds
+3048	Queen of Land and Water
+3049	Queen of Land and Water
+3050	Triton Priest
+3051	Soldier of the Setting Sun
+3052	Soldier of the Setting Sun
+3053	Grand Hierophant
+3054	Firstborn of the Star
+3055	Grand Hydromancer
+3056	Aphroi Sage
+3057	Aphroi Sage
+3058	God-King of the Deep
+3059	Magister Supreme
+3060	Master
+3061	Hell Spawn
+3062	Hellbred Giant
+3063	Hellbred Horite
+3064	Anzu
+3065	Marble Lion
+3066	Hamadryad
+3067	Spectral Lictor
+3068	Kusarikku
+3069	Namanari
+3070	Chunari
+3071	Vanarusian Berserker
+3072	Kami of the Sun
+3073	Kami of the Moon
+3074	Kami of Storms
+3075	Little Soulless
+3076	Morrigna
+3077	Morrigna
+3078	Morrigna
+3079	Duiu of Thunder
+3080	Duiu of Farming
+3081	Duiu of War
+3082	Matrona of the Healing Spring
+3083	Hound
+3084	Amanojaku
+3085	Oni Spirit
+3086	Deives of the Sun
+3087	Lar
+3088	Dharmapala of the Underworld
+3089	Kulullu
+3090	Kulullu Soldier
+3091	Kulullu Sage
+3092	Kuliltu Queen
+3093	Kulullu Commander
+3094	Kulullu King
+3095	Ugallu
+3096	Mage of the Deep
+3097	Spider Archer
+3098	First Spawn
+3099	Hoburg Slinger
+3100	Hoburg Spearman
+3101	Hoburg Pikeman
+3102	Hoburg Defender
