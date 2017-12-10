@@ -82,14 +82,6 @@ public class MercenaryStatIndexer {
 			FileOutputStream fos = new FileOutputStream("NewMercenary.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
-//			XSSFRow titleRow = sheet.getRow(0);
-//			int cellNum = 0;
-//			XSSFCell titleCell = titleRow.getCell(cellNum);
-//			while (titleCell != null) {
-//				cellNum++;
-//				titleCell = titleRow.getCell(cellNum);
-//			}
-			
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
@@ -97,10 +89,6 @@ public class MercenaryStatIndexer {
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
-//					if (ch == 0xc3) {
-//						ch = in.read();
-//						ch += 0x40;
-//					}
 					name.append((char)ch);
 					ch = in.read();
 				}
@@ -140,10 +128,6 @@ public class MercenaryStatIndexer {
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
-//					if (ch == 0xc3) {
-//						ch = in.read();
-//						ch += 0x40;
-//					}
 					name.append((char)ch);
 					ch = in.read();
 				}

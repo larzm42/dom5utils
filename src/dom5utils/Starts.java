@@ -42,8 +42,8 @@ public class Starts {
 
 	public static final long EVENT = 0x00365240l;
 	
-	public static final long MERCENARY = 0x00cb6dcal;
-	public static final int MERCENARY_COUNT = 68;
+	public static final long MERCENARY = 0x00ec4012l;
+	public static final int MERCENARY_COUNT = 76;
 
 	public static final long ARMOR = 0x001c2998l;
 	public static final int ARMOR_COUNT = 235;
