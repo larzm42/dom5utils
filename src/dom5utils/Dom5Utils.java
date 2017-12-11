@@ -23,6 +23,10 @@ public class Dom5Utils {
 		MonsterStatIndexer.run();
 		EventStatIndexer.run();
 		MercenaryStatIndexer.run();
+		ArmorStatIndexer.run();
+		WeaponStatIndexer.run();
+		SpellStatIndexer.run();
+		NationStatIndexer.run();
 		
 		// Descriptions
 		ItemMonsterDescDumper.run();

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -325,6 +327,7 @@ public class NationStatIndexer {
 				
 			}
 			
+			Set<Integer> heroes = new TreeSet<Integer>();
 			int rowNum = 1;
 			for (Attributes attribute : attributes) {
 				XSSFRow row = sheet.getRow(rowNum);
@@ -334,7 +337,14 @@ public class NationStatIndexer {
 				cell2.setCellValue(attribute.attribute);
 				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell2.setCellValue(attribute.raw_value);
+				if (attribute.attribute >= 139 && attribute.attribute <= 150) {
+					heroes.add((int)attribute.raw_value);
+				}
 				rowNum++;
+			}
+			
+			for (Integer hero : heroes) {
+				System.out.println(hero);
 			}
 
 			in.close();

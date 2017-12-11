@@ -30,9 +30,8 @@ public class Starts {
 	public static final long SITE = 0x0113dc60l;
 	public static final int SITE_COUNT = 1157;
 	
-	public static final long NAMES = 0x00b049acl;
-	public static final long FIXED_NAMES = 0x00c49b94l;
-	
+	public static final long NAMES = 0x00d02da4l;
+	public static final long FIXED_NAMES = 0x00e48680l;
 	public static final int NAMES_COUNT = 161;
 	
 	public static final long SPELL = 0x011a7aa0l;

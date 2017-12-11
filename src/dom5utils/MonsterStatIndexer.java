@@ -15,9 +15,11 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -2147,7 +2149,7 @@ public class MonsterStatIndexer {
 			doit1(240, 303, sheet);
 
 			// fixedname
-			/*File heroesFile = new File("heroes.txt");
+			File heroesFile = new File("heroes.txt");
 			Set<Integer> heroes = new HashSet<Integer>();
 			File namesFile = new File("names.txt");
 			List<String> names = new ArrayList<String>();
@@ -2176,7 +2178,7 @@ public class MonsterStatIndexer {
 				} else {
 					System.out.println("");
 				}
-			}*/
+			}
 
 			stream = new FileInputStream("Dominions5.exe");			
 			stream.skip(Starts.MONSTER_MAGIC);

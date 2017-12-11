@@ -78,7 +78,7 @@ public class NametypeIndexer {
 				if (name.length() == 0) {
 					continue;
 				}
-				if (name.toString().equals("Active Mods")) {
+				if (name.toString().equals("Options")) {
 					break;
 				}
 				
