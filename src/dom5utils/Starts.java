@@ -16,41 +16,41 @@ package dom5utils;
  */
 
 public class Starts {
-	public static final long ITEM = 0x00e70e30l;
+	public static final long ITEM = 0x00e72cb8l;
 	public static final int ITEM_COUNT = 430;
 	
-	public static final long MONSTER = 0x00ef3ac8l;
-	public static final long MONSTER_MAGIC = 0x01245de0l;
-	public static final long ITEM_AND_MONSTER_DESC = 0x001e8d58l;
-	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x00311eb0l;
+	public static final long MONSTER = 0x00ef5cb8l;
+	public static final long MONSTER_MAGIC = 0x012489d0l;
+	public static final long ITEM_AND_MONSTER_DESC = 0x001ea5b0l;
+	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x00313b88l;
 	public static final int MONSTER_COUNT = 3102;
 	
 	public static final long MONSTER_TRS_INDEX = 0x001ef4al;
 	
-	public static final long SITE = 0x0113dc60l;
+	public static final long SITE = 0x01140850l;
 	public static final int SITE_COUNT = 1157;
 	
 	public static final long NAMES = 0x00d02da4l;
 	public static final long FIXED_NAMES = 0x00e48680l;
 	public static final int NAMES_COUNT = 161;
 	
-	public static final long SPELL = 0x011a7aa0l;
+	public static final long SPELL = 0x011aa690l;
 	public static final int SPELL_COUNT = 1128;
-	public static final long SPELL_DESC = 0x0031da30l;
-	public static final long SPELL_DESC_INDEX = 0x0035f440l;
+	public static final long SPELL_DESC = 0x0031f708l;
+	public static final long SPELL_DESC_INDEX = 0x00360ff8l;
 
-	public static final long EVENT = 0x00365240l;
+	public static final long EVENT = 0x00366df8l;
 	
-	public static final long MERCENARY = 0x00ec4012l;
+	public static final long MERCENARY = 0x00ec5ffal;
 	public static final int MERCENARY_COUNT = 76;
 
-	public static final long ARMOR = 0x001c2998l;
+	public static final long ARMOR = 0x001c41b0l;
 	public static final int ARMOR_COUNT = 235;
 
-	public static final long WEAPON = 0x01267e28l;
+	public static final long WEAPON = 0x0126af38l;
 	public static final int WEAPON_COUNT = 720;
 	
-	public static final long NATION = 0x00c2fe60l;
+	public static final long NATION = 0x00c31b48l;
 	public static final int NATION_COUNT = 112;	
 	
 }

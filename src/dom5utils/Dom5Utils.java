@@ -32,11 +32,14 @@ public class Dom5Utils {
 		ItemMonsterDescDumper.run();
 		SpellDescDumper.run();
 		
+		// Events
+		EventStatIndexer.run();
+		
 		// Sprites
-		ItemSpriteIndexer.run();
-		MonsterSpriteIndexer.run();
+		//ItemSpriteIndexer.run();
+		//MonsterSpriteIndexer.run();
 		
 		// Names
-		NametypeIndexer.run();
+		//NametypeIndexer.run();
 	}
 }

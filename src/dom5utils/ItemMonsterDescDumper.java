@@ -115,7 +115,7 @@ public class ItemMonsterDescDumper {
 						break;
 					}
 				}
-				System.out.println(buffer.toString());
+				//System.out.println(buffer.toString());
 				stream.close();
 
 				if (buffer.toString().startsWith(":")) {

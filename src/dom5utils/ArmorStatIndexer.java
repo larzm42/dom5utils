@@ -144,7 +144,7 @@ public class ArmorStatIndexer {
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				System.out.println(name);
+				//System.out.println(name);
 				
 				XSSFRow row = sheet.getRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
