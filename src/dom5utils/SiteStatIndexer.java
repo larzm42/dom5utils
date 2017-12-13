@@ -304,7 +304,7 @@ public class SiteStatIndexer {
 				rowNumber++;
 				XSSFCell cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(Integer.decode("0X" + high));
-				stream.skip(214l);
+				stream.skip(215l);
 				i++;
 				if (i >= Starts.SITE_COUNT) {
 					break;

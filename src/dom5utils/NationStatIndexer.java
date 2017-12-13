@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +34,18 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class NationStatIndexer {
+public class NationStatIndexer extends AbstractStatIndexer {
 	
 	enum unitType {
-		PRETENDER(2, "pretender_types_by_nation.xlsx"),
-		UNPRETENDER(1, "unpretender_types_by_nation.xlsx"),
-		TROOP(0, "fort_troop_types_by_nation.xlsx"),
+		PRETENDER(2, "pretender_types_by_nation"),
+		UNPRETENDER(1, "unpretender_types_by_nation"),
+		TROOP(0, "fort_troop_types_by_nation"),
 		UNKNOWN(-1, ""),
-		LEADER(-2, "fort_leader_types_by_nation.xlsx"),
-		NONFORT_TROOP(-3, "nonfort_troop_types_by_nation.xlsx"),
-		NONFORT_LEADER(-4, "nonfort_leader_types_by_nation.xlsx"),
-		COAST_TROOP(-5, "coast_troop_types_by_nation.xlsx"),
-		COAST_LEADER(-6, "coast_leader_types_by_nation.xlsx");
+		LEADER(-2, "fort_leader_types_by_nation"),
+		NONFORT_TROOP(-3, "nonfort_troop_types_by_nation"),
+		NONFORT_LEADER(-4, "nonfort_leader_types_by_nation"),
+		COAST_TROOP(-5, "coast_troop_types_by_nation"),
+		COAST_LEADER(-6, "coast_leader_types_by_nation");
 		
 		private int id;
 		private String filename;
@@ -67,29 +66,6 @@ public class NationStatIndexer {
 		public String getFilename() { return filename;}
 	}
 	
-	private static XSSFWorkbook readFile(String filename) throws IOException {
-		return new XSSFWorkbook(new FileInputStream(filename));
-	}
-	
-	private static int doit3(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		int value = 0;
-		byte[] c = new byte[4];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 4)) != -1) {
-			String high1 = String.format("%02X", c[3]);
-			String low1 = String.format("%02X", c[2]);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			
-			value = new BigInteger(high1 + low1 + high + low, 16).intValue();
-
-			break;
-		}
-		stream.close();
-		return value;
-	}
-	
 	public static void main(String[] args) {
 		run();
 	}
@@ -100,12 +76,12 @@ public class NationStatIndexer {
 	        long startIndex = Starts.NATION;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = NationStatIndexer.readFile("BaseN.xlsx");
+			XSSFWorkbook wb = NationStatIndexer.readFile("BaseN_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("NewBaseN.xlsx");
+			FileOutputStream fos = new FileOutputStream("BaseN.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -126,134 +102,30 @@ public class NationStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.NATION_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
+				XSSFRow row = sheet.createRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(rowNumber-1);
-				rowNumber++;
 				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(name.toString());
+				rowNumber++;
 			}
 			in.close();
 			stream.close();
 
 			// epithet
-	        startIndex = Starts.NATION;
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(startIndex + 36l);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
-				stream.skip(startIndex + 36l);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				XSSFCell cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 36l, 2, Starts.NATION, Starts.NATION_SIZE);
 			
 			// abbreviation
-	        startIndex = Starts.NATION;
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(startIndex + 72l);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
-				stream.skip(startIndex + 72l);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				XSSFCell cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 72l, 3, Starts.NATION, Starts.NATION_SIZE);
 
 			// file_name_base
-	        startIndex = Starts.NATION;
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(startIndex + 77l);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
-				stream.skip(startIndex + 77l);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				XSSFCell cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 77l, 4, Starts.NATION, Starts.NATION_SIZE);
 			
 			wb.write(fos);
 			fos.close();
@@ -277,12 +149,12 @@ public class NationStatIndexer {
 	        long startIndex = Starts.NATION;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = NationStatIndexer.readFile("attributes_by_nation.xlsx");
+			XSSFWorkbook wb = NationStatIndexer.readFile("attributes_by_nation_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("Newattributes_by_nation.xlsx");
+			FileOutputStream fos = new FileOutputStream("attributes_by_nation.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -306,21 +178,20 @@ public class NationStatIndexer {
 				
 				long newIndex = startIndex+172l;
 				
-				int attrib = doit3(newIndex);
+				int attrib = getBytes4(newIndex);
 				long valueIndex = newIndex + 388l;
-				long value = doit3(valueIndex);
+				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
 					attributes.add(new Attributes(rowNumber-1, attrib, value));
 					newIndex+=4;
 					valueIndex+=8;
-					attrib = doit3(newIndex);
-					value = doit3(valueIndex);
+					attrib = getBytes4(newIndex);
+					value = getBytes4(valueIndex);
 				}
 				rowNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.NATION_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -330,7 +201,7 @@ public class NationStatIndexer {
 			Set<Integer> heroes = new TreeSet<Integer>();
 			int rowNum = 1;
 			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.getRow(rowNum);
+				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(attribute.nation_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -372,7 +243,7 @@ public class NationStatIndexer {
 	        long startIndex = Starts.NATION;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
 			// name
@@ -402,7 +273,7 @@ public class NationStatIndexer {
 					unitMap.put(type, new ArrayList<Troops>());
 				}
 				
-				int attrib = doit3(newIndex);
+				int attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					if (attrib < 0) {
 						if (attrib != -1) {
@@ -415,13 +286,12 @@ public class NationStatIndexer {
 						unitMap.get(type).add(new Troops(rowNumber-1, attrib));
 					}
 					newIndex+=4;
-					attrib = doit3(newIndex);
+					attrib = getBytes4(newIndex);
 				}
 				rowNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.NATION_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -430,12 +300,12 @@ public class NationStatIndexer {
 			
 			for (Map.Entry<unitType, List<Troops>> entry : unitMap.entrySet()) {
 				if (entry.getKey() == unitType.UNKNOWN) { continue; }
-				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename());
-				FileOutputStream fos = new FileOutputStream("New" + entry.getKey().getFilename());
+				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename() + "_Template.xlsx");
+				FileOutputStream fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
 				XSSFSheet sheet = wb.getSheetAt(0);
 				int rowNum = 1;
 				for (Troops troop : entry.getValue()) {
-					XSSFRow row = sheet.getRow(rowNum);
+					XSSFRow row = sheet.createRow(rowNum);
 					XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 					cell1.setCellValue(troop.monster_number);
 					XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -468,7 +338,7 @@ public class NationStatIndexer {
 	        long startIndex = Starts.NATION;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
 			// name
@@ -493,7 +363,7 @@ public class NationStatIndexer {
 				
 				long newIndex = startIndex+1496l;
 				
-				int attrib = doit3(newIndex);
+				int attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					if (attrib < 0) {
 						if (unitMap.get(unitType.UNPRETENDER) == null) {
@@ -507,13 +377,12 @@ public class NationStatIndexer {
 						unitMap.get(unitType.PRETENDER).add(new Troops(rowNumber-1, attrib));
 					}
 					newIndex+=4;
-					attrib = doit3(newIndex);
+					attrib = getBytes4(newIndex);
 				}
 				rowNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1752l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.NATION_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -522,12 +391,12 @@ public class NationStatIndexer {
 			
 			for (Map.Entry<unitType, List<Troops>> entry : unitMap.entrySet()) {
 				if (entry.getKey() == unitType.UNKNOWN) { continue; }
-				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename());
-				FileOutputStream fos = new FileOutputStream("New" + entry.getKey().getFilename());
+				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename() + "_Template.xlsx");
+				FileOutputStream fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
 				XSSFSheet sheet = wb.getSheetAt(0);
 				int rowNum = 1;
 				for (Troops troop : entry.getValue()) {
-					XSSFRow row = sheet.getRow(rowNum);
+					XSSFRow row = sheet.createRow(rowNum);
 					XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 					cell1.setCellValue(troop.monster_number);
 					XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);

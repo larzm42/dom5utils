@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,101 +30,16 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class WeaponStatIndexer {
+public class WeaponStatIndexer extends AbstractStatIndexer {
 	
-	private static XSSFWorkbook readFile(String filename) throws IOException {
-		return new XSSFWorkbook(new FileInputStream(filename));
-	}
-	
-	private static void doit(XSSFSheet sheet, int skip, int column) throws IOException {
-		doit(sheet, skip, column, null);
+	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
+		putBytes2(sheet, skip, column, Starts.WEAPON, Starts.WEAPON_SIZE, Starts.WEAPON_COUNT);
 	}
 	
-	private static void doit(XSSFSheet sheet, int skip, int column, Callback callback) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		stream.skip(Starts.WEAPON);
-		int rowNumber = 1;
-		int i = 0;
-		byte[] c = new byte[2];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 2)) != -1) {
-			XSSFRow row = sheet.getRow(rowNumber);
-			rowNumber++;
-			XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			short value = Integer.decode("0X" + high + low).shortValue();
-
-			if (callback != null) {
-				cell.setCellValue(callback.found(Short.toString(value)));
-			} else {
-				cell.setCellValue(value);
-			}
-
-			stream.skip(110l);
-			i++;
-			if (i >= Starts.WEAPON_COUNT) {
-				break;
-			}
-		}
-		stream.close();
+	private static void putBytes2(XSSFSheet sheet, int skip, int column, Callback callback) throws IOException {
+		putBytes2(sheet, skip, column, Starts.WEAPON, Starts.WEAPON_SIZE, Starts.WEAPON_COUNT, callback);
 	}
 	
-	private static short doit2(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		short value = 0;
-		byte[] c = new byte[2];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 2)) != -1) {
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			 value = Integer.decode("0X" + high + low).shortValue();
-			break;
-		}
-		stream.close();
-		return value;
-	}
-
-	private static int doit3(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		int value = 0;
-		byte[] c = new byte[4];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 4)) != -1) {
-			String high1 = String.format("%02X", c[3]);
-			String low1 = String.format("%02X", c[2]);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			
-			value = new BigInteger(high1 + low1 + high + low, 16).intValue();
-
-			break;
-		}
-		stream.close();
-		return value;
-	}
-
-	private static long doit4(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		long value = 0;
-		byte[] c = new byte[6];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 6)) != -1) {
-			String high2 = String.format("%02X", c[5]);
-			String low2 = String.format("%02X", c[4]);
-			String high1 = String.format("%02X", c[3]);
-			String low1 = String.format("%02X", c[2]);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			
-			value = new BigInteger(high2 + low2 + high1 + low1 + high + low, 16).longValue();
-
-			break;
-		}
-		stream.close();
-		return value;
-	}
-
 	public static void main(String[] args) {
 		run();
 	}
@@ -136,12 +50,12 @@ public class WeaponStatIndexer {
 	        long startIndex = Starts.WEAPON;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("BaseW.xlsx");
+			XSSFWorkbook wb = WeaponStatIndexer.readFile("BaseW_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("NewBaseW.xlsx");
+			FileOutputStream fos = new FileOutputStream("BaseW.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -162,15 +76,13 @@ public class WeaponStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 112l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.WEAPON_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
+				XSSFRow row = sheet.createRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(rowNumber);
 				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -183,22 +95,22 @@ public class WeaponStatIndexer {
 			stream.close();
 
 			// att
-			doit(sheet, 48, 3);
+			putBytes2(sheet, 48, 3);
 
 			// def
-			doit(sheet, 50, 4);
+			putBytes2(sheet, 50, 4);
 
 			// len		
-			doit(sheet, 56, 5);
+			putBytes2(sheet, 56, 5);
 
 			// nratt
-			doit(sheet, 58, 6);
+			putBytes2(sheet, 58, 6);
 
 			// ammo
-			doit(sheet, 60, 7);
+			putBytes2(sheet, 60, 7);
 			
 			// secondaryeffect
-			doit(sheet, 72, 8, new CallbackAdapter() {
+			putBytes2(sheet, 72, 8, new CallbackAdapter() {
 				@Override
 				public String found(String value) {
 					if (Integer.parseInt(value) > 0) {
@@ -210,7 +122,7 @@ public class WeaponStatIndexer {
 			});
 			
 			// secondaryeffectalways
-			doit(sheet, 72, 9, new CallbackAdapter() {
+			putBytes2(sheet, 72, 9, new CallbackAdapter() {
 				@Override
 				public String found(String value) {
 					if (Integer.parseInt(value) < 0) {
@@ -222,7 +134,7 @@ public class WeaponStatIndexer {
 			});
 			
 			// rcost
-			doit(sheet, 86, 10);
+			putBytes2(sheet, 86, 10);
 			
 			wb.write(fos);
 			fos.close();
@@ -246,12 +158,12 @@ public class WeaponStatIndexer {
 	        long startIndex = Starts.WEAPON;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("attributes_by_weapon.xlsx");
+			XSSFWorkbook wb = WeaponStatIndexer.readFile("attributes_by_weapon_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("Newattributes_by_weapon.xlsx");
+			FileOutputStream fos = new FileOutputStream("attributes_by_weapon.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -275,17 +187,16 @@ public class WeaponStatIndexer {
 				
 				long newIndex = startIndex+88;
 				
-				int attrib = doit3(newIndex);
+				int attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					attributes.add(new Attributes(attrib, weaponNumber));
 					newIndex+=4;					
-					attrib = doit3(newIndex);
+					attrib = getBytes4(newIndex);
 				}
 				weaponNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 112l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.WEAPON_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -294,9 +205,9 @@ public class WeaponStatIndexer {
 			
 			int rowNum = 1;
 			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.getRow(rowNum);
+				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.armor_number);
+				cell1.setCellValue(attribute.weapon_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell2.setCellValue(attribute.attribute);
 				rowNum++;
@@ -327,12 +238,12 @@ public class WeaponStatIndexer {
 	        long startIndex = Starts.WEAPON;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("effects_weapons.xlsx");
+			XSSFWorkbook wb = WeaponStatIndexer.readFile("effects_weapons_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("Neweffects_weapons.xlsx");
+			FileOutputStream fos = new FileOutputStream("effects_weapons.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -356,26 +267,25 @@ public class WeaponStatIndexer {
 				
 				long newIndex = startIndex+52;
 				
-				short effect_number = doit2(newIndex);
+				short effect_number = getBytes2(newIndex);
 				if (effect_number != 0) {
 					Effect effect = new Effect();
 					effect.effect_number = effect_number;
 					effect.record_number = weaponNumber;
 					effect.object_type = "Weapon";
 					effect.ritual = 0;
-					effect.modifiers_mask = doit4(startIndex+64);
-					effect.raw_argument = doit2(startIndex+40);
-					effect.range_base = doit2(startIndex+56);
-					effect.area_base = doit2(startIndex+82);
+					effect.modifiers_mask = getBytes6(startIndex+64);
+					effect.raw_argument = getBytes2(startIndex+40);
+					effect.range_base = getBytes2(startIndex+56);
+					effect.area_base = getBytes2(startIndex+82);
 					
 					effects.add(effect);
 
 				}
 				weaponNumber++;
-				System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 112l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.WEAPON_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -384,7 +294,7 @@ public class WeaponStatIndexer {
 			
 			int rowNum = 1;
 			for (Effect eff : effects) {
-				XSSFRow row = sheet.getRow(rowNum);
+				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(eff.record_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -453,12 +363,12 @@ public class WeaponStatIndexer {
 	
 	private static class Attributes {
 		int attribute;
-		int armor_number;
-		public Attributes(int attribute, int armor_number) {
+		int weapon_number;
+		public Attributes(int attribute, int weapon_number) {
 			super();
 			this.attribute = attribute;
-			this.armor_number = armor_number;
+			this.weapon_number = weapon_number;
 		}
-		
 	}
+	
 }

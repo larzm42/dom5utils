@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,79 +30,14 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ArmorStatIndexer {
+public class ArmorStatIndexer extends AbstractStatIndexer {
 	
-	private static XSSFWorkbook readFile(String filename) throws IOException {
-		return new XSSFWorkbook(new FileInputStream(filename));
+	public static void main(String[] args) {
+		run();
 	}
 	
 	private static void doit(XSSFSheet sheet, int skip, int column) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		stream.skip(Starts.ARMOR);
-		int rowNumber = 1;
-		int i = 0;
-		byte[] c = new byte[2];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 2)) != -1) {
-			XSSFRow row = sheet.getRow(rowNumber);
-			rowNumber++;
-			XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			short value = Integer.decode("0X" + high + low).shortValue();
-
-			if (value == 0) {
-				//System.out.println("0");
-				cell.setCellValue(0);
-			} else {
-				//System.out.println(Integer.decode("0X" + high + low));
-				cell.setCellValue(value);
-			}
-			stream.skip(102l);
-			i++;
-			if (i >= Starts.ARMOR_COUNT) {
-				break;
-			}
-		}
-		stream.close();
-	}
-	
-	private static short doit2(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		short value = 0;
-		byte[] c = new byte[2];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 2)) != -1) {
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			 value = Integer.decode("0X" + high + low).shortValue();
-			break;
-		}
-		stream.close();
-		return value;
-	}
-
-	private static int doit3(long skip) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		int value = 0;
-		byte[] c = new byte[4];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 4)) != -1) {
-			String high1 = String.format("%02X", c[3]);
-			String low1 = String.format("%02X", c[2]);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			
-			value = new BigInteger(high1 + low1 + high + low, 16).intValue();
-
-			break;
-		}
-		stream.close();
-		return value;
-	}
-
-	public static void main(String[] args) {
-		run();
+		putBytes2(sheet, skip, column, Starts.ARMOR, Starts.ARMOR_SIZE, Starts.ARMOR_COUNT);
 	}
 	
 	public static void run() {
@@ -112,12 +46,11 @@ public class ArmorStatIndexer {
 	        long startIndex = Starts.ARMOR;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("BaseA.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("NewBaseA.xlsx");
+			XSSFWorkbook wb = ArmorStatIndexer.readFile("BaseA_Template.xlsx");
+			FileOutputStream fos = new FileOutputStream("BaseA.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -138,15 +71,13 @@ public class ArmorStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 104l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.ARMOR_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
+				XSSFRow row = sheet.createRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(rowNumber);
 				rowNumber++;
@@ -190,12 +121,12 @@ public class ArmorStatIndexer {
 	        long startIndex = Starts.ARMOR;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("protections_by_armor.xlsx");
+			XSSFWorkbook wb = ArmorStatIndexer.readFile("protections_by_armor_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("Newprotections_by_armor.xlsx");
+			FileOutputStream fos = new FileOutputStream("protections_by_armor.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -219,20 +150,19 @@ public class ArmorStatIndexer {
 				
 				long newIndex = startIndex+36;
 				
-				short zone = doit2(newIndex);
+				short zone = getBytes2(newIndex);
 				while (zone != 0) {
 					newIndex+=2;
-					short prot = doit2(newIndex);
+					short prot = getBytes2(newIndex);
 					protections.add(new Protections(zone, prot, armorNumber));
 
 					newIndex+=2;					
-					zone = doit2(newIndex);
+					zone = getBytes2(newIndex);
 				}
 				armorNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 104l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.ARMOR_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -241,7 +171,7 @@ public class ArmorStatIndexer {
 			
 			int rowNum = 1;
 			for (Protections prot : protections) {
-				XSSFRow row = sheet.getRow(rowNum);
+				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(prot.zone_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -275,12 +205,12 @@ public class ArmorStatIndexer {
 	        long startIndex = Starts.ARMOR;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("attributes_by_armor.xlsx");
+			XSSFWorkbook wb = ArmorStatIndexer.readFile("attributes_by_armor_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("Newattributes_by_armor.xlsx");
+			FileOutputStream fos = new FileOutputStream("attributes_by_armor.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -304,17 +234,16 @@ public class ArmorStatIndexer {
 				
 				long newIndex = startIndex+72;
 				
-				int attrib = doit3(newIndex);
+				int attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					attributes.add(new Attributes(attrib, armorNumber));
 					newIndex+=4;					
-					attrib = doit3(newIndex);
+					attrib = getBytes4(newIndex);
 				}
 				armorNumber++;
-				//System.out.println(name);
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 104l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.ARMOR_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
@@ -323,7 +252,7 @@ public class ArmorStatIndexer {
 			
 			int rowNum = 1;
 			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.getRow(rowNum);
+				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(attribute.armor_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -373,6 +302,6 @@ public class ArmorStatIndexer {
 			this.attribute = attribute;
 			this.armor_number = armor_number;
 		}
-		
 	}
+	
 }

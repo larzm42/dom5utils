@@ -28,40 +28,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class MercenaryStatIndexer {
+public class MercenaryStatIndexer extends AbstractStatIndexer {
 	
-	private static XSSFWorkbook readFile(String filename) throws IOException {
-		return new XSSFWorkbook(new FileInputStream(filename));
-	}
-	
-	private static void doit(XSSFSheet sheet, int skip, int column) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
-		stream.skip(Starts.MERCENARY);
-		int rowNumber = 1;
-		int i = 0;
-		byte[] c = new byte[2];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 2)) != -1) {
-			XSSFRow row = sheet.getRow(rowNumber);
-			rowNumber++;
-			XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			int value = Integer.decode("0X" + high + low);
-			if (value == 0) {
-				//System.out.println("0");
-				cell.setCellValue(0);
-			} else {
-				//System.out.println(Integer.decode("0X" + high + low));
-				cell.setCellValue(Integer.decode("0X" + high + low));
-			}
-			stream.skip(310l);
-			i++;
-			if (i >= Starts.MERCENARY_COUNT) {
-				break;
-			}
-		}
-		stream.close();
+	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
+		putBytes2(sheet, skip, column, Starts.MERCENARY, Starts.MERCENARY_SIZE, Starts.MERCENARY_COUNT);
 	}
 	
 	public static void main(String[] args) {
@@ -74,12 +44,12 @@ public class MercenaryStatIndexer {
 	        long startIndex = Starts.MERCENARY;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = MercenaryStatIndexer.readFile("Mercenary.xlsx");
+			XSSFWorkbook wb = MercenaryStatIndexer.readFile("Mercenary_Template.xlsx");
 			
-			FileOutputStream fos = new FileOutputStream("NewMercenary.xlsx");
+			FileOutputStream fos = new FileOutputStream("Mercenary.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
@@ -100,173 +70,57 @@ public class MercenaryStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream("Dominions5.exe");		
+				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + 312l;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
+				XSSFRow row = sheet.createRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(rowNumber);
-				rowNumber++;
 				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(name.toString());
+				rowNumber++;
 			}
 			in.close();
 			stream.close();
 
 			// bossname
-			stream = new FileInputStream("Dominions5.exe");			
-			startIndex = Starts.MERCENARY + 36;
-			stream.skip(startIndex);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 312l;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				
-				if (rowNumber > Starts.MERCENARY_COUNT) {
-					break;
-				}
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 36, 2, Starts.MERCENARY, Starts.MERCENARY_SIZE);
 
 			// com
-			doit(sheet, 74, 3);
+			putBytes2(sheet, 74, 3);
 
 			// unit
-			doit(sheet, 78, 4);
+			putBytes2(sheet, 78, 4);
 
 			// nrunits
-			doit(sheet, 82, 5);
+			putBytes2(sheet, 82, 5);
 
 			// minmen
-			doit(sheet, 86, 7);
+			putBytes2(sheet, 86, 7);
 
 			// minpay
-			doit(sheet, 90, 8);
+			putBytes2(sheet, 90, 8);
 
 			// xp
-			doit(sheet, 94, 9);
+			putBytes2(sheet, 94, 9);
 
 			// randequip
-			doit(sheet, 158, 10);
+			putBytes2(sheet, 158, 10);
 
 			// recrate
-			doit(sheet, 306, 11);
+			putBytes2(sheet, 306, 11);
 
 			// item1
-			stream = new FileInputStream("Dominions5.exe");			
-			startIndex = Starts.MERCENARY + 162;
-			stream.skip(startIndex);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					if (ch == 0xc3) {
-						ch = in.read();
-						ch += 0x40;
-					}
-					name.append((char)ch);
-					ch = in.read();
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 312l;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				if (name.length() != 0) {
-					XSSFCell cell = row.getCell(12, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(name.toString());
-				}
-				
-				if (rowNumber > Starts.MERCENARY_COUNT) {
-					break;
-				}
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 162, 12, Starts.MERCENARY, Starts.MERCENARY_SIZE);
 
 			// item2
-			stream = new FileInputStream("Dominions5.exe");			
-			startIndex = Starts.MERCENARY + 198;
-			stream.skip(startIndex);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-	        rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					if (ch == 0xc3) {
-						ch = in.read();
-						ch += 0x40;
-					}
-					name.append((char)ch);
-					ch = in.read();
-				}
-				in.close();
-
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 312l;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				//System.out.println(name);
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				if (name.length() != 0) {
-					XSSFCell cell = row.getCell(13, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(name.toString());
-				}
-				
-				if (rowNumber > Starts.MERCENARY_COUNT) {
-					break;
-				}
-			}
-			in.close();
-			stream.close();
+			putString(sheet, 198, 13, Starts.MERCENARY, Starts.MERCENARY_SIZE);
 			
 			// eramask
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.MERCENARY-2);
 			rowNumber = 1;
 			int i = 0;
@@ -293,7 +147,7 @@ public class MercenaryStatIndexer {
 			stream.close();
 
 			// level
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.MERCENARY-1);
 			rowNumber = 1;
 			i = 0;
