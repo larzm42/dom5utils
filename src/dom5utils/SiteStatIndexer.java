@@ -33,18 +33,14 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class SiteStatIndexer {
+public class SiteStatIndexer extends AbstractStatIndexer {
 	
-	private static XSSFWorkbook readFile(String filename) throws IOException {
-		return new XSSFWorkbook(new FileInputStream(filename));
-	}
-
 	public static void doit(XSSFSheet sheet, String attr, int column) throws IOException {
 		doit(sheet, attr, column, null);
 	}
 	
 	public static void doit2(XSSFSheet sheet, String attr, int column, int column2) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
+		FileInputStream stream = new FileInputStream(EXE_NAME);			
 		stream.skip(Starts.SITE);
 		int rowNumber = 1;
 		int i = 0;
@@ -115,7 +111,7 @@ public class SiteStatIndexer {
 	}
 	
 	public static void doit(XSSFSheet sheet, String attr, int column, Callback callback) throws IOException {
-		FileInputStream stream = new FileInputStream("Dominions5.exe");			
+		FileInputStream stream = new FileInputStream(EXE_NAME);			
 		stream.skip(Starts.SITE);
 		int rowNumber = 1;
 		
@@ -138,7 +134,6 @@ public class SiteStatIndexer {
 					stream.read(c, 0, 2);
 					high = String.format("%02X", c[1]);
 					low = String.format("%02X", c[0]);
-					//System.out.print(low + high + " ");
 					if (x == pos) {
 						int tmp = new BigInteger(high + low, 16).intValue();
 						if (tmp < 1000) {
@@ -146,13 +141,11 @@ public class SiteStatIndexer {
 						} else {
 							value = new BigInteger("FFFF" + high + low, 16).intValue();
 						}
-						//System.out.print(fire);
 						found = true;
 					}
 					stream.skip(6);
 				}
 				
-				//System.out.println("");
 				XSSFRow row = sheet.getRow(rowNumber);
 				rowNumber++;
 				XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -175,7 +168,6 @@ public class SiteStatIndexer {
 				k = 0;
 				i++;
 			} else {
-				//System.out.print(low + high + " ");
 				if ((low + high).equals(attr)) {
 					pos = k;
 				}
@@ -199,11 +191,11 @@ public class SiteStatIndexer {
 	        long startIndex = Starts.SITE;
 	        int ch;
 
-			stream = new FileInputStream("Dominions5.exe");			
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			
-			XSSFWorkbook wb = SiteStatIndexer.readFile("MagicSites.xlsx");
-			FileOutputStream fos = new FileOutputStream("NewMagicSites.xlsx");
+			XSSFWorkbook wb = SiteStatIndexer.readFile("MagicSites_Template.xlsx");
+			FileOutputStream fos = new FileOutputStream("MagicSites.xlsx");
 			XSSFSheet sheet = wb.getSheetAt(0);
 			
 			// Name
@@ -224,102 +216,48 @@ public class SiteStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 216l;
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.SITE_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				//System.out.println(name);
-				XSSFRow row = sheet.getRow(rowNumber);
+				XSSFRow row = sheet.createRow(rowNumber);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell1.setCellValue(rowNumber);
-				rowNumber++;
 				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell.setCellValue(name.toString());
+				rowNumber++;
 			}
 			in.close();
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
 			// rarity
-			int i = 0;
-			byte[] c = new byte[1];
-			stream.skip(42);
-			while ((stream.read(c, 0, 1)) != -1) {
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				if (c[0] == -1 || c[0] == 0) {
-					//System.out.println("0");
-					cell.setCellValue("0");
-				} else {
-					//System.out.println(c[0]);
-					cell.setCellValue(c[0]);
+			putBytes1(sheet, 42, 2, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT, new CallbackAdapter() {
+				@Override
+				public String found(String value) {
+					if (value.equals("-1")) {
+						return "0";
+					} else {
+						return value;
+					}
 				}
-				stream.skip(215l);
-				i++;
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
+			});
 
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
 			// loc
-			i = 0;
-			c = new byte[2];
-			stream.skip(208);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				//System.out.println(Integer.decode("0X" + high + low));
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(Integer.decode("0X" + high + low));
-				stream.skip(214l);
-				i++;
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
+			putBytes2(sheet, 208, 3, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT);
 
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
 			// level
-			i = 0;
-			c = new byte[1];
-			stream.skip(40);
-			while ((stream.read(c, 0, 1)) != -1) {
-				String high = String.format("%02X", c[0]);
-				//System.out.println(Integer.decode("0X" + high));
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(Integer.decode("0X" + high));
-				stream.skip(215l);
-				i++;
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
+			putBytes1(sheet, 40, 4, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT);
 
+			// path
 			stream = new FileInputStream("Dominions5.exe");			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// path
 			String[] paths = {"Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Blood", "Holy"};
 			int[] spriteOffset = {1, 9, 18, 26, 35, 42, 50, 59, 68};
-			i = 0;
-			c = new byte[1];
+			int i = 0;
+			byte[] c = new byte[1];
 			byte[] d = new byte[1];
 			stream.skip(36);
 			stream.read(d, 0, 1);
@@ -330,10 +268,8 @@ public class SiteStatIndexer {
 				XSSFCell cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				XSSFCell cell2 = row.getCell(105, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				if (c[0] == -1) {
-					//System.out.println("");
 					cell.setCellValue("");
 				} else {
-					//System.out.println(paths[c[0]]);
 					cell.setCellValue(paths[c[0]]);
 					cell2.setCellValue(spriteOffset[c[0]] + d[0]);
 				}
@@ -402,10 +338,10 @@ public class SiteStatIndexer {
 			// fort
 			doit(sheet, "1100", 20);
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// scales
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// scales
 			String[] scales = {"Turmoil", "Sloth", "Cold", "Death", "Misfortune", "Drain"};
 			String[] opposite = {"Order", "Productivity", "Heat", "Growth", "Luck", "Magic"};
 			i = 0;
@@ -429,33 +365,19 @@ public class SiteStatIndexer {
 						stream.read(c, 0, 2);
 						high = String.format("%02X", c[1]);
 						low = String.format("%02X", c[0]);
-						//System.out.print(low + high + " ");
 						if (oppositeSet.contains(x)) {
-							//int fire = Integer.decode("0X" + high + low);
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(opposite[fire]);
+							found = true;
 							value[index++] = opposite[fire];
 						}
 						if (scalesSet.contains(x)) {
-							//int fire = Integer.decode("0X" + high + low);
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(scales[fire]);
+							found = true;
 							value[index++] = scales[fire];
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					if (value[0].length() > 0) {
@@ -473,7 +395,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("1F00")) {
 						oppositeSet.add(k);
 					}
@@ -489,10 +410,10 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// rit/ritr
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// rit/ritr
 			i = 0;
 			k = 0;
 			String rit = "";
@@ -513,18 +434,13 @@ public class SiteStatIndexer {
 						stream.read(c, 0, 2);
 						high = String.format("%02X", c[1]);
 						low = String.format("%02X", c[0]);
-						//System.out.print(low + high + " ");
 						if (x == pos) {
-							//int fire = Integer.decode("0X" + high + low);
-							//int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							//System.out.print(rit + "\t" + fire);
 							found = true;
 							value = new BigInteger(new byte[]{c[1], c[0]}).intValue();
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					XSSFCell cell1 = row.getCell(41, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -544,7 +460,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("FA00")) {
 						rit += "F";
 						pos = k;
@@ -590,10 +505,11 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// hmon
+			putMultipleAttributes(sheet, "1D00", 44, 34l, 43, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT, null);
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// hmon
 			i = 0;
 			k = 0;
 			numFound = 0;
@@ -615,18 +531,12 @@ public class SiteStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(fire);
+							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					int ind = 0;
@@ -641,7 +551,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("1D00")) {
 						posSet.add(k);
 					}
@@ -654,10 +563,10 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// hcom
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// hcom
 			i = 0;
 			k = 0;
 			numFound = 0;
@@ -679,18 +588,12 @@ public class SiteStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(fire);
+							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					int ind = 0;
@@ -705,7 +608,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("1E00")) {
 						posSet.add(k);
 					}
@@ -718,10 +620,10 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// mon
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// mon
 			i = 0;
 			k = 0;
 			numFound = 0;
@@ -743,18 +645,12 @@ public class SiteStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(fire);
+							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					int ind = 0;
@@ -769,7 +665,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("0B00")) {
 						posSet.add(k);
 					}
@@ -782,10 +677,10 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// com
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// com
 			i = 0;
 			k = 0;
 			numFound = 0;
@@ -807,18 +702,12 @@ public class SiteStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(fire);
+							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					int ind = 0;
@@ -833,7 +722,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("0C00")) {
 						posSet.add(k);
 					}
@@ -846,10 +734,10 @@ public class SiteStatIndexer {
 			}
 			stream.close();
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// provdef
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// provdef
 			i = 0;
 			k = 0;
 			numFound = 0;
@@ -871,18 +759,12 @@ public class SiteStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (!found) {
-								found = true;
-							} else {
-								//System.out.print("\t");
-							}
-							//System.out.print(fire);
+							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
 					}
 					
-					//System.out.println("");
 					XSSFRow row = sheet.getRow(rowNumber);
 					rowNumber++;
 					int ind = 0;
@@ -897,7 +779,6 @@ public class SiteStatIndexer {
 					k = 0;
 					i++;
 				} else {
-					//System.out.print(low + high + " ");
 					if ((low + high).equals("E000")) {
 						posSet.add(k);
 					}
@@ -1028,10 +909,10 @@ public class SiteStatIndexer {
 				}
 			});
 
-			stream = new FileInputStream("Dominions5.exe");			
+			// summoning
+			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
 			rowNumber = 1;
-			// summoning
 			i = 0;
 			k = 0;
 			posSet = new HashSet<Integer>();

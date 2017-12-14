@@ -36,7 +36,7 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 		run();
 	}
 	
-	private static void doit(XSSFSheet sheet, int skip, int column) throws IOException {
+	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
 		putBytes2(sheet, skip, column, Starts.ARMOR, Starts.ARMOR_SIZE, Starts.ARMOR_COUNT);
 	}
 	
@@ -88,16 +88,16 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 			stream.close();
 
 			// type
-			doit(sheet, 66, 2);
+			putBytes2(sheet, 66, 2);
 
 			// def
-			doit(sheet, 62, 3);
+			putBytes2(sheet, 62, 3);
 
 			// enc		
-			doit(sheet, 64, 4);
+			putBytes2(sheet, 64, 4);
 
 			// rcost
-			doit(sheet, 68, 5);
+			putBytes2(sheet, 68, 5);
 
 			wb.write(fos);
 			fos.close();
