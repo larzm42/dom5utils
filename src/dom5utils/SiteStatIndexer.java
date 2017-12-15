@@ -358,7 +358,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					String value[] = {"", ""};
 					int index = 0;
 					for (int x = 0; x < numFound; x++) {
@@ -367,12 +366,10 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (oppositeSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							value[index++] = opposite[fire];
 						}
 						if (scalesSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							value[index++] = scales[fire];
 						}
 						stream.skip(6);
@@ -523,7 +520,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -531,7 +527,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
@@ -580,7 +575,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -588,7 +582,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
@@ -637,7 +630,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -645,7 +637,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
@@ -694,7 +685,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -702,7 +692,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);
@@ -751,7 +740,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				if (weapon == 0) {
 					stream.skip(34l - numFound*2l);
 					// Values
-					boolean found = false;
 					List<Integer> values = new ArrayList<Integer>();
 					for (int x = 0; x < numFound; x++) {
 						stream.read(c, 0, 2);
@@ -759,7 +747,6 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						low = String.format("%02X", c[0]);
 						if (posSet.contains(x)) {
 							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							found = true;
 							values.add(fire);
 						}
 						stream.skip(6);

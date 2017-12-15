@@ -232,6 +232,9 @@ public abstract class AbstractStatIndexer {
 			String high = String.format("%02X", c[1]);
 			String low = String.format("%02X", c[0]);
 			int value = Integer.decode("0X" + high + low);
+			if (value > 60000) {
+				value = new BigInteger("FFFF" + high + low, 16).intValue();
+			}
 
 			if (callback != null) {
 				cell.setCellValue(callback.found(Integer.toString(value)));

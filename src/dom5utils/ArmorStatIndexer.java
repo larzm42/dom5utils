@@ -235,10 +235,14 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 				long newIndex = startIndex+72;
 				
 				int attrib = getBytes4(newIndex);
+				long valueIndex = newIndex + 16l;
+				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
-					attributes.add(new Attributes(attrib, armorNumber));
-					newIndex+=4;					
+					attributes.add(new Attributes(attrib, armorNumber, value));
+					newIndex+=4;
+					valueIndex+=4;
 					attrib = getBytes4(newIndex);
+					value = getBytes4(valueIndex);
 				}
 				armorNumber++;
 
@@ -257,6 +261,8 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 				cell1.setCellValue(attribute.armor_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell2.setCellValue(attribute.attribute);
+				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+				cell2.setCellValue(attribute.raw_value);
 				rowNum++;
 			}
 
@@ -297,10 +303,12 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 	private static class Attributes {
 		int attribute;
 		int armor_number;
-		public Attributes(int attribute, int armor_number) {
+		long raw_value;
+		public Attributes(int attribute, int armor_number, long raw_value) {
 			super();
 			this.attribute = attribute;
 			this.armor_number = armor_number;
+			this.raw_value = raw_value;
 		}
 	}
 	
