@@ -22,132 +22,38 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class SpellStatIndexer extends AbstractStatIndexer {
-	
+	public static String[] spells_columns = {"id","name", "school", "researchlevel", "path1", "pathlevel1", "path2", "pathlevel2", "effect_record_id", "effects_count", "precision", "fatiguecost", "gemcost", "next_spell", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
+	public static String[] effects_spells_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
+	public static String[] attributes_by_spell_columns = {"spell_number", "attribute", "raw_value", "end"};
+
 	public static void main(String[] args) {
 		run();
 	}
 	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Spell> spellList = new ArrayList<Spell>();
+
 		try {
 	        long startIndex = Starts.SPELL;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = SpellStatIndexer.readFile("BaseS_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("BaseS.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber-1);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-
-				cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 36l));
-				cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 37l));
-				cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 38l));
-				cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 40l));
-				cell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 39l));
-				cell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 41l));
-				cell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(rowNumber-1);
-
-				cell = row.getCell(9, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes2(startIndex + 64l));
-				cell = row.getCell(10, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 50l));
-				cell = row.getCell(11, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				int fat = getBytes2(startIndex + 42l);
-				cell.setCellValue(fat%100);
-				cell = row.getCell(12, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(fat/100);
-				cell = row.getCell(13, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(getBytes1(startIndex + 88l));
-
-				rowNumber++;
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.SPELL_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-			}
-			in.close();
-			stream.close();
-			
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-				
-		// effects_spells
-		try {
-	        long startIndex = Starts.SPELL;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = SpellStatIndexer.readFile("effects_spells_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("effects_spells.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
 	        int spellNumber = 0;
-	        List<Effect> effects = new ArrayList<Effect>();
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
@@ -162,12 +68,28 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 				}
 				in.close();
 				
-				
+				Spell spell = new Spell();
+				spell.parameters = new HashMap<String, Object>();
+				spell.parameters.put("id", spellNumber);
+				spell.parameters.put("name", name.toString());
+				spell.parameters.put("school", getBytes1(startIndex + 36l));
+				spell.parameters.put("researchlevel", getBytes1(startIndex + 37l));
+				spell.parameters.put("path1", getBytes1(startIndex + 38l));
+				spell.parameters.put("pathlevel1", getBytes1(startIndex + 40l));
+				spell.parameters.put("path2", getBytes1(startIndex + 39l));
+				spell.parameters.put("pathlevel2", getBytes1(startIndex + 41l));
+				spell.parameters.put("effect_record_id", spellNumber);
+				spell.parameters.put("effects_count", getBytes2(startIndex + 64l));
+				spell.parameters.put("precision", getBytes1(startIndex + 50l));
+				int fat = getBytes2(startIndex + 42l);
+				spell.parameters.put("fatiguecost", fat%100);
+				spell.parameters.put("gemcost", fat/100);
+				spell.parameters.put("next_spell", getBytes1(startIndex + 88l));
+
 				Effect effect = new Effect();
 				int effect_number = getBytes2(startIndex+46);
 				if (effect_number > 10000) {
 					effect.ritual = 1;
-					//effect_number = effect_number % 1000;
 				} else if (effect_number > 1000) {
 					effect.duration = effect_number / 1000;
 				}
@@ -207,141 +129,123 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 					break;
 				}
 
-				effects.add(effect);
-
-				spellNumber++;
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.SPELL_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
+				spell.effect = effect;
 				
-			}
-			
-			int rowNum = 1;
-			for (Effect eff : effects) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.record_number);
-				cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.effect_number);
-				cell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.duration != 0 ? eff.duration+"" : "");
-				cell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.ritual);
-				cell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.object_type);
-				cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.raw_argument);
-				cell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(Long.toString(eff.modifiers_mask));
-				cell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.range_base);
-				cell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.range_per_level);
-				cell = row.getCell(9, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.range_strength_divisor);
-				cell = row.getCell(10, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.area_base);
-				cell = row.getCell(11, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.area_per_level);
-				cell = row.getCell(12, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(eff.area_battlefield_pct != 0 ? eff.area_battlefield_pct+"" : "");
-				rowNum++;
-			}
-
-			in.close();
-			stream.close();
-
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// attributes_by_nation
-		try {
-	        long startIndex = Starts.SPELL;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = SpellStatIndexer.readFile("attributes_by_spell_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("attributes_by_spell.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-	        List<Attributes> attributes = new ArrayList<Attributes>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
+		        List<Attribute> attributes = new ArrayList<Attribute>();
 				long newIndex = startIndex+92l;
-				
 				int attrib = getBytes4(newIndex);
 				long valueIndex = newIndex + 60l;
 				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
-					attributes.add(new Attributes(rowNumber-1, attrib, value));
+					attributes.add(new Attribute(spellNumber, attrib, value));
 					newIndex+=4;
 					valueIndex+=4;
 					attrib = getBytes4(newIndex);
 					value = getBytes4(valueIndex);
 				}
-				rowNumber++;
+				spell.attributes = attributes;
+
+				spellList.add(spell);
 
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + Starts.SPELL_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
-				
-			}
-			
-			int rowNum = 1;
-			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.spell_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.attribute);
-				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.raw_value);
-				rowNum++;
-			}
 
+				spellNumber++;
+			}
 			in.close();
 			stream.close();
+			
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("spells.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			XSSFWorkbook wb2 = new XSSFWorkbook();
+			FileOutputStream fos2 = new FileOutputStream("effects_spells.xlsx");
+			XSSFSheet sheet2 = wb2.createSheet();
+			XSSFWorkbook wb3 = new XSSFWorkbook();
+			FileOutputStream fos3 = new FileOutputStream("attributes_by_spell.xlsx");
+			XSSFSheet sheet3 = wb3.createSheet();
 
+			int rowNum = 0;
+			int effectsNum = 0;
+			int attributesNum = 0;
+			for (Spell spell : spellList) {
+				// spells
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < spells_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spells_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < spells_columns.length; i++) {
+					Object object = spell.parameters.get(spells_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				
+				// effects_spells
+				if (spell.effect != null) {
+					if (effectsNum == 0) {
+						row = sheet2.createRow(effectsNum);
+						for (int i = 0; i < effects_spells_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(effects_spells_columns[i]);
+						}
+						effectsNum++;
+					}
+					
+					row = sheet2.createRow(effectsNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.record_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.effect_number);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.duration != 0 ? spell.effect.duration+"" : "");
+					row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.ritual);
+					row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.object_type);
+					row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.raw_argument);
+					row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Long.toString(spell.effect.modifiers_mask));
+					row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.range_base);
+					row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.range_per_level);
+					row.getCell(9, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.range_strength_divisor);
+					row.getCell(10, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.area_base);
+					row.getCell(11, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.area_per_level);
+					row.getCell(12, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.area_battlefield_pct != 0 ? spell.effect.area_battlefield_pct+"" : "");
+					effectsNum++;
+				}
+				
+				
+				// attributes_by_spell
+				for (Attribute attribute : spell.attributes) {
+					if (attributesNum == 0) {
+						row = sheet3.createRow(attributesNum);
+						for (int i = 0; i < attributes_by_spell_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attributes_by_spell_columns[i]);
+						}
+						attributesNum++;
+					}
+					row = sheet3.createRow(attributesNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.object_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.attribute);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
+					attributesNum++;
+				}
+
+				rowNum++;
+			}
+			
 			wb.write(fos);
 			fos.close();
+			wb.close();
+
+			wb2.write(fos2);
+			fos2.close();
+			wb2.close();
+
+			wb3.write(fos3);
+			fos3.close();
+			wb3.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -356,42 +260,13 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
-		
+				
 	}	
 	
-	private static class Attributes {
-		int spell_number;
-		int attribute;
-		long raw_value;
-
-		public Attributes(int spell_number, int attribute_number, long raw_value) {
-			super();
-			this.spell_number = spell_number;
-			this.attribute = attribute_number;
-			this.raw_value = raw_value;
-		}
-		
+	private static class Spell {
+		Map<String, Object> parameters;
+		Effect effect;
+		List<Attribute> attributes;
 	}
 
-	private static class Effect {
-		int record_number;
-		int effect_number;
-		int duration;
-		int ritual;
-		String object_type;
-		int raw_argument;
-		long modifiers_mask;
-		int range_base;
-		int range_per_level;
-		int range_strength_divisor;
-		int area_base;
-		int area_per_level;
-		int area_battlefield_pct;
-		int sound_number;
-		int flight_sprite_number;
-		int flight_sprite_length;
-		int explosion_sprite_number;
-		int explosion_sprite_length;
-
-	}
 }

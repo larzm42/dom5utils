@@ -17,17 +17,20 @@ package dom5utils;
 
 public class Starts {
 	public static final long ITEM = 0x00e72cb8l;
-	public static final int ITEM_COUNT = 430;
 	public static final long ITEM_SIZE = 232l;
 	public static final long ITEM_ATTRIBUTE_OFFSET = 120l;
 	public static final long ITEM_ATTRIBUTE_GAP = 26l;
+	public static final int ITEM_COUNT = 430;
 	
 	public static final long MONSTER = 0x00ef5cb8l;
 	public static final long MONSTER_SIZE = 264l;
+	public static final long MONSTER_ATTRIBUTE_OFFSET = 64l;
+	public static final long MONSTER_ATTRIBUTE_GAP = 46l;
+	public static final int MONSTER_COUNT = 3102;
+
 	public static final long MONSTER_MAGIC = 0x012489d0l;
 	public static final long ITEM_AND_MONSTER_DESC = 0x001ea5b0l;
 	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x00313b88l;
-	public static final int MONSTER_COUNT = 3102;
 	
 	public static final long MONSTER_TRS_INDEX = 0x001ef4al;
 	
@@ -40,27 +43,28 @@ public class Starts {
 	public static final int NAMES_COUNT = 161;
 	
 	public static final long SPELL = 0x011aa690l;
-	public static final int SPELL_COUNT = 1128;
 	public static final long SPELL_SIZE = 216l;
+	public static final int SPELL_COUNT = 1128;
+
 	public static final long SPELL_DESC = 0x0031f708l;
 	public static final long SPELL_DESC_INDEX = 0x00360ff8l;
 
 	public static final long EVENT = 0x00366df8l;
 	
 	public static final long MERCENARY = 0x00ec5ffal;
-	public static final int MERCENARY_COUNT = 76;
 	public static final long MERCENARY_SIZE = 312l;
+	public static final int MERCENARY_COUNT = 76;
 
 	public static final long ARMOR = 0x001c41b0l;
-	public static final int ARMOR_COUNT = 235;
 	public static final long ARMOR_SIZE = 104l;
+	public static final int ARMOR_COUNT = 235;
 
 	public static final long WEAPON = 0x0126af38l;
-	public static final int WEAPON_COUNT = 720;
 	public static final long WEAPON_SIZE = 112l;
+	public static final int WEAPON_COUNT = 720;
 	
 	public static final long NATION = 0x00c31b48l;
-	public static final int NATION_COUNT = 112;	
 	public static final long NATION_SIZE = 1752l;
+	public static final int NATION_COUNT = 112;	
 	
 }

@@ -22,155 +22,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class WeaponStatIndexer extends AbstractStatIndexer {
-	
-	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
-		putBytes2(sheet, skip, column, Starts.WEAPON, Starts.WEAPON_SIZE, Starts.WEAPON_COUNT);
-	}
-	
-	private static void putBytes2(XSSFSheet sheet, int skip, int column, Callback callback) throws IOException {
-		putBytes2(sheet, skip, column, Starts.WEAPON, Starts.WEAPON_SIZE, Starts.WEAPON_COUNT, callback);
-	}
-	
+	public static String[] weapons_columns = {"id", "name", "effect_record_id", "att", "def", "len", "nratt", "ammo", "secondaryeffect", "secondaryeffectalways", "rcost", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
+	public static String[] effects_weapons_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
+	public static String[] attributes_by_weapons_columns = {"weapon_number", "attribute", "raw_value", "end"};
+
 	public static void main(String[] args) {
 		run();
 	}
 	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Weapon> weaponList = new ArrayList<Weapon>();
 		try {
 	        long startIndex = Starts.WEAPON;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("BaseW_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("BaseW.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.WEAPON_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				XSSFCell cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(rowNumber);
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
-
-			// att
-			putBytes2(sheet, 48, 3);
-
-			// def
-			putBytes2(sheet, 50, 4);
-
-			// len		
-			putBytes2(sheet, 56, 5);
-
-			// nratt
-			putBytes2(sheet, 58, 6);
-
-			// ammo
-			putBytes2(sheet, 60, 7);
-			
-			// secondaryeffect
-			putBytes2(sheet, 72, 8, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) > 0) {
-						return value;
-					}
-					return "0";
-				}
-				
-			});
-			
-			// secondaryeffectalways
-			putBytes2(sheet, 72, 9, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) < 0) {
-						return Integer.toString(Math.abs(Integer.valueOf(value)));
-					}
-					return "0";
-				}
-				
-			});
-			
-			// rcost
-			putBytes2(sheet, 86, 10);
-			
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		// attributes_by_weapon
-		try {
-	        long startIndex = Starts.WEAPON;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("attributes_by_weapon_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("attributes_by_weapon.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
 	        int weaponNumber = 1;
-	        List<Attributes> attributes = new ArrayList<Attributes>();
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
@@ -185,88 +67,36 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				}
 				in.close();
 				
+				Weapon weapon = new Weapon();
+				weapon.parameters = new HashMap<String, Object>();
+				weapon.parameters.put("id", weaponNumber);
+				weapon.parameters.put("name", name.toString());
+				weapon.parameters.put("effect_record_id", weaponNumber);
+				weapon.parameters.put("att", getBytes2(startIndex + 48));
+				weapon.parameters.put("def", getBytes2(startIndex + 50));
+				weapon.parameters.put("len", getBytes2(startIndex + 56));
+				weapon.parameters.put("nratt", getBytes2(startIndex + 58));
+				weapon.parameters.put("ammo", getBytes2(startIndex + 60));
+				short bytes2 = getBytes2(startIndex + 72);
+				weapon.parameters.put("secondaryeffect", bytes2 > 0 ? bytes2 : 0);
+				weapon.parameters.put("secondaryeffectalways", bytes2 < 0 ? Math.abs(bytes2) : 0);
+				weapon.parameters.put("rcost", getBytes2(startIndex + 86));
+				
+		        List<Attribute> attributes = new ArrayList<Attribute>();
 				long newIndex = startIndex+88;
-				
 				int attrib = getBytes4(newIndex);
+				long valueIndex = newIndex + 12l;
+				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
-					attributes.add(new Attributes(attrib, weaponNumber));
-					newIndex+=4;					
+					attributes.add(new Attribute(weaponNumber, attrib, value));
+					newIndex+=4;
+					valueIndex+=4;
 					attrib = getBytes4(newIndex);
+					value = getBytes4(valueIndex);
 				}
-				weaponNumber++;
+				weapon.attributes = attributes;
 
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.WEAPON_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-				
-			}
-			
-			int rowNum = 1;
-			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.weapon_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.attribute);
-				rowNum++;
-			}
-
-			in.close();
-			stream.close();
-
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// effects_weapons
-		try {
-	        long startIndex = Starts.WEAPON;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = WeaponStatIndexer.readFile("effects_weapons_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("effects_weapons.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int weaponNumber = 1;
-	        List<Effect> effects = new ArrayList<Effect>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
-				long newIndex = startIndex+52;
-				
+				newIndex = startIndex+52;
 				short effect_number = getBytes2(newIndex);
 				if (effect_number != 0) {
 					Effect effect = new Effect();
@@ -278,50 +108,105 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 					effect.raw_argument = getBytes2(startIndex+40);
 					effect.range_base = getBytes2(startIndex+56);
 					effect.area_base = getBytes2(startIndex+82);
-					
-					effects.add(effect);
-
+					weapon.effect = effect;
 				}
-				weaponNumber++;
+				weaponList.add(weapon);
 
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + Starts.WEAPON_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
-				
-			}
-			
-			int rowNum = 1;
-			for (Effect eff : effects) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(eff.record_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(eff.effect_number);
-				XSSFCell cell3 = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell3.setCellValue(eff.object_type);
-				XSSFCell cell4 = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell4.setCellValue(eff.raw_argument);
-				XSSFCell cell5 = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell5.setCellValue(Long.toString(eff.modifiers_mask));
-				if (eff.range_base >= 0) {
-					cell5 = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell5.setCellValue(eff.range_base);
-				} else {
-					cell5 = row.getCell(9, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell5.setCellValue(Math.abs(eff.range_base));
-				}
-				cell5 = row.getCell(10, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell5.setCellValue(Math.abs(eff.area_base));
-				rowNum++;
-			}
 
+		        weaponNumber++;
+			}
 			in.close();
 			stream.close();
+			
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("weapons.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			XSSFWorkbook wb2 = new XSSFWorkbook();
+			FileOutputStream fos2 = new FileOutputStream("effects_weapons.xlsx");
+			XSSFSheet sheet2 = wb2.createSheet();
+			XSSFWorkbook wb3 = new XSSFWorkbook();
+			FileOutputStream fos3 = new FileOutputStream("attributes_by_weapon.xlsx");
+			XSSFSheet sheet3 = wb3.createSheet();
 
+			int rowNum = 0;
+			int effectsNum = 0;
+			int attributesNum = 0;
+			for (Weapon weapon : weaponList) {
+				// BaseW
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < weapons_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapons_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < weapons_columns.length; i++) {
+					Object object = weapon.parameters.get(weapons_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				
+				// effects_weapons
+				if (weapon.effect != null) {
+					if (effectsNum == 0) {
+						row = sheet2.createRow(effectsNum);
+						for (int i = 0; i < effects_weapons_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(effects_weapons_columns[i]);
+						}
+						effectsNum++;
+					}
+					row = sheet2.createRow(effectsNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapon.effect.record_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapon.effect.effect_number);
+					row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapon.effect.object_type);
+					row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapon.effect.raw_argument);
+					row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Long.toString(weapon.effect.modifiers_mask));
+					if (weapon.effect.range_base >= 0) {
+						row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(weapon.effect.range_base);
+					} else {
+						row.getCell(9, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Math.abs(weapon.effect.range_base));
+					}
+					row.getCell(10, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Math.abs(weapon.effect.area_base));
+					effectsNum++;
+				}
+				
+				// attributes_by_weapon
+				for (Attribute attribute : weapon.attributes) {
+					if (attributesNum == 0) {
+						row = sheet3.createRow(attributesNum);
+						for (int i = 0; i < attributes_by_weapons_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attributes_by_weapons_columns[i]);
+						}
+						attributesNum++;
+					}
+					row = sheet3.createRow(attributesNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.object_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.attribute);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
+					attributesNum++;
+				}
+
+				rowNum++;
+			}
+			
 			wb.write(fos);
 			fos.close();
+			wb.close();
+
+			wb2.write(fos2);
+			fos2.close();
+			wb2.close();
+
+			wb3.write(fos3);
+			fos3.close();
+			wb3.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -336,39 +221,12 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
-		
 	}	
 	
-	private static class Effect {
-		int record_number;
-		int effect_number;
-		int duration;
-		int ritual;
-		String object_type;
-		int raw_argument;
-		long modifiers_mask;
-		int range_base;
-		int range_per_level;
-		int range_strength_divisor;
-		int area_base;
-		int area_per_level;
-		int area_battlefield_pct;
-		int sound_number;
-		int flight_sprite_number;
-		int flight_sprite_length;
-		int explosion_sprite_number;
-		int explosion_sprite_length;
-
-	}
-	
-	private static class Attributes {
-		int attribute;
-		int weapon_number;
-		public Attributes(int attribute, int weapon_number) {
-			super();
-			this.attribute = attribute;
-			this.weapon_number = weapon_number;
-		}
+	private static class Weapon {
+		Map<String, Object> parameters;
+		Effect effect;
+		List<Attribute> attributes;
 	}
 	
 }

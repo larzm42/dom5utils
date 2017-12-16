@@ -451,4 +451,41 @@ public abstract class AbstractStatIndexer {
 		return boolArray;
 	}
 
+	protected static class Attribute {
+		int object_number;
+		int attribute;
+		long raw_value;
+		public Attribute(int object_number, int attribute, long raw_value) {
+			super();
+			this.object_number = object_number;
+			this.attribute = attribute;
+			this.raw_value = raw_value;
+		}
+	}
+	
+	protected static class Effect {
+		int record_number;
+		int effect_number;
+		int duration;
+		int ritual;
+		String object_type;
+		int raw_argument;
+		long modifiers_mask;
+		int range_base;
+		int range_per_level;
+		int range_strength_divisor;
+		int area_base;
+		int area_per_level;
+		int area_battlefield_pct;
+		int sound_number;
+		int flight_sprite_number;
+		int flight_sprite_length;
+		int explosion_sprite_number;
+		int explosion_sprite_length;
+
+	}
+	
+
 }
+
+

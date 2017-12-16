@@ -161,7 +161,7 @@ public class NationStatIndexer extends AbstractStatIndexer {
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
 	        int rowNumber = 1;
-	        List<Attributes> attributes = new ArrayList<Attributes>();
+	        List<Attribute> attributes = new ArrayList<Attribute>();
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
@@ -182,7 +182,7 @@ public class NationStatIndexer extends AbstractStatIndexer {
 				long valueIndex = newIndex + 388l;
 				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
-					attributes.add(new Attributes(rowNumber-1, attrib, value));
+					attributes.add(new Attribute(rowNumber-1, attrib, value));
 					newIndex+=4;
 					valueIndex+=8;
 					attrib = getBytes4(newIndex);
@@ -200,10 +200,10 @@ public class NationStatIndexer extends AbstractStatIndexer {
 			
 			Set<Integer> heroes = new TreeSet<Integer>();
 			int rowNum = 1;
-			for (Attributes attribute : attributes) {
+			for (Attribute attribute : attributes) {
 				XSSFRow row = sheet.createRow(rowNum);
 				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.nation_number);
+				cell1.setCellValue(attribute.object_number);
 				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				cell2.setCellValue(attribute.attribute);
 				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -425,20 +425,6 @@ public class NationStatIndexer extends AbstractStatIndexer {
 		}
 	}	
 	
-	private static class Attributes {
-		int nation_number;
-		int attribute;
-		long raw_value;
-
-		public Attributes(int nation_number, int attribute_number, long raw_value) {
-			super();
-			this.nation_number = nation_number;
-			this.attribute = attribute_number;
-			this.raw_value = raw_value;
-		}
-		
-	}
-
 	private static class Troops {
 		int nation_number;
 		int monster_number;

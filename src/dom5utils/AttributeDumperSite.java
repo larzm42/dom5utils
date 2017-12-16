@@ -116,13 +116,13 @@ public class AttributeDumperSite {
 			int i = 0;
 			long numFound = 0;
 			byte[] c = new byte[2];
-			stream.skip(42);
+			stream.skip(44);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(32l - numFound*2l);
+					stream.skip(34l - numFound*2l);
 					System.out.print("id:" + (i+1));
 					// Values
 					for (int x = 0; x < numFound; x++) {
@@ -139,7 +139,7 @@ public class AttributeDumperSite {
 					}
 
 					System.out.println("");
-					stream.skip(142l - 32l - numFound*4l);
+					stream.skip(214l - 34l - numFound*8l);
 					numFound = 0;
 					i++;
 					

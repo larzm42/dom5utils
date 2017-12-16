@@ -22,118 +22,38 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ArmorStatIndexer extends AbstractStatIndexer {
-	
+	public static String[] armors_columns = {"id", "name", "type", "def", "enc", "rcost", "end"};
+	public static String[] attributes_by_armor_columns = {"armor_number", "attribute", "raw_value", "end"};
+	public static String[] protections_by_armor_columns = {"zone_number", "protection", "armor_number", "end"};
+
 	public static void main(String[] args) {
 		run();
 	}
 	
-	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
-		putBytes2(sheet, skip, column, Starts.ARMOR, Starts.ARMOR_SIZE, Starts.ARMOR_COUNT);
-	}
-	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Armor> armorList = new ArrayList<Armor>();
+
 		try {
 	        long startIndex = Starts.ARMOR;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("BaseA_Template.xlsx");
-			FileOutputStream fos = new FileOutputStream("BaseA.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.ARMOR_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-			}
-			in.close();
-			stream.close();
-
-			// type
-			putBytes2(sheet, 66, 2);
-
-			// def
-			putBytes2(sheet, 62, 3);
-
-			// enc		
-			putBytes2(sheet, 64, 4);
-
-			// rcost
-			putBytes2(sheet, 68, 5);
-
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		// protections_by_armor
-		try {
-	        long startIndex = Starts.ARMOR;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("protections_by_armor_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("protections_by_armor.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
 	        int armorNumber = 1;
-	        List<Protections> protections = new ArrayList<Protections>();
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
 				while (ch != 0) {
@@ -147,131 +67,131 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 					break;
 				}
 				in.close();
+
+				Armor armor = new Armor();
+				armor.parameters = new HashMap<String, Object>();
+				armor.parameters.put("id", armorNumber);
+				armor.parameters.put("name", name.toString());
+				armor.parameters.put("def", getBytes2(startIndex + 62));
+				armor.parameters.put("enc", getBytes2(startIndex + 64));
+				armor.parameters.put("type", getBytes2(startIndex + 66));
+				armor.parameters.put("rcost", getBytes2(startIndex + 68));
 				
+		        List<Protection> protections = new ArrayList<Protection>();
 				long newIndex = startIndex+36;
-				
 				short zone = getBytes2(newIndex);
 				while (zone != 0) {
 					newIndex+=2;
 					short prot = getBytes2(newIndex);
-					protections.add(new Protections(zone, prot, armorNumber));
-
+					protections.add(new Protection(zone, prot, armorNumber));
 					newIndex+=2;					
 					zone = getBytes2(newIndex);
 				}
-				armorNumber++;
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.ARMOR_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
+				armor.protections = protections;
 				
-			}
-			
-			int rowNum = 1;
-			for (Protections prot : protections) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(prot.zone_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(prot.protection);
-				XSSFCell cell3 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell3.setCellValue(prot.armor_number);
-				rowNum++;
-			}
-
-			in.close();
-			stream.close();
-
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		// attributes_by_armor
-		try {
-	        long startIndex = Starts.ARMOR;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = ArmorStatIndexer.readFile("attributes_by_armor_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("attributes_by_armor.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int armorNumber = 1;
-	        List<Attributes> attributes = new ArrayList<Attributes>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
-				long newIndex = startIndex+72;
-				
+		        List<Attribute> attributes = new ArrayList<Attribute>();
+				newIndex = startIndex+72;
 				int attrib = getBytes4(newIndex);
 				long valueIndex = newIndex + 16l;
 				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
-					attributes.add(new Attributes(attrib, armorNumber, value));
+					attributes.add(new Attribute(armorNumber, attrib, value));
 					newIndex+=4;
 					valueIndex+=4;
 					attrib = getBytes4(newIndex);
 					value = getBytes4(valueIndex);
 				}
-				armorNumber++;
+				armor.attributes = attributes;
+				
+				armorList.add(armor);
 
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + Starts.ARMOR_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
-				
-			}
-			
-			int rowNum = 1;
-			for (Attributes attribute : attributes) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.armor_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.attribute);
-				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.raw_value);
-				rowNum++;
-			}
 
+		        armorNumber++;
+			}
 			in.close();
 			stream.close();
+			
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("armors.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			XSSFWorkbook wb2 = new XSSFWorkbook();
+			FileOutputStream fos2 = new FileOutputStream("protections_by_armor.xlsx");
+			XSSFSheet sheet2 = wb2.createSheet();
+			XSSFWorkbook wb3 = new XSSFWorkbook();
+			FileOutputStream fos3 = new FileOutputStream("attributes_by_armor.xlsx");
+			XSSFSheet sheet3 = wb3.createSheet();
 
+			int rowNum = 0;
+			int protectionsNum = 0;
+			int attributesNum = 0;
+			for (Armor armor : armorList) {
+				// BaseA
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < armors_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(armors_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < armors_columns.length; i++) {
+					Object object = armor.parameters.get(armors_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				
+				// protections_by_armor
+				for (Protection prot : armor.protections) {
+					if (protectionsNum == 0) {
+						row = sheet2.createRow(protectionsNum);
+						for (int i = 0; i < protections_by_armor_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(protections_by_armor_columns[i]);
+						}
+						protectionsNum++;
+					}
+					row = sheet2.createRow(protectionsNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(prot.zone_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(prot.protection);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(prot.armor_number);
+					protectionsNum++;
+				}
+				
+				// attributes_by_armor
+				for (Attribute attribute : armor.attributes) {
+					if (attributesNum == 0) {
+						row = sheet3.createRow(attributesNum);
+						for (int i = 0; i < attributes_by_armor_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attributes_by_armor_columns[i]);
+						}
+						attributesNum++;
+					}
+					row = sheet3.createRow(attributesNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.object_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.attribute);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
+					attributesNum++;
+				}
+
+				rowNum++;
+			}
+			
 			wb.write(fos);
 			fos.close();
+			wb.close();
 
+			wb2.write(fos2);
+			fos2.close();
+			wb2.close();
+
+			wb3.write(fos3);
+			fos3.close();
+			wb3.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -285,14 +205,14 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
-
+				
 	}	
 	
-	private static class Protections {
+	private static class Protection {
 		short zone_number;
 		short protection;
 		int armor_number;
-		public Protections(short zone_number, short protection, int armor_number) {
+		public Protection(short zone_number, short protection, int armor_number) {
 			super();
 			this.zone_number = zone_number;
 			this.protection = protection;
@@ -300,16 +220,9 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 		}
 	}
 	
-	private static class Attributes {
-		int attribute;
-		int armor_number;
-		long raw_value;
-		public Attributes(int attribute, int armor_number, long raw_value) {
-			super();
-			this.attribute = attribute;
-			this.armor_number = armor_number;
-			this.raw_value = raw_value;
-		}
+	private static class Armor {
+		Map<String, Object> parameters;
+		List<Protection> protections;
+		List<Attribute> attributes;
 	}
-	
 }

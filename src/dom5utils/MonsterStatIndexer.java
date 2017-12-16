@@ -208,7 +208,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 	}
 	
 	private static void putAttribute(XSSFSheet sheet, String attr, int column, Callback callback, boolean append) throws IOException {
-		putAttribute(sheet, attr, 64, 46l, column, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, append, callback);
+		putAttribute(sheet, attr, Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP, column, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, append, callback);
 	}
 	
 	public static void main(String[] args) {

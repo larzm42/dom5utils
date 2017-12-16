@@ -148,13 +148,13 @@ public class AttributeDumperItem {
 			int i = 0;
 			long numFound = 0;
 			byte[] c = new byte[2];
-			stream.skip(120);
+			stream.skip(Starts.ITEM_ATTRIBUTE_OFFSET);
 			while ((stream.read(c, 0, 2)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
 				int weapon = Integer.decode("0X" + high + low);
 				if (weapon == 0) {
-					stream.skip(18l - numFound*2l);
+					stream.skip(Starts.ITEM_ATTRIBUTE_GAP - numFound*2l);
 					System.out.print("id:" + (i+1));
 					// Values
 					for (int x = 0; x < numFound; x++) {
@@ -171,7 +171,7 @@ public class AttributeDumperItem {
 					}
 
 					System.out.println("");
-					stream.skip(206l - 18l - numFound*4l);
+					stream.skip(Starts.ITEM_SIZE - 2 - Starts.ITEM_ATTRIBUTE_GAP - numFound*4l);
 					numFound = 0;
 					i++;
 					
