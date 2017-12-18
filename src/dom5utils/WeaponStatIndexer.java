@@ -74,7 +74,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				weapon.parameters.put("effect_record_id", weaponNumber);
 				weapon.parameters.put("att", getBytes2(startIndex + 48));
 				weapon.parameters.put("def", getBytes2(startIndex + 50));
-				weapon.parameters.put("len", getBytes2(startIndex + 56));
+				weapon.parameters.put("len", getBytes2(startIndex + 54));
 				weapon.parameters.put("nratt", getBytes2(startIndex + 58));
 				weapon.parameters.put("ammo", getBytes2(startIndex + 60));
 				short bytes2 = getBytes2(startIndex + 72);

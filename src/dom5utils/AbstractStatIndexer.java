@@ -125,6 +125,23 @@ public abstract class AbstractStatIndexer {
 		return value;
 	}
 	
+	protected static String getString(long skip) throws IOException {
+		FileInputStream stream = new FileInputStream(EXE_NAME);			
+		InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
+        Reader in = new BufferedReader(isr);
+        int ch;
+		StringBuffer name = new StringBuffer();
+		stream.skip(skip);
+		ch = in.read();
+		while (ch != 0) {
+			name.append((char)ch);
+			ch = in.read();
+		}
+		in.close();
+		stream.close();
+		return name.toString();
+	}
+	
 	protected static void putString(XSSFSheet sheet, long skip, int column, long start, long size) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);			
 		InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");

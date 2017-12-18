@@ -25,17 +25,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class NationStatIndexer extends AbstractStatIndexer {
-	
+	public static String[] nations_columns = {"id", "name", "epithet", "abbreviation", "file_name_base", "era", "end"};
+	public static String[] attributes_by_nation_columns = {"nation_number", "attribute", "raw_value", "end"};
+	public static String[] troops_by_nation_columns = {"monster_number", "nation_number", "end"};
+
 	enum unitType {
 		PRETENDER(2, "pretender_types_by_nation"),
 		UNPRETENDER(1, "unpretender_types_by_nation"),
@@ -49,6 +49,10 @@ public class NationStatIndexer extends AbstractStatIndexer {
 		
 		private int id;
 		private String filename;
+		private int rowNum = 0;
+		XSSFWorkbook wb;
+		FileOutputStream fos;
+		XSSFSheet sheet;
 		
 		unitType(int i, String filename) {
 			id = i;
@@ -64,6 +68,8 @@ public class NationStatIndexer extends AbstractStatIndexer {
 	    }
 		public int getId() { return id;}
 		public String getFilename() { return filename;}
+		public int getRowNum() { return rowNum; }
+		public void incrementRowNum() { rowNum++; }
 	}
 	
 	public static void main(String[] args) {
@@ -72,17 +78,13 @@ public class NationStatIndexer extends AbstractStatIndexer {
 	
 	public static void run() {
 		FileInputStream stream = null;
-		try {
+        List<Nation> nationList = new ArrayList<Nation>();
+
+        try {
 	        long startIndex = Starts.NATION;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = NationStatIndexer.readFile("BaseN_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("BaseN.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
 
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
@@ -102,80 +104,22 @@ public class NationStatIndexer extends AbstractStatIndexer {
 				}
 				in.close();
 
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.NATION_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber-1);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
-
-			// epithet
-			putString(sheet, 36l, 2, Starts.NATION, Starts.NATION_SIZE);
-			
-			// abbreviation
-			putString(sheet, 72l, 3, Starts.NATION, Starts.NATION_SIZE);
-
-			// file_name_base
-			putString(sheet, 77l, 4, Starts.NATION, Starts.NATION_SIZE);
-			
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				Nation nation = new Nation();
+				nation.parameters = new HashMap<String, Object>();
+				nation.parameters.put("id", rowNumber);
+				nation.parameters.put("epithet", getString(startIndex + 36l));
+				nation.parameters.put("abbreviation", getString(startIndex + 72l));
+				String fileNameBase = getString(startIndex + 77l);
+				nation.parameters.put("file_name_base", fileNameBase);
+				if (fileNameBase.startsWith("early_")) {
+					nation.parameters.put("era", "1");
+				} else if (fileNameBase.startsWith("mid_")) {
+					nation.parameters.put("era", "2");
+				} else if (fileNameBase.startsWith("late_")) {
+					nation.parameters.put("era", "3");
 				}
-			}
-		}
 				
-		// attributes_by_nation
-		try {
-	        long startIndex = Starts.NATION;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = NationStatIndexer.readFile("attributes_by_nation_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("attributes_by_nation.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-	        List<Attribute> attributes = new ArrayList<Attribute>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
+		        List<Attribute> attributes = new ArrayList<Attribute>();
 				long newIndex = startIndex+172l;
 				
 				int attrib = getBytes4(newIndex);
@@ -188,92 +132,16 @@ public class NationStatIndexer extends AbstractStatIndexer {
 					attrib = getBytes4(newIndex);
 					value = getBytes4(valueIndex);
 				}
-				rowNumber++;
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.NATION_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
+				nation.attributes = attributes;
 				
-			}
-			
-			Set<Integer> heroes = new TreeSet<Integer>();
-			int rowNum = 1;
-			for (Attribute attribute : attributes) {
-				XSSFRow row = sheet.createRow(rowNum);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(attribute.object_number);
-				XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.attribute);
-				cell2 = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell2.setCellValue(attribute.raw_value);
-				if (attribute.attribute >= 139 && attribute.attribute <= 150) {
-					heroes.add((int)attribute.raw_value);
-				}
-				rowNum++;
-			}
-			
-			for (Integer hero : heroes) {
-				System.out.println(hero);
-			}
-
-			in.close();
-			stream.close();
-
-			wb.write(fos);
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		// *_types_by_nation
-		try {
-	        long startIndex = Starts.NATION;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-	        
-	        Map<unitType, List<Troops>> unitMap = new HashMap<unitType, List<Troops>>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
-				long newIndex = startIndex+1328l;
-				
+		        Map<unitType, List<Troops>> unitMap = new HashMap<unitType, List<Troops>>();
+				newIndex = startIndex+1328l;
 				unitType type = unitType.TROOP;
 				if (unitMap.get(type) == null) {
 					unitMap.put(type, new ArrayList<Troops>());
 				}
 				
-				int attrib = getBytes4(newIndex);
+				attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					if (attrib < 0) {
 						if (attrib != -1) {
@@ -288,82 +156,9 @@ public class NationStatIndexer extends AbstractStatIndexer {
 					newIndex+=4;
 					attrib = getBytes4(newIndex);
 				}
-				rowNumber++;
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.NATION_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
 				
-			}
-			
-			for (Map.Entry<unitType, List<Troops>> entry : unitMap.entrySet()) {
-				if (entry.getKey() == unitType.UNKNOWN) { continue; }
-				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename() + "_Template.xlsx");
-				FileOutputStream fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
-				XSSFSheet sheet = wb.getSheetAt(0);
-				int rowNum = 1;
-				for (Troops troop : entry.getValue()) {
-					XSSFRow row = sheet.createRow(rowNum);
-					XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell1.setCellValue(troop.monster_number);
-					XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell2.setCellValue(troop.nation_number);
-					rowNum++;
-				}
-				wb.write(fos);
-				fos.close();
-			}
-
-			in.close();
-			stream.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// un/pretender_types_by_nation
-		try {
-	        long startIndex = Starts.NATION;
-	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			// name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-	        
-	        Map<unitType, List<Troops>> unitMap = new HashMap<unitType, List<Troops>>();
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-				
-				long newIndex = startIndex+1496l;
-				
-				int attrib = getBytes4(newIndex);
+				newIndex = startIndex+1496l;
+				attrib = getBytes4(newIndex);
 				while (attrib != 0) {
 					if (attrib < 0) {
 						if (unitMap.get(unitType.UNPRETENDER) == null) {
@@ -379,37 +174,106 @@ public class NationStatIndexer extends AbstractStatIndexer {
 					newIndex+=4;
 					attrib = getBytes4(newIndex);
 				}
-				rowNumber++;
+
+				nation.unitMap = unitMap;
+				
+				nationList.add(nation);
 
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + Starts.NATION_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
-				
+		        
+				rowNumber++;
 			}
-			
-			for (Map.Entry<unitType, List<Troops>> entry : unitMap.entrySet()) {
-				if (entry.getKey() == unitType.UNKNOWN) { continue; }
-				XSSFWorkbook wb = NationStatIndexer.readFile(entry.getKey().getFilename() + "_Template.xlsx");
-				FileOutputStream fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
-				XSSFSheet sheet = wb.getSheetAt(0);
-				int rowNum = 1;
-				for (Troops troop : entry.getValue()) {
-					XSSFRow row = sheet.createRow(rowNum);
-					XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell1.setCellValue(troop.monster_number);
-					XSSFCell cell2 = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell2.setCellValue(troop.nation_number);
-					rowNum++;
-				}
-				wb.write(fos);
-				fos.close();
-			}
-
 			in.close();
 			stream.close();
+			
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("nations.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			XSSFWorkbook wb2 = new XSSFWorkbook();
+			FileOutputStream fos2 = new FileOutputStream("attributes_by_nation.xlsx");
+			XSSFSheet sheet2 = wb2.createSheet();
+			
+			int rowNum = 0;
+			int attributesNum = 0;
+			for (Nation nation : nationList) {
+				// nations
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < nations_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(nations_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < nations_columns.length; i++) {
+					Object object = nation.parameters.get(nations_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				
+				// attributes_by_nation
+				for (Attribute attribute : nation.attributes) {
+					if (attributesNum == 0) {
+						row = sheet2.createRow(attributesNum);
+						for (int i = 0; i < attributes_by_nation_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attributes_by_nation_columns[i]);
+						}
+						attributesNum++;
+					}
+					row = sheet2.createRow(attributesNum);
+					row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.object_number);
+					row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.attribute);
+					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
+					attributesNum++;
+				}
+				
+				for (Map.Entry<unitType, List<Troops>> entry : nation.unitMap.entrySet()) {
+					if (entry.getKey() == unitType.UNKNOWN) { continue; }
+					if (entry.getKey().getRowNum() == 0) {
+						entry.getKey().wb = new XSSFWorkbook();
+						entry.getKey().fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
+						entry.getKey().sheet = entry.getKey().wb.createSheet();
+						row = entry.getKey().sheet.createRow(0);
+						for (int i = 0; i < troops_by_nation_columns.length; i++) {
+							row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(troops_by_nation_columns[i]);
+						}
+						entry.getKey().incrementRowNum();
+					}
+					for (Troops troop : entry.getValue()) {
+						row = entry.getKey().sheet.createRow(entry.getKey().getRowNum());
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(troop.monster_number);
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(troop.nation_number);
+						entry.getKey().incrementRowNum();
+					}
+				}
+				
+				rowNum++;
+			}
+			wb.write(fos);
+			fos.close();
+			wb.close();
 
+			wb2.write(fos2);
+			fos2.close();
+			wb2.close();
+			
+			for (Nation nation : nationList) {
+				for (Map.Entry<unitType, List<Troops>> entry : nation.unitMap.entrySet()) {
+					if (entry.getKey().rowNum != -1) {
+						entry.getKey().wb.write(entry.getKey().fos);
+						entry.getKey().fos.close();
+						entry.getKey().wb.close();
+						entry.getKey().rowNum = -1;
+					}
+				}
+			}
+
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -423,6 +287,7 @@ public class NationStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
+				
 	}	
 	
 	private static class Troops {
@@ -436,4 +301,11 @@ public class NationStatIndexer extends AbstractStatIndexer {
 		}
 		
 	}
+	
+	private static class Nation {
+		Map<String, Object> parameters;
+		List<Attribute> attributes;
+		Map<unitType, List<Troops>> unitMap;
+	}
+
 }
