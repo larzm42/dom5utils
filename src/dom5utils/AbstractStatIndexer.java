@@ -142,57 +142,6 @@ public abstract class AbstractStatIndexer {
 		return name.toString();
 	}
 	
-	protected static void putString(XSSFSheet sheet, long skip, int column, long start, long size) throws IOException {
-		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-        Reader in = new BufferedReader(isr);
-        int rowNumber = 1;
-        int ch;
-		stream.skip(start);
-		while ((ch = in.read()) > -1) {
-			StringBuffer name = new StringBuffer();
-			while (ch != 0) {
-				name.append((char)ch);
-				ch = in.read();
-			}
-			if (name.length() == 0) {
-				continue;
-			}
-			if (name.toString().equals("end")) {
-				break;
-			}
-			System.out.println(name);
-			in.skip(skip - name.length()-1);
-
-			StringBuffer value = new StringBuffer();
-			ch = in.read();
-			while (ch != 0) {
-//				if (ch == 0xc3) {
-//					ch = in.read();
-//					ch += 0x40;
-//				}
-				value.append((char)ch);
-				ch = in.read();
-			}
-			in.close();
-			stream.close();
-
-			System.out.println(value);
-			stream = new FileInputStream(EXE_NAME);		
-			start = start + size;
-			stream.skip(start);
-			isr = new InputStreamReader(stream, "ISO-8859-1");
-	        in = new BufferedReader(isr);
-
-			XSSFRow row = sheet.getRow(rowNumber);
-			XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-			cell.setCellValue(value.toString());
-			rowNumber++;
-		}
-		in.close();
-		stream.close();
-	}
-	
 	protected static void putBytes1(XSSFSheet sheet, int skip, int column, long start, long size, int count) throws IOException {
 		putBytes1(sheet, skip, column, start, size, count, null);
 	}

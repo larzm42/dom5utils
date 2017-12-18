@@ -21,18 +21,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MercenaryStatIndexer extends AbstractStatIndexer {
-	
-	private static void putBytes2(XSSFSheet sheet, int skip, int column) throws IOException {
-		putBytes2(sheet, skip, column, Starts.MERCENARY, Starts.MERCENARY_SIZE, Starts.MERCENARY_COUNT);
-	}
+	public static String[] mercenary_columns = {"id", "name", "bossname", "com", "unit", "nrunits", "level", "minmen", "minpay", "xp", "randequip", "recrate", "item1", "item2", "eramask", "end"};
 	
 	public static void main(String[] args) {
 		run();
@@ -40,18 +40,14 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Mercenary> mercenaryList = new ArrayList<Mercenary>();
+
 		try {
 	        long startIndex = Starts.MERCENARY;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
 			
-			XSSFWorkbook wb = MercenaryStatIndexer.readFile("Mercenary_Template.xlsx");
-			
-			FileOutputStream fos = new FileOutputStream("Mercenary.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
 			// name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
@@ -69,112 +65,64 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 					break;
 				}
 				in.close();
-
+				
+				Mercenary merc = new Mercenary();
+				merc.parameters = new HashMap<String, Object>();
+				merc.parameters.put("id", rowNumber);
+				merc.parameters.put("name", name.toString());
+				merc.parameters.put("bossname", getString(startIndex + 36l));
+				merc.parameters.put("com", getBytes2(startIndex + 74));
+				merc.parameters.put("unit", getBytes2(startIndex + 78));
+				merc.parameters.put("nrunits", getBytes2(startIndex + 82));
+				merc.parameters.put("minmen", getBytes2(startIndex + 86));
+				merc.parameters.put("minpay", getBytes2(startIndex + 90));
+				merc.parameters.put("xp", getBytes2(startIndex + 94));
+				merc.parameters.put("randequip", getBytes2(startIndex + 158));
+				merc.parameters.put("recrate", getBytes2(startIndex + 306));
+				merc.parameters.put("item1", getString(startIndex + 162l));
+				merc.parameters.put("item2", getString(startIndex + 198l));
+				merc.parameters.put("eramask", getBytes1(startIndex-2));
+				merc.parameters.put("level", getBytes1(startIndex-1));
+				
+				mercenaryList.add(merc);
+				
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + 312l;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
 				rowNumber++;
 			}
 			in.close();
 			stream.close();
-
-			// bossname
-			putString(sheet, 36, 2, Starts.MERCENARY, Starts.MERCENARY_SIZE);
-
-			// com
-			putBytes2(sheet, 74, 3);
-
-			// unit
-			putBytes2(sheet, 78, 4);
-
-			// nrunits
-			putBytes2(sheet, 82, 5);
-
-			// minmen
-			putBytes2(sheet, 86, 7);
-
-			// minpay
-			putBytes2(sheet, 90, 8);
-
-			// xp
-			putBytes2(sheet, 94, 9);
-
-			// randequip
-			putBytes2(sheet, 158, 10);
-
-			// recrate
-			putBytes2(sheet, 306, 11);
-
-			// item1
-			putString(sheet, 162, 12, Starts.MERCENARY, Starts.MERCENARY_SIZE);
-
-			// item2
-			putString(sheet, 198, 13, Starts.MERCENARY, Starts.MERCENARY_SIZE);
 			
-			// eramask
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.MERCENARY-2);
-			rowNumber = 1;
-			int i = 0;
-			byte[] c = new byte[1];
-			while ((stream.read(c, 0, 1)) != -1) {
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(14, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X00" + low);
-				if (weapon == 0) {
-					//System.out.println("");
-					cell.setCellValue("");
-				} else {
-					//System.out.println(Integer.decode("0X00" + low));
-					cell.setCellValue(Integer.decode("0X00" + low));
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("Mercenary.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			
+			int rowNum = 0;
+			for (Mercenary merc : mercenaryList) {
+				// Mercenary
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < mercenary_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(mercenary_columns[i]);
+					}
+					rowNum++;
 				}
-				stream.skip(311l);
-				i++;
-				if (i >= Starts.MERCENARY_COUNT) {
-					break;
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < mercenary_columns.length; i++) {
+					Object object = merc.parameters.get(mercenary_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
 				}
+				rowNum++;
 			}
-			stream.close();
-
-			// level
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.MERCENARY-1);
-			rowNumber = 1;
-			i = 0;
-			c = new byte[1];
-			while ((stream.read(c, 0, 1)) != -1) {
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X00" + low);
-				if (weapon == 0) {
-					//System.out.println("0");
-					cell.setCellValue(0);
-				} else {
-					//System.out.println(Integer.decode("0X" + low));
-					cell.setCellValue(Integer.decode("0X00" + low));
-				}
-				stream.skip(311l);
-				i++;
-				if (i >= Starts.MERCENARY_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
 			wb.write(fos);
 			fos.close();
+			wb.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -191,4 +139,8 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 		}
 	}
 	
+	private static class Mercenary {
+		Map<String, Object> parameters;
+	}
+
 }
