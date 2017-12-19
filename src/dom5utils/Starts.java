@@ -36,6 +36,8 @@ public class Starts {
 	
 	public static final long SITE = 0x01140850l;
 	public static final long SITE_SIZE = 216l;
+	public static final long SITE_ATTRIBUTE_OFFSET = 44;
+	public static final long SITE_ATTRIBUTE_GAP = 34l;
 	public static final int SITE_COUNT = 1157;
 	
 	public static final long NAMES = 0x00d02da4l;

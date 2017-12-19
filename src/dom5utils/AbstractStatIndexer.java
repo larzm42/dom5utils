@@ -144,48 +144,6 @@ public abstract class AbstractStatIndexer {
 		return name.toString();
 	}
 	
-	protected static void putBytes1(XSSFSheet sheet, int skip, int column, long start, long size, int count) throws IOException {
-		putBytes1(sheet, skip, column, start, size, count, null);
-	}
-	
-	protected static void putBytes1(XSSFSheet sheet, int skip, int column, long start, long size, int count, Callback callback) throws IOException {
-		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		stream.skip(start);
-		int rowNumber = 1;
-		int i = 0;
-		byte[] c = new byte[1];
-		stream.skip(skip);
-		while ((stream.read(c, 0, 1)) != -1) {
-			XSSFRow row = sheet.getRow(rowNumber);
-			rowNumber++;
-			XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-
-			String low = String.format("%02X", c[0]);
-			short value = new BigInteger(low, 16).shortValue();
-			if (value > 100) {
-				value = new BigInteger("FF" + low, 16).shortValue();
-			}
-
-			if (callback != null) {
-				cell.setCellValue(callback.found(Short.toString(value)));
-			} else {
-				cell.setCellValue(value);
-			}
-
-			stream.skip(size-1);
-			i++;
-			if (i >= count) {
-				break;
-			}
-		}
-		stream.close();
-	}
-	
-
-	protected static void putBytes2(XSSFSheet sheet, int skip, int column, long start, long size, int count) throws IOException {
-		putBytes2(sheet, skip, column, start, size, count, null);
-	}
-	
 	protected static void putBytes2(XSSFSheet sheet, int skip, int column, long start, long size, int count, Callback callback) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);			
 		stream.skip(start);
@@ -220,6 +178,9 @@ public abstract class AbstractStatIndexer {
 	}
 	
 	protected static List<AttributeValue> getAttributes(long skip, long attrGap) throws IOException {
+		return getAttributes(skip, attrGap, 4l);
+	}
+	protected static List<AttributeValue> getAttributes(long skip, long attrGap, long attrValueLength) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);	
 		List<AttributeValue> attrList = new ArrayList<AttributeValue>();
 		stream.skip(skip);
@@ -241,6 +202,7 @@ public abstract class AbstractStatIndexer {
 					high = String.format("%02X", d[1]);
 					low = String.format("%02X", d[0]);
 					attrVal.values.add(Integer.toString(new BigInteger(high1 + low1 + high + low, 16).intValue()));
+					stream.skip(attrValueLength-4);
 				}
 				break;
 			}				
@@ -316,10 +278,6 @@ public abstract class AbstractStatIndexer {
 		stream.close();
 	}
 
-	protected static void putAttribute(XSSFSheet sheet, String attr, long attrStart, long attrGap, int column, long start, long size, int count, Callback callback) throws IOException {
-		putAttribute(sheet, attr, attrStart, attrGap, column, start, size, count, false, callback);
-	}
-	
 	protected static void putAttribute(XSSFSheet sheet, String attr, long attrStart, long attrGap, int column, long start, long size, int count, boolean append, Callback callback) throws IOException {
         FileInputStream stream = new FileInputStream(EXE_NAME);			
 		stream.skip(start);

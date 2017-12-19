@@ -21,182 +21,105 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class SiteStatIndexer extends AbstractStatIndexer {
-	
-	public static void doit(XSSFSheet sheet, String attr, int column) throws IOException {
-		doit(sheet, attr, column, null);
-	}
-	
-	public static void doit2(XSSFSheet sheet, String attr, int column, int column2) throws IOException {
-		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		stream.skip(Starts.SITE);
-		int rowNumber = 1;
-		int i = 0;
-		int k = 0;
-		int numFound = 0;
-		Set<Integer> posSet = new HashSet<Integer>();
-		byte[] c = new byte[2];
-		stream.skip(44);
-		while ((stream.read(c, 0, 2)) != -1) {
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			int weapon = Integer.decode("0X" + high + low);
-			if (weapon == 0) {
-				stream.skip(34l - numFound*2l);
-				// Values
-				boolean found = false;
-				List<Integer> values = new ArrayList<Integer>();
-				for (int x = 0; x < numFound; x++) {
-					stream.read(c, 0, 2);
-					high = String.format("%02X", c[1]);
-					low = String.format("%02X", c[0]);
-					if (posSet.contains(x)) {
-						int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-						if (!found) {
-							found = true;
-						} else {
-							//System.out.print("\t");
-						}
-						//System.out.print(fire);
-						values.add(fire);
-					}
-					stream.skip(6);
-				}
-				
-				//System.out.println("");
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				int ind = 0;
-				for (Integer mon : values) {
-					if (ind == 0) {
-						XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-					} else {
-						XSSFCell cell = row.getCell(column2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-					}
-					ind++;
-				}
-				stream.skip(214l - 34l - numFound*8l);
-				numFound = 0;
-				posSet.clear();
-				k = 0;
-				i++;
-			} else {
-				//System.out.print(low + high + " ");
-				if ((low + high).equals(attr)) {
-					posSet.add(k);
-				}
-				k++;
-				numFound++;
-			}				
-			if (i >= Starts.SITE_COUNT) {
-				break;
-			}
-		}
-		stream.close();
+	public static String[] site_columns = {"id", "name", "rarity", "loc", "level", "path", "F", "A", "W", "E", "S", "D", "N", "B", "gold", "res", 
+			"sup", "unr", "exp", "lab", "fort", "scale1", "scale2", "domspread", "turmoil", "sloth", "cold", "death", "misfortune", "drain", 
+			"fireres", "coldres", "shockres", "poisonres", "str", "prec", "mor", "undying", "att", "darkvision", "aawe", "rit", "ritrng", 
+			"hmon1", "hmon2", "hmon3", "hmon4", "hmon5", "voidgate", "sum1", "n_sum1", "sum2", "n_sum2", "sum3", "n_sum3", "conj", "alter", "evo", 
+			"const", "ench", "thau", "blood", "heal", "disease", "curse", "horror", "holyfire", "holypow", "scry", "adventure", "other", "sum4", "n_sum4", 
+			"hcom1", "hcom2", "hcom3", "hcom4", "hcom5", "mon1", "mon2", "mon3", "mon4", "mon5", "com1", "com2", "com3", "com4", "com5", "reveal", 
+			"provdef1", "provdef2", "def", "F2", "A2", "W2", "E2", "S2", "D2", "N2", "B2", "awe", "reinvigoration", "airshield", "provdefcom", 
+			"domconflict", "sprite", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
 
-	}
-	
-	public static void doit(XSSFSheet sheet, String attr, int column, Callback callback) throws IOException {
-		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		stream.skip(Starts.SITE);
-		int rowNumber = 1;
-		
-		int i = 0;
-		int k = 0;
-		int pos = -1;
-		long numFound = 0;
-		byte[] c = new byte[2];
-		stream.skip(44);
-		while ((stream.read(c, 0, 2)) != -1) {
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			int weapon = Integer.decode("0X" + high + low);
-			if (weapon == 0) {
-				boolean found = false;
-				int value = 0;
-				stream.skip(34l - numFound*2l);
-				// Values
-				for (int x = 0; x < numFound; x++) {
-					stream.read(c, 0, 2);
-					high = String.format("%02X", c[1]);
-					low = String.format("%02X", c[0]);
-					if (x == pos) {
-						int tmp = new BigInteger(high + low, 16).intValue();
-						if (tmp < 1000) {
-							value = Integer.decode("0X" + high + low);
-						} else {
-							value = new BigInteger("FFFF" + high + low, 16).intValue();
-						}
-						found = true;
-					}
-					stream.skip(6);
-				}
-				
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				if (found) {
-					if (callback == null) {
-						cell.setCellValue(value);
-					} else {
-						cell.setCellValue(callback.found(Integer.toString(value)));
-					}
-				} else {
-					if (callback == null) {
-						cell.setCellValue("");
-					} else {
-						cell.setCellValue(callback.notFound());
-					}
-				}
-				stream.skip(214l - 34l - numFound*8l);
-				numFound = 0;
-				pos = -1;
-				k = 0;
-				i++;
-			} else {
-				if ((low + high).equals(attr)) {
-					pos = k;
-				}
-				k++;
-				numFound++;
-			}				
-			if (i >= Starts.SITE_COUNT) {
-				break;
-			}
-		}
-		stream.close();
-	}
-	
+	private static String[][] KNOWN_SITE_ATTRS = {
+			{"0100", "F"},
+			{"0200", "A"},
+			{"0300", "W"},
+			{"0400", "E"},
+			{"0500", "S"},
+			{"0600", "D"},
+			{"0700", "N"},
+			{"0800", "B"},
+			{"0D00", "gold"},
+			{"0E00", "res"},
+			{"1400", "sup"},
+			{"1300", "unr"},
+			{"1600", "exp"},
+			{"0F00", "lab"},
+			{"1100", "fort"},
+			{"1E00", "hcom#"},
+			{"1D00", "hmon#"},
+			{"0C00", "com#"},
+			{"0B00", "mon#"},
+			{"3C00", "conj"},
+			{"3D00", "alter"},
+			{"3E00", "evo"},
+			{"3F00", "const"},
+			{"4000", "ench"},
+			{"4100", "thau"},
+			{"4200", "blood"},
+			{"4600", "heal"},
+			{"1500", "disease"},
+			{"4700", "curse"},
+			{"1800", "horror"},
+			{"4400", "holyfire"},
+			{"4300", "holypow"},
+			{"4800", "scry"},
+			{"C000", "adventure"},
+			{"3900", "voidgate"},
+			{"1200", "summoning"},
+			{"1501", "domspread"},
+			{"1901", "turmoil"},
+			{"1A01", "sloth"},
+			{"1B01", "cold"},
+			{"1C01", "death"},
+			{"1D01", "misfortune"},
+			{"1E01", "drain"},
+			{"FB01", "fireres"},
+			{"FC01", "coldres"},
+			{"FA01", "str"},
+			{"0402", "prec"},
+			{"F401", "mor"},
+			{"FD01", "shockres"},
+			{"F801", "undying"},
+			{"F501", "att"},
+			{"FE01", "poisonres"},
+			{"0302", "darkvision"},
+			{"0102", "aawe"},
+			{"1401", "throne?"},
+			{"0A01", "fortparts"},
+			{"0601", "reveal"},
+			{"E000", "provdef#"},
+			{"F601", "def"},
+			{"0202", "awe"},
+			{"FF01", "reinvigoration"},
+			{"0002", "airshield"},
+			{"4A00", "provdefcom"},
+	};
+
 	public static void main(String[] args) {
 		run();
 	}
 	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Site> siteList = new ArrayList<Site>();
+
 		try {
 	        long startIndex = Starts.SITE;
 	        int ch;
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
-			
-			XSSFWorkbook wb = SiteStatIndexer.readFile("MagicSites_Template.xlsx");
-			FileOutputStream fos = new FileOutputStream("MagicSites.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
 			
 			// Name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
@@ -216,871 +139,225 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				}
 				in.close();
 
+				Site site = new Site();
+				site.parameters = new HashMap<String, Object>();
+				site.parameters.put("id", rowNumber);
+				site.parameters.put("name", name.toString());
+				short rarity = getBytes1(startIndex + 42);
+				site.parameters.put("rarity", rarity == -1 ? "0" : rarity);
+				site.parameters.put("loc", getBytes4(startIndex + 208));
+				site.parameters.put("level", getBytes2(startIndex + 40));
+				String[] paths = {"Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Blood", "Holy"};
+				int[] spriteOffset = {1, 9, 18, 26, 35, 42, 50, 59, 68};
+				short path = getBytes1(startIndex + 38);
+				short sprite = getBytes1(startIndex + 36);
+				site.parameters.put("path", path == -1 ? "" : paths[path]);
+				site.parameters.put("sprite", path == -1 ? "" : spriteOffset[path] + sprite);
+				
+				List<AttributeValue> attributes = getAttributes(startIndex + Starts.SITE_ATTRIBUTE_OFFSET, Starts.SITE_ATTRIBUTE_GAP, 8);
+				for (AttributeValue attr : attributes) {
+					for (int x = 0; x < KNOWN_SITE_ATTRS.length; x++) {
+						if (KNOWN_SITE_ATTRS[x][0].equals(attr.attribute)) {
+							if (KNOWN_SITE_ATTRS[x][1].endsWith("#")) {
+								int i = 1;
+								for (String value : attr.values) {
+									site.parameters.put(KNOWN_SITE_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value));
+									i++;
+								}
+							} else {
+								switch (KNOWN_SITE_ATTRS[x][1]) {
+								case ("conj"):
+								case ("alter"):
+								case ("evo"):
+								case ("const"):
+								case ("ench"):
+								case ("thau"):
+								case ("blood"):
+								case ("heal"):
+								case ("disease"):
+								case ("curse"):
+								case ("horror"):
+								case ("holyfire"):
+								case ("holypow"):
+								case ("voidgate"):
+									site.parameters.put(KNOWN_SITE_ATTRS[x][1], attr.values.get(0)+"%");
+									break;
+								case ("lab"):
+									site.parameters.put(KNOWN_SITE_ATTRS[x][1], "lab");
+									break;
+								case ("unr"):
+									site.parameters.put(KNOWN_SITE_ATTRS[x][1], -Integer.parseInt(attr.values.get(0)));
+									break;
+								default:
+									site.parameters.put(KNOWN_SITE_ATTRS[x][1], attr.values.get(0));
+								}
+
+							}
+						}
+					}
+				}
+				
+				// scales
+				String[] scales = {"Turmoil", "Sloth", "Cold", "Death", "Misfortune", "Drain"};
+				String[] opposite = {"Order", "Productivity", "Heat", "Growth", "Luck", "Magic"};
+				String scalesValue[] = {"", ""};
+				int index = 0;
+				if (attributes.contains(new AttributeValue("1F00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("1F00")));
+					for (String vals : attributeValue.values) {
+						scalesValue[index++] = opposite[Integer.parseInt(vals)];
+					}
+				}
+				if (attributes.contains(new AttributeValue("2000"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("2000")));
+					for (String vals : attributeValue.values) {
+						scalesValue[index++] = scales[Integer.parseInt(vals)];
+					}
+				}
+				site.parameters.put("scale1", scalesValue[0]);
+				site.parameters.put("scale2", scalesValue[1]);
+				
+				// rit/ritrng
+				boolean[] boolPaths = {false, false, false, false, false, false, false, false};
+				String[] boolPathsStr = {"F", "A", "W", "E", "S", "D", "N", "B"};
+				String value = "";
+				if (attributes.contains(new AttributeValue("FA00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FA00")));
+					value = attributeValue.values.get(0);
+					boolPaths[0] = true;
+				}
+				if (attributes.contains(new AttributeValue("FB00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FB00")));
+					value = attributeValue.values.get(0);
+					boolPaths[1] = true;
+				}
+				if (attributes.contains(new AttributeValue("FC00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FC00")));
+					value = attributeValue.values.get(0);
+					boolPaths[2] = true;
+				}
+				if (attributes.contains(new AttributeValue("FD00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FD00")));
+					value = attributeValue.values.get(0);
+					boolPaths[3] = true;
+				}
+				if (attributes.contains(new AttributeValue("FE00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FE00")));
+					value = attributeValue.values.get(0);
+					boolPaths[4] = true;
+				}
+				if (attributes.contains(new AttributeValue("FF00"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("FF00")));
+					value = attributeValue.values.get(0);
+					boolPaths[5] = true;
+				}
+				if (attributes.contains(new AttributeValue("0001"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0001")));
+					value = attributeValue.values.get(0);
+					boolPaths[6] = true;
+				}
+				if (attributes.contains(new AttributeValue("0101"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0101")));
+					value = attributeValue.values.get(0);
+					boolPaths[7] = true;
+				}
+				if (attributes.contains(new AttributeValue("0401"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0401")));
+					value = attributeValue.values.get(0);
+					boolPaths = new boolean[]{true, true, true, true, true, true, true, true};
+				}
+				StringBuffer rit = new StringBuffer();
+				for (int x = 0; x < boolPaths.length; x++) {
+					if (boolPaths[x]) {
+						rit.append(boolPathsStr[x]);
+					}
+				}
+				site.parameters.put("rit", rit.toString());
+				site.parameters.put("ritrng", value);
+				
+				// summoning
+				String sum1 = null;
+				int sum1count = 0;
+				String sum2 = null;
+				int sum2count = 0;
+				String sum3 = null;
+				int sum3count = 0;
+				String sum4 = null;
+				int sum4count = 0;
+				if (attributes.contains(new AttributeValue("1200"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("1200")));
+					for (String val : attributeValue.values) {
+						if (sum1 == null || sum1.equals(val)) {
+							sum1 = val;
+							sum1count++;
+						} else if (sum2 == null || sum2.equals(val)) {
+							sum2 = val;
+							sum2count++;
+						} else if (sum3 == null || sum3.equals(val)) {
+							sum3 = val;
+							sum3count++;
+						} else if (sum4 == null || sum4.equals(val)) {
+							sum4 = val;
+							sum4count++;
+						}
+					}
+				}
+				if (sum1 != null) {
+					site.parameters.put("sum1", sum1);
+					site.parameters.put("n_sum1", sum1count);
+				}
+				if (sum2 != null) {
+					site.parameters.put("sum2", sum2);
+					site.parameters.put("n_sum2", sum2count);
+				}
+				if (sum3 != null) {
+					site.parameters.put("sum3", sum3);
+					site.parameters.put("n_sum3", sum3count);
+				}
+				if (sum4 != null) {
+					site.parameters.put("sum4", sum4);
+					site.parameters.put("n_sum4", sum4count);
+				}
+
+				siteList.add(site);
+
 				stream = new FileInputStream(EXE_NAME);		
 				startIndex = startIndex + Starts.SITE_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
 
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
 				rowNumber++;
 			}
 			in.close();
 			stream.close();
 
-			// rarity
-			putBytes1(sheet, 42, 2, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("-1")) {
-						return "0";
-					} else {
-						return value;
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("MagicSites.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+
+			int rowNum = 0;
+			for (Site site : siteList) {
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < site_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(site_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < site_columns.length; i++) {
+					Object object = site.parameters.get(site_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 					}
 				}
-			});
-
-			// loc
-			putBytes2(sheet, 208, 3, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT);
-
-			// level
-			putBytes1(sheet, 40, 4, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT);
-
-			// path
-			stream = new FileInputStream("Dominions5.exe");			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			String[] paths = {"Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Blood", "Holy"};
-			int[] spriteOffset = {1, 9, 18, 26, 35, 42, 50, 59, 68};
-			int i = 0;
-			byte[] c = new byte[1];
-			byte[] d = new byte[1];
-			stream.skip(36);
-			stream.read(d, 0, 1);
-			stream.skip(1);
-			while ((stream.read(c, 0, 1)) != -1) {
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				XSSFCell cell2 = row.getCell(105, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				if (c[0] == -1) {
-					cell.setCellValue("");
-				} else {
-					cell.setCellValue(paths[c[0]]);
-					cell2.setCellValue(spriteOffset[c[0]] + d[0]);
-				}
-				stream.skip(213l);
-				stream.read(d, 0, 1);
-				stream.skip(1);
-				i++;
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
+				rowNum++;
 			}
-			stream.close();
-
-			// F
-			doit2(sheet, "0100", 6, 92);
-
-			// A
-			doit2(sheet, "0200", 7, 93);
-
-			// W
-			doit2(sheet, "0300", 8, 94);
-
-			// E
-			doit2(sheet, "0400", 9, 95);
-
-			// S
-			doit2(sheet, "0500", 10, 96);
-
-			// D
-			doit2(sheet, "0600", 11, 97);
-
-			// N
-			doit2(sheet, "0700", 12, 98);
-
-			// B
-			doit2(sheet, "0800", 13, 99);
-
-			// gold
-			doit(sheet, "0D00", 14);
-
-			// res
-			doit(sheet, "0E00", 15);
-
-			// sup
-			doit(sheet, "1400", 16);
-
-			// unr
-			doit(sheet, "1300", 17, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return Integer.toString(-Integer.parseInt(value));
-				}
-			});
-
-			// exp
-			doit(sheet, "1600", 18);
-
-			// lab
-			doit(sheet, "0F00", 19, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "lab";
-				}
-			});
-
-			// fort
-			doit(sheet, "1100", 20);
-
-			// scales
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			String[] scales = {"Turmoil", "Sloth", "Cold", "Death", "Misfortune", "Drain"};
-			String[] opposite = {"Order", "Productivity", "Heat", "Growth", "Luck", "Magic"};
-			i = 0;
-			int k = 0;
-			Set<Integer> scalesSet = new HashSet<Integer>();
-			Set<Integer> oppositeSet = new HashSet<Integer>();
-			long numFound = 0;
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					String value[] = {"", ""};
-					int index = 0;
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (oppositeSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							value[index++] = opposite[fire];
-						}
-						if (scalesSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							value[index++] = scales[fire];
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					if (value[0].length() > 0) {
-						XSSFCell cell = row.getCell(21, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(value[0]);
-					}
-					if (value[1].length() > 0) {
-						XSSFCell cell = row.getCell(22, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(value[1]);
-					}
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					scalesSet.clear();
-					oppositeSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("1F00")) {
-						oppositeSet.add(k);
-					}
-					if ((low + high).equals("2000")) {
-						scalesSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// rit/ritr
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			String rit = "";
-			numFound = 0;
-			int pos = -1;
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					boolean found = false;
-					int value = 0;
-					// Values
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (x == pos) {
-							found = true;
-							value = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					XSSFCell cell1 = row.getCell(41, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					XSSFCell cell2 = row.getCell(42, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					if (found) {
-						cell1.setCellValue(rit);
-						cell2.setCellValue(value);
-					} else {
-						cell1.setCellValue("");
-						cell2.setCellValue("");
-					}
-					
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					pos = -1;
-					rit = "";
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("FA00")) {
-						rit += "F";
-						pos = k;
-					}
-					if ((low + high).equals("FB00")) {
-						rit += "A";
-						pos = k;
-					}
-					if ((low + high).equals("FC00")) {
-						rit += "W";
-						pos = k;
-					}
-					if ((low + high).equals("FD00")) {
-						rit += "E";
-						pos = k;
-					}
-					if ((low + high).equals("FE00")) {
-						rit += "S";
-						pos = k;
-					}
-					if ((low + high).equals("FF00")) {
-						rit += "D";
-						pos = k;
-					}
-					if ((low + high).equals("0001")) {
-						rit += "N";
-						pos = k;
-					}
-					if ((low + high).equals("0101")) {
-						rit += "B";
-						pos = k;
-					}
-					if ((low + high).equals("0401")) {
-						rit += "FAWESDNB";
-						pos = k;
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// hmon
-			putMultipleAttributes(sheet, "1D00", 44, 34l, 43, Starts.SITE, Starts.SITE_SIZE, Starts.SITE_COUNT, null);
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			numFound = 0;
-			Set<Integer> posSet = new HashSet<Integer>();
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					List<Integer> values = new ArrayList<Integer>();
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							values.add(fire);
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					int ind = 0;
-					for (Integer mon : values) {
-						XSSFCell cell = row.getCell(43+ind, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-						ind++;
-					}
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("1D00")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// hcom
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			numFound = 0;
-			posSet = new HashSet<Integer>();
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					List<Integer> values = new ArrayList<Integer>();
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							values.add(fire);
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					int ind = 0;
-					for (Integer mon : values) {
-						XSSFCell cell = row.getCell(73+ind, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-						ind++;
-					}
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("1E00")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// mon
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			numFound = 0;
-			posSet = new HashSet<Integer>();
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					List<Integer> values = new ArrayList<Integer>();
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							values.add(fire);
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					int ind = 0;
-					for (Integer mon : values) {
-						XSSFCell cell = row.getCell(78+ind, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-						ind++;
-					}
-					stream.skip(214l - 34l - numFound*4l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("0B00")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// com
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			numFound = 0;
-			posSet = new HashSet<Integer>();
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					List<Integer> values = new ArrayList<Integer>();
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							values.add(fire);
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					int ind = 0;
-					for (Integer mon : values) {
-						XSSFCell cell = row.getCell(83+ind, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-						ind++;
-					}
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("0C00")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// provdef
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			numFound = 0;
-			posSet = new HashSet<Integer>();
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					List<Integer> values = new ArrayList<Integer>();
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							values.add(fire);
-						}
-						stream.skip(6);
-					}
-					
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					int ind = 0;
-					for (Integer mon : values) {
-						XSSFCell cell = row.getCell(89+ind, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell.setCellValue(mon);
-						ind++;
-					}
-					stream.skip(214l - 34l - numFound*4l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					if ((low + high).equals("E000")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// conj
-			doit(sheet, "3C00", 55, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// alter
-			doit(sheet, "3D00", 56, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// evo
-			doit(sheet, "3E00", 57, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// const
-			doit(sheet, "3F00", 58, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// ench
-			doit(sheet, "4000", 59, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// thau
-			doit(sheet, "4100", 60, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// blood
-			doit(sheet, "4200", 61, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// heal
-			doit(sheet, "4600", 62, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// disease
-			doit(sheet, "1500", 63, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// curse
-			doit(sheet, "4700", 64, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// horror
-			doit(sheet, "1800", 65, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// holyfire
-			doit(sheet, "4400", 66, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// holypower
-			doit(sheet, "4300", 67, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// scry
-			doit(sheet, "4800", 68);
-
-			// adventure
-			doit(sheet, "C000", 69);
-
-			// voidgate
-			doit(sheet, "3900", 48, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return value + "%";
-				}
-			});
-
-			// summoning
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.SITE);
-			rowNumber = 1;
-			i = 0;
-			k = 0;
-			posSet = new HashSet<Integer>();
-			int sum1 = 0;
-			int sum1count = 0;
-			int sum2 = 0;
-			int sum2count = 0;
-			int sum3 = 0;
-			int sum3count = 0;
-			int sum4 = 0;
-			int sum4count = 0;
-			numFound = 0;
-			c = new byte[2];
-			stream.skip(44);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(34l - numFound*2l);
-					// Values
-					for (int x = 0; x < numFound; x++) {
-						stream.read(c, 0, 2);
-						high = String.format("%02X", c[1]);
-						low = String.format("%02X", c[0]);
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(new byte[]{c[1], c[0]}).intValue();
-							if (sum1 == 0 || sum1 == fire) {
-								sum1 = fire;
-								sum1count++;
-							} else if (sum2 == 0 || sum2 == fire) {
-								sum2 = fire;
-								sum2count++;
-							} else if (sum3 == 0 || sum3 == fire) {
-								sum3 = fire;
-								sum3count++;
-							} else if (sum4 == 0 || sum4 == fire) {
-								sum4 = fire;
-								sum4count++;
-							}
-						}
-						stream.skip(6);
-					}
-
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					//String sum = "";
-					if (sum1 > 0) {
-						//sum += sum1 + "\t" + sum1count;
-						XSSFCell cell1 = row.getCell(49, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell1.setCellValue(sum1);
-						XSSFCell cell2 = row.getCell(50, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell2.setCellValue(sum1count);
-
-					}
-					if (sum2 > 0) {
-						//sum += "\t" + sum2 + "\t" + sum2count;
-						XSSFCell cell1 = row.getCell(51, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell1.setCellValue(sum2);
-						XSSFCell cell2 = row.getCell(52, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell2.setCellValue(sum2count);
-					}
-					if (sum3 > 0) {
-						//sum += "\t" + sum3 + "\t" + sum3count;
-						XSSFCell cell1 = row.getCell(53, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell1.setCellValue(sum3);
-						XSSFCell cell2 = row.getCell(54, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell2.setCellValue(sum3count);
-					}
-					if (sum4 > 0) {
-						//sum += "\t" + sum3 + "\t" + sum3count;
-						XSSFCell cell1 = row.getCell(71, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell1.setCellValue(sum4);
-						XSSFCell cell2 = row.getCell(72, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-						cell2.setCellValue(sum4count);
-					}
-					//System.out.println(sum);
-					stream.skip(214l - 34l - numFound*8l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					sum1 = 0;
-					sum1count = 0;
-					sum2 = 0;
-					sum2count = 0;
-					sum3 = 0;
-					sum3count = 0;
-					sum4 = 0;
-					sum4count = 0;
-					i++;
-				} else {
-					//System.out.print(low + high + " ");
-					if ((low + high).equals("1200")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.SITE_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// domspread
-			doit(sheet, "1501", 23);
-
-			// turmoil/order
-			doit(sheet, "1901", 24);
-
-			// sloth/prod
-			doit(sheet, "1A01", 25);
-
-			// cold/heat
-			doit(sheet, "1B01", 26);
-
-			// death/growth
-			doit(sheet, "1C01", 27);
-
-			// misfortune/luck
-			doit(sheet, "1D01", 28);
-
-			// drain/magic
-			doit(sheet, "1E01", 29);
-
-			// fire resistence
-			doit(sheet, "FB01", 30);
-
-			// cold resistence
-			doit(sheet, "FC01", 31);
-
-			// str
-			doit(sheet, "FA01", 34);
-
-			// prec
-			doit(sheet, "0402", 35);
-
-			// mor
-			doit(sheet, "F401", 36);
-
-			// shock resistence
-			doit(sheet, "FD01", 32);
-
-			// undying
-			doit(sheet, "F801", 37);
-
-			// att
-			doit(sheet, "F501", 38);
-
-			// poison resistence
-			doit(sheet, "FE01", 33);
-
-			// darkvision
-			doit(sheet, "0302", 39);
-
-			// animal awe
-			doit(sheet, "0102", 40);
-
-			// reveal
-			doit(sheet, "0601", 88);
-			
-			// def
-			doit(sheet, "F601", 91);
-
-			// awe
-			doit(sheet, "0202", 100);
-			
-			// reinvigoration
-			doit(sheet, "FF01", 101);
-			
-			// airshield
-			doit(sheet, "0002", 102);
-			
-			// provdefcom
-			doit(sheet, "4A00", 103);
-			
-			// domconflict
-			doit(sheet, "2A00", 104);
-			
 			wb.write(fos);
 			fos.close();
+			wb.close();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -1094,6 +371,9 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
+	}
+	private static class Site {
+		Map<String, Object> parameters;
 	}
 
 }
