@@ -21,8 +21,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -215,6 +217,45 @@ public abstract class AbstractStatIndexer {
 			}
 		}
 		stream.close();
+	}
+	
+	protected static List<AttributeValue> getAttributes(long skip, long attrGap) throws IOException {
+		FileInputStream stream = new FileInputStream(EXE_NAME);	
+		List<AttributeValue> attrList = new ArrayList<AttributeValue>();
+		stream.skip(skip);
+		byte[] c = new byte[2];
+		while ((stream.read(c, 0, 2)) != -1) {
+			String high = String.format("%02X", c[1]);
+			String low = String.format("%02X", c[0]);
+			if (Integer.decode("0X" + high + low) != 0) {
+				AttributeValue val = new AttributeValue(low + high);
+				attrList.add(val);
+			} else {
+				stream.skip(attrGap - attrList.size()*2l);
+				// Values
+				for (AttributeValue attrVal : attrList) {
+					byte[] d = new byte[4];
+					stream.read(d, 0, 4);
+					String high1 = String.format("%02X", d[3]);
+					String low1 = String.format("%02X", d[2]);
+					high = String.format("%02X", d[1]);
+					low = String.format("%02X", d[0]);
+					attrVal.values.add(Integer.toString(new BigInteger(high1 + low1 + high + low, 16).intValue()));
+				}
+				break;
+			}				
+		}
+		List<AttributeValue> newList = new ArrayList<AttributeValue>();
+		for (AttributeValue attrVal : attrList) {
+			if (!newList.contains(attrVal)) {
+				newList.add(attrVal);
+			} else {
+				AttributeValue oldAttr = newList.get(newList.indexOf(attrVal));
+				oldAttr.values.add(attrVal.values.get(0));
+			}
+		}
+		stream.close();
+		return newList;
 	}
 	
 	protected static void putMultipleAttributes(XSSFSheet sheet, String attr, long attrStart, long attrGap, int column, long start, long size, int count, Callback callback) throws IOException {
@@ -417,6 +458,33 @@ public abstract class AbstractStatIndexer {
 		return boolArray;
 	}
 
+	protected static List<String> largeBitmap(long start, String[][] values) throws IOException {
+		FileInputStream stream = new FileInputStream(EXE_NAME);		
+		List<String> boolList = new ArrayList<String>();
+		stream.skip(start);
+		byte[] c = new byte[2];
+		stream.read(c, 0, 2);
+		for (int k = 0; k < values.length; k++) {
+			String high = String.format("%02X", c[1]);
+			String low = String.format("%02X", c[0]);
+			int val = Integer.decode("0X" + high + low);
+			if (val > 0) {
+				for (int j=0; j < 16; j++) {
+					if ((val & MASK[j]) != 0) {
+						if (!values[k][j].equals("")) {
+							boolList.add(values[k][j]);
+						}
+					}
+				}
+			}
+			if (k < values.length-1) {
+				stream.read(c, 0, 2);
+			}
+		}
+		stream.close();
+		return boolList;
+	}
+
 	protected static class Attribute {
 		int object_number;
 		int attribute;
@@ -426,6 +494,39 @@ public abstract class AbstractStatIndexer {
 			this.object_number = object_number;
 			this.attribute = attribute;
 			this.raw_value = raw_value;
+		}
+	}
+	
+	protected static class AttributeValue {
+		String attribute;
+		List<String> values = new ArrayList<String>();
+		
+		public AttributeValue(String attribute) {
+			super();
+			this.attribute = attribute;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((attribute == null) ? 0 : attribute.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			AttributeValue other = (AttributeValue) obj;
+			if (attribute == null) {
+				if (other.attribute != null)
+					return false;
+			} else if (!attribute.equals(other.attribute))
+				return false;
+			return true;
 		}
 	}
 	
