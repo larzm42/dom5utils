@@ -77,7 +77,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				weapon.parameters.put("len", getBytes2(startIndex + 54));
 				weapon.parameters.put("nratt", getBytes2(startIndex + 58));
 				weapon.parameters.put("ammo", getBytes2(startIndex + 60));
-				short bytes2 = getBytes2(startIndex + 72);
+				int bytes2 = getBytes2(startIndex + 72);
 				weapon.parameters.put("secondaryeffect", bytes2 > 0 ? bytes2 : 0);
 				weapon.parameters.put("secondaryeffectalways", bytes2 < 0 ? Math.abs(bytes2) : 0);
 				weapon.parameters.put("rcost", getBytes2(startIndex + 86));
@@ -97,7 +97,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				weapon.attributes = attributes;
 
 				newIndex = startIndex+52;
-				short effect_number = getBytes2(newIndex);
+				int effect_number = getBytes2(newIndex);
 				if (effect_number != 0) {
 					Effect effect = new Effect();
 					effect.effect_number = effect_number;

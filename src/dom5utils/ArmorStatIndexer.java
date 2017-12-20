@@ -79,10 +79,10 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 				
 		        List<Protection> protections = new ArrayList<Protection>();
 				long newIndex = startIndex+36;
-				short zone = getBytes2(newIndex);
+				int zone = getBytes2(newIndex);
 				while (zone != 0) {
 					newIndex+=2;
-					short prot = getBytes2(newIndex);
+					int prot = getBytes2(newIndex);
 					protections.add(new Protection(zone, prot, armorNumber));
 					newIndex+=2;					
 					zone = getBytes2(newIndex);
@@ -209,10 +209,10 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 	}	
 	
 	private static class Protection {
-		short zone_number;
-		short protection;
+		int zone_number;
+		int protection;
 		int armor_number;
-		public Protection(short zone_number, short protection, int armor_number) {
+		public Protection(int zone_number, int protection, int armor_number) {
 			super();
 			this.zone_number = zone_number;
 			this.protection = protection;

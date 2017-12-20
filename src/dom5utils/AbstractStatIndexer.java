@@ -75,15 +75,18 @@ public abstract class AbstractStatIndexer {
 		return value;
 	}
 	
-	protected static short getBytes2(long skip) throws IOException {
+	protected static int getBytes2(long skip) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		short value = 0;
+		int value = 0;
 		byte[] c = new byte[2];
 		stream.skip(skip);
 		while ((stream.read(c, 0, 2)) != -1) {
 			String high = String.format("%02X", c[1]);
 			String low = String.format("%02X", c[0]);
-			value = Integer.decode("0X" + high + low).shortValue();
+			value = Integer.decode("0X" + high + low).intValue();
+			if (value > 60000) {
+				value = new BigInteger("FFFF" + high + low, 16).intValue();
+			}
 			break;
 		}
 		stream.close();

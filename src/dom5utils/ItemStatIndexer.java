@@ -219,9 +219,9 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				short type = getBytes1(startIndex + 41);
 				String[] types = {"1-h wpn", "2-h wpn", "missile", "shield", "armor", "helm", "boots", "misc"};
 				item.parameters.put("type", type < 1 ? "" : types[type-1]);
-				short weapon = getBytes2(startIndex + 44);
+				int weapon = getBytes2(startIndex + 44);
 				item.parameters.put("weapon", weapon == 0 ? "" : weapon);
-				short armor = getBytes2(startIndex + 46);
+				int armor = getBytes2(startIndex + 46);
 				item.parameters.put("armor", armor == 0 ? "" : armor);
 				item.parameters.put("itemspell", getString(startIndex + 48));
 				

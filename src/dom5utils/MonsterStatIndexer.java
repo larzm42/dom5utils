@@ -15,31 +15,54 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MonsterStatIndexer extends AbstractStatIndexer {
+	public static String[] unit_columns = {"id", "name", "wpn1", "wpn2", "wpn3", "wpn4", "wpn5", "wpn6", "wpn7", "armor1", "armor2", "armor3", "armor4", 
+			"rt", "reclimit", "basecost", "gmon", "gcom", "rcost", "size", "ressize", "hp", "prot", "mr", "mor", "str", "att", "def", "prec", "enc", 
+			"mapmove", "ap", "ambidextrous", "mounted", "reinvigoration", "leader", "undeadleader", "magicleader", "startage", "maxage", "hand", "head", 
+			"body", "foot", "misc", "pathcost", "startdom", "inn", "F", "A", "W", "E", "S", "D", "N", "B", "H", "rand1", "nbr1", "link1", "mask1", "rand2", 
+			"nbr2", "link2", "mask2", "rand3", "nbr3", "link3", "mask3", "rand4", "nbr4", "link4", "mask4", "holy", "inquisitor", "mind", "inanimate", 
+			"undead", "demon", "magicbeing", "stonebeing", "animal", "coldblood", "female", "forestsurvival", "mountainsurvival", "wastesurvival", 
+			"swampsurvival", "cavesurvival", "aquatic", "amphibian", "pooramphibian", "float", "flying", "stormimmune", "teleport", "immobile", 
+			"noriverpass", "sailingshipsize", "sailingmaxunitsize", "stealthy", "illusion", "spy", "assassin", "patience", "seduce", "succubus", 
+			"corrupt", "heal", "immortal", "reinc", "noheal", "neednoteat", "homesick", "undisciplined", "formationfighter", "slave", "standard", 
+			"inspirational", "taskmaster", "beastmaster", "bodyguard", "waterbreathing", "iceprot", "invulnerable", "slashres", "bluntres", "pierceres", 
+			"shockres", "fireres", "coldres", "poisonres", "voidsanity", "darkvision", "blind", "animalawe", "awe", "halt", "fear", "berserk", "cold", 
+			"heat", "fireshield", "banefireshield", "damagerev", "poisoncloud", "diseasecloud", "slimer", "mindslime", "disbel", "reform", "regeneration", 
+			"reanimator", "barbs", "petrify", "eyeloss", "ethereal", "ethtrue", "deathcurse", "trample", "trampswallow", "stormpower", "firepower", 
+			"coldpower", "darkpower", "chaospower", "magicpower", "winterpower", "springpower", "summerpower", "fallpower", "forgebonus", "fixforgebonus", 
+			"mastersmith", "resources", "autohealer", "autodishealer", "alch", "nobadevents", "event", "insane", "shatteredsoul", "leper", "taxcollector", 
+			"gem", "gemprod", "chaosrec", "pillagebonus", "patrolbonus", "castledef", "siegebonus", "incprovdef", "supplybonus", "incunrest", "popkill", 
+			"researchbonus", "drainimmune", "inspiringres", "douse", "sacr", "ivylord", "crossbreeder", "makepearls", "pathboost", "allrange", "voidsum", 
+			"heretic", "elegist", "shapechange", "firstshape", "secondshape", "secondtmpshape", "landshape", "watershape", "forestshape", "plainshape", 
+			"unique", "fixedname", "special", "nametype", "type", "typeclass", "from", "summon", "n_summon", "autosum", "n_autosum", "batstartsum1", 
+			"batstartsum2", "domsummon1", "domsummon2", "bloodvengeance", "bringeroffortune", "realm1", "realm2", "realm3", "batstartsum3", "batstartsum4", 
+			"batstartsum5", "batstartsum1d6", "batstartsum2d6", "batstartsum3d6", "batstartsum4d6", "batstartsum5d6", "batstartsum6d6", "turmoilsummon", 
+			"coldsummon", "scalewalls", "baseleadership", "explodeondeath", "startaff", "uwregen", "shrinkhp", "growhp", "transformation", "startingaff", 
+			"fixedresearch", "divineins", "lamiabonus", "preanimator", "dreanimator", "mummify", "onebattlespell", "fireattuned", "airattuned", 
+			"waterattuned", "earthattuned", "astralattuned", "deathattuned", "natureattuned", "bloodattuned", "magicboostF", "magicboostA", "magicboostW", 
+			"magicboostE", "magicboostS", "magicboostD", "magicboostN", "magicboostALL", "eyes", "heatrec", "coldrec", "spreadchaos", "spreaddeath", 
+			"corpseeater", "poisonskin", "bug", "uwbug", "spreadorder", "spreadgrowth", "startitem", "spreaddom", "reform", "battlesum5", "acidsplash", 
+			"drake", "prophetshape", "horror", "enchrebate50", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
+			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", "end"}; 
+			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
-										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "sacred", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
+										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
 										{"bluntres", "slashres", "pierceres", "slow_to_recruit", "float", "", "teleport", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"magicbeing", "", "", "poormagicleader", "okmagicleader", "goodmagicleader", "expertmagicleader", "superiormagicleader", "poorundeadleader", "okundeadleader", "goodundeadleader", "expertundeadleader", "superiorundeadleader", "", "", "" },
@@ -47,63 +70,201 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" }};
 	
-	
-	private static String DOTHESE[][] = {
-		{"heal", "108"}, 
-		{"mounted", "33"},
-		{"animal", "81"},
-		{"amphibian", "90"},
-		{"wastesurvival", "86"},
-		{"undead", "77"},
-		{"heat", "141"},
-		{"neednoteat", "112"},
-		{"aquatic", "89"},
-		{"flying", "93"},
-		{"trample", "159"},
-		{"immortal", "109"},
-		{"cold", "140"},
-		{"forestsurvival", "84"},
-		{"swampsurvival", "87"},
-		{"demon", "78"},
-		{"sacred", "73"},
-		{"mountainsurvival", "85"},
-		{"illusion", "101"},
-		{"noheal", "111"},
-		{"ethereal", "156"},
-		{"pooramphibian", "91"},
-		{"coldblood", "82"},
-		{"inanimate", "76"},
-		{"female", "83"},
-		{"bluntres", "126"},
-		{"slashres", "125"},
-		{"pierceres", "127"},
-		{"slow_to_recruit", "13"},
-		{"float", "92"},
-		{"teleport", "95"},
-		{"magicbeing", "79"},
-		{"immobile", "96"},
-		{"stealthy40", "100"},
-		{"coldres15", "130"},
-		{"fireres15", "129"},
-		{"poisonres15", "131"},
-		{"shockres15", "128"},
-		{"noleader", "35"},
-		{"poorleader", "35"}, 
-		{"goodleader", "35"}, 
-		{"expertleader", "35"}, 
-		{"superiorleader", "35"},
-		{"poorundeadleader", "36"},
-		{"okundeadleader", "36"}, 
-		{"goodundeadleader", "36"}, 
-		{"expertundeadleader", "36"}, 
-		{"superiorundeadleader", "36"},
-		{"poormagicleader", "37"},
-		{"okmagicleader", "37"}, 
-		{"goodmagicleader", "37"}, 
-		{"expertmagicleader", "37"}, 
-		{"superiormagicleader", "37"},
-		{"misc2", "40"},
-		};
+	private static String[][] KNOWN_MONSTER_ATTRS = {
+		{"6C00", "stealthy"},
+		{"C900", "coldres"},
+		{"DC00", "cold"},
+		{"C600", "fireres"},
+		{"3C01", "heat"},
+		{"C800", "poisonres"},
+		{"C700", "shockres"},
+		{"6A00", "poisoncloud"},
+		{"CD01", "patience"},
+		{"AF00", "stormimmune"},
+		{"BD00", "regeneration"},
+		{"C200", "secondshape"},
+		{"C300", "firstshape"},
+		{"C100", "shapechange"},
+		{"C400", "secondtmpshape"},
+		{"1C01", "maxage"},
+		{"CA00", "damagerev"},
+		{"9E01", "bloodvengeance"},
+		{"EB00", "nobadevents"},
+		{"E400", "bringeroffortune"},
+		{"1901", "darkvision"},
+		{"B700", "fear"},
+		{"1501", "voidsanity"},
+		{"6700", "standard"},
+		{"6E01", "formationfighter"},
+		{"6F01", "undisciplined"},
+		{"9801", "bodyguard"},
+		{"A400", "summon"},
+		{"A500", "summon"},
+		{"A600", "summon"},
+		{"7001", "inspirational"},
+		{"8300", "pillagebonus"},
+		{"BE00", "berserk"},
+		{"F200", "startdom"},
+		{"F300", "pathcost"},
+		{"6F00", "waterbreathing"},
+		{"5A02", "realm#"},
+		{"B401", "batstartsum1"},
+		{"B501", "batstartsum2"},
+		{"B601", "batstartsum3"},
+		{"B701", "batstartsum4"},
+		{"B801", "batstartsum5"},
+		{"B901", "batstartsum1d6"},
+		{"BA01", "batstartsum2d6"},
+		{"BB01", "batstartsum3d6"},
+		{"BC01", "batstartsum4d6"},
+		{"BD01", "batstartsum5d6"},
+		{"BE01", "batstartsum6d6"},
+		{"2501", "darkpower"},
+		{"AE00", "stormpower"},
+		{"B100", "firepower"},
+		{"B000", "coldpower"},
+		{"2501", "darkpower"},
+		{"A001", "chaospower"},
+		{"4401", "magicpower"},
+		{"EA00", "winterpower"},
+		{"E700", "springpower"},
+		{"E800", "summerpower"},
+		{"E900", "fallpower"},
+		{"FB00", "nametype"},
+		{"B600", "itemslots"},
+		{"0901", "ressize"},
+		{"1D01", "startage"},
+		{"AB00", "blind"},
+		{"B200", "eyes"},
+		{"7A00", "supplybonus"},
+		{"7C01", "slave"},
+		{"7900", "researchbonus"},
+		{"CA01", "chaosrec"},
+		{"7D00", "siegebonus"},
+		{"D900", "ambidextrous"},
+		{"7E01", "invulnerable"},
+		{"BF00", "iceprot"},
+		{"7500", "reinvigoration"},
+		{"D600", "spy"},
+		{"E301", "scalewalls"},
+		{"D500", "assassin"},
+		{"D200", "succubus"},
+		{"2A01", "seduce"},
+		{"2901", "explodeondeath"},
+		{"7B01", "taskmaster"},
+		{"1301", "unique"},
+		{"6900", "awe"},
+		{"9D00", "additional leadership"},
+		{"B900", "startaff"},
+		{"F500", "landshape"},
+		{"F600", "watershape"},
+		{"4201", "forestshape"},
+		{"4301", "plainshape"},
+		{"DD00", "uwregen"},
+		{"AA00", "patrolbonus"},
+		{"D700", "castledef"},
+		{"7000", "sailingshipsize"},
+		{"9A01", "sailingmaxunitsize"},
+		{"DF00", "incunrest"},
+		{"BC00", "barbs"},
+		{"4E01", "inn"},
+		{"1801", "stonebeing"},
+		{"5001", "shrinkhp"},
+		{"4F01", "growhp"},
+		{"FD01", "transformation"},
+		{"A101", "domsummon#"},
+		{"DB00", "domsummon#"},
+		{"F100", "domsummon#"},
+		{"6B00", "autosum"},
+		{"8F00", "autosum"},
+		{"AD00", "turmoilsummon"},
+		{"9200", "coldsummon"},
+		{"B800", "heretic"},
+		{"2001", "popkill"},
+		{"6201", "autohealer"},
+		{"A300", "fireshield"},
+		{"E200", "startingaff"},
+		{"1E00", "gemprod fire"},
+		{"1F00", "gemprod air"},
+		{"2000", "gemprod water"},
+		{"2100", "gemprod earth"},
+		{"2200", "gemprod astral"},
+		{"2300", "gemprod death"},
+		{"2400", "gemprod nature"},
+		{"2500", "gemprod blood"},
+		{"F800", "fixedresearch"},
+		{"C201", "divineins"},
+		{"4701", "halt"},
+		{"AF01", "crossbreeder"},
+		{"7D01", "reclimit"},
+		{"C501", "fixforgebonus"},
+		{"6B01", "mastersmith"},
+		{"A900", "lamiabonus"},
+		{"FD00", "homesick"},
+		{"DE00", "banefireshield"},
+		{"A200", "animalawe"},
+		{"6301", "autodishealer"},
+		{"4801", "shatteredsoul"},
+		{"CE00", "voidsum"},
+		{"AE01", "makepearls"},
+		{"5501", "inspiringres"},
+		{"1101", "drainimmune"},
+		{"AC00", "diseasecloud"},
+		{"D300", "inquisitor"},
+		{"7101", "beastmaster"},
+		{"7400", "douse"},
+		{"6C01", "preanimator"},
+		{"6D01", "dreanimator"},
+		{"FF01", "mummify"},
+		{"D100", "onebattlespell"},
+		{"F501", "fireattuned"},
+		{"F601", "airattuned"},
+		{"F701", "waterattuned"},
+		{"F801", "earthattuned"},
+		{"F901", "astralattuned"},
+		{"FA01", "deathattuned"},
+		{"FB01", "natureattuned"},
+		{"FC01", "bloodattuned"},
+		{"0A00", "magicboostF"},
+		{"0B00", "magicboostA"},
+		{"0C00", "magicboostW"},
+		{"0D00", "magicboostE"},
+		{"0E00", "magicboostS"},
+		{"0F00", "magicboostD"},
+		{"1000", "magicboostN"},
+		{"1600", "magicboostALL"},
+		{"EA01", "heatrec"},
+		{"EB01", "coldrec"},
+		{"D801", "spreadchaos/death"},
+		{"D901", "spreadorder/growth"},
+		{"EC00", "corpseeater"},
+		{"0602", "poisonskin"},
+		{"AB01", "bug"},
+		{"AC01", "uwbug"},
+		{"9C00", "spreaddom"},
+		{"8A01", "reform"},
+		{"8E01", "battlesum5"},
+		{"F101", "acidsplash"},
+		{"F201", "drake"},
+		{"0402", "prophetshape"},
+		{"8701", "horror"},
+		{"3501", "insane"},
+		{"D800", "sacr"},
+		{"1002", "enchrebate50"},
+		{"7C00", "leper"},
+		{"9C01", "slimer"},
+		{"9201", "mindslime"},
+		{"9701", "resources"},
+		{"E000", "corrupt"},
+		{"6800", "petrify"},
+		{"F400", "eyeloss"},
+		{"0401", "ethtrue"},
+		{"1602", "heroarrivallimit"},
+		{"1702", "sailsize"},
+		{"0201", "uwdamage"},
+		{"0E02", "landdamage"}
+	};
+
 	
 	private static class Magic {
 		public int F;
@@ -125,1707 +286,28 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		public int mask;
 	}
 	
-	private static Map<Integer, Magic> monsterMagic = new HashMap<Integer, Magic>();
-	
 	private static String magicStrip(int mag) {
 		return mag > 0 ? Integer.toString(mag) : "";
 	}
+	
+	private static Map<Integer, Magic> monsterMagic = new HashMap<Integer, Magic>();
 
-	private static void putBytes2(int skip, int column, XSSFSheet sheet) throws IOException {
-		putBytes2(skip, column, sheet, null);
-	}
-	
-	private static void putBytes2(int skip, int column, XSSFSheet sheet, Callback callback) throws IOException {
-		putBytes2(sheet, skip, column, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, callback);
-	}
-	
-	private static String getAttr(String key, int id) throws IOException {
-		String attributeString = attrCache.get(new CacheKey(key, id));
-		if (attributeString != null) {
-			return attributeString;
-		}
-
-		FileInputStream stream = new FileInputStream(EXE_NAME);			
-		stream.skip(Starts.MONSTER);
-		int k = 0;
-		int pos = -1;
-		long numFound = 0;
-		byte[] c = new byte[2];
-		stream.skip(64);
-		stream.skip(264*(id-1));
-		while ((stream.read(c, 0, 2)) != -1) {
-			String high = String.format("%02X", c[1]);
-			String low = String.format("%02X", c[0]);
-			int weapon = Integer.decode("0X" + high + low);
-			if (weapon == 0) {
-				boolean found = false;
-				int value = 0;
-				stream.skip(46l - numFound*2l);
-				// Values
-				for (int x = 0; x < numFound; x++) {
-					byte[] d = new byte[4];
-					stream.read(d, 0, 4);
-					String high1 = String.format("%02X", d[3]);
-					String low1 = String.format("%02X", d[2]);
-					high = String.format("%02X", d[1]);
-					low = String.format("%02X", d[0]);
-					//System.out.print(low + high + " ");
-					if (x == pos) {
-						value = new BigInteger(high1 + low1 + high + low, 16).intValue();
-						//System.out.print(fire);
-						found = true;
-					}
-					//stream.skip(2);
-				}
-				
-				stream.close();
-				if (found) {
-					attrCache.put(new CacheKey(key, id), Integer.toString(value));
-					return Integer.toString(value);
-				} else {
-					attrCache.put(new CacheKey(key, id), "");
-					return "";
-				}
-			} else {
-				//System.out.print(low + high + " ");
-				if ((low + high).equals(key)) {
-					pos = k;
-				}
-				k++;
-				numFound++;
-			}				
-		}
-		stream.close();
-		return null;
-	}
-	
-	private static void putAttribute(XSSFSheet sheet, String attr, int column) throws IOException {
-		putAttribute(sheet, attr, column, null);
-	}
-	
-	private static void putAttribute(XSSFSheet sheet, String attr, int column, Callback callback) throws IOException {
-		putAttribute(sheet, attr, column, callback, false);
-	}
-	
-	private static void putAttribute(XSSFSheet sheet, String attr, int column, Callback callback, boolean append) throws IOException {
-		putAttribute(sheet, attr, Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP, column, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, append, callback);
-	}
-	
 	public static void main(String[] args) {
 		run();
 	}
 	
 	public static void run() {
 		FileInputStream stream = null;
+        List<Monster> monsterList = new ArrayList<Monster>();
+
 		try {
 	        long startIndex = Starts.MONSTER;
 	        int ch;
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(startIndex);
-			
-			XSSFWorkbook wb = MonsterStatIndexer.readFile("BaseU_Template.xlsx");
-			FileOutputStream fos = new FileOutputStream("BaseU.xlsx");
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// Name
-			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
-	        Reader in = new BufferedReader(isr);
-	        int rowNumber = 1;
-			while ((ch = in.read()) > -1) {
-				StringBuffer name = new StringBuffer();
-				while (ch != 0) {
-					name.append((char)ch);
-					ch = in.read();
-				}
-				if (name.length() == 0) {
-					continue;
-				}
-				if (name.toString().equals("end")) {
-					break;
-				}
-				in.close();
-
-				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + Starts.MONSTER_SIZE;
-				stream.skip(startIndex);
-				isr = new InputStreamReader(stream, "ISO-8859-1");
-		        in = new BufferedReader(isr);
-
-				XSSFRow row = sheet.createRow(rowNumber);
-				XSSFCell cell1 = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell1.setCellValue(rowNumber);
-				XSSFCell cell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				cell.setCellValue(name.toString());
-				rowNumber++;
-			}
-			in.close();
-			stream.close();
-
-	        // AP
-			putBytes2(40, 31, sheet);
-
-			// MM
-			putBytes2(42, 30, sheet);
-
-			// Size
-			putBytes2(44, 19, sheet);
-			
-			// ressize
-			putBytes2(44, 20, sheet);
-			putAttribute(sheet, "0901", 20, new CallbackAdapter() {
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			
-			// HP
-			putBytes2(46, 21, sheet);
-
-			// Prot
-			putBytes2(48, 22, sheet);
-
-			// STR
-			putBytes2(50, 25, sheet);
-
-			// ENC
-			putBytes2(52, 29, sheet);
-
-			// Prec
-			putBytes2(54, 28, sheet);
-
-			// ATT
-			putBytes2(56, 26, sheet);
-
-			// Def
-			putBytes2(58, 27, sheet);
-
-			// MR
-			putBytes2(60, 23, sheet);
-
-			// Mor
-			putBytes2(62, 24, sheet);
-
-			// wpn1
-			putBytes2(208, 2, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn2
-			putBytes2(210, 3, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn3
-			putBytes2(212, 4, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn4
-			putBytes2(214, 5, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn5
-			putBytes2(216, 6, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn6
-			putBytes2(218, 7, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// wpn7
-			putBytes2(220, 8, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// armor1
-			putBytes2(228, 9, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// armor2
-			putBytes2(230, 10, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// armor3
-			putBytes2(232, 11, sheet, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					if (Integer.parseInt(value) == 0) {
-						return "";
-					}
-					return value;
-				}
-			});
-
-			// basecost
-			putBytes2(234, 15, sheet);
-
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.MONSTER);
-			rowNumber = 1;
-			// res
-			int i = 0;
-			byte[] c = new byte[2];
-			stream.skip(236);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				//System.out.println(Integer.decode("0X" + high + low));
-				XSSFRow row = sheet.getRow(rowNumber);
-				rowNumber++;
-				XSSFCell cell = row.getCell(18, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-				int tmp = new BigInteger(high + low, 16).intValue();
-				if (tmp < 1000) {
-					cell.setCellValue(Integer.decode("0X" + high + low));
-				} else {
-					cell.setCellValue(new BigInteger("FFFF" + high + low, 16).intValue());
-				}
-				stream.skip(262l);
-				i++;
-				if (i >= Starts.MONSTER_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-
-			// additional leadership
-			putAttribute(sheet, "9D00", 35, new Callback() {
-				
-				@Override
-				public String notFound() {
-					return "40";
-				}
-				
-				@Override
-				public String found(String value) {
-					return Integer.toString(Integer.parseInt(value)+40);
-				}
-			});
-			
-			// itemslots defaults
-			putAttribute(sheet, "B600", 40, new CallbackAdapter(){
-				// hand
-				@Override
-				public String notFound() {
-					return "2";
-				}
-			});
-			putAttribute(sheet, "B600", 41, new CallbackAdapter(){
-				// head
-				@Override
-				public String notFound() {
-					return "1";
-				}
-			});
-			putAttribute(sheet, "B600", 42, new CallbackAdapter(){
-				// body
-				@Override
-				public String notFound() {
-					return "1";
-				}
-			});
-			putAttribute(sheet, "B600", 43, new CallbackAdapter(){
-				// foot
-				@Override
-				public String notFound() {
-					return "1";
-				}
-			});
-			putAttribute(sheet, "B600", 44, new CallbackAdapter(){
-				// misc
-				@Override
-				public String notFound() {
-					return "2";
-				}
-			});
-			
-			// Large bitmap
-			for (String[] pair : DOTHESE) {
-				rowNumber = 1;
-				boolean[] boolArray = largeBitmap(pair[0], 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values);
-				for (boolean found : boolArray) {
-					XSSFRow row = sheet.getRow(rowNumber);
-					rowNumber++;
-					XSSFCell cell = row.getCell(Integer.parseInt(pair[1]), Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					if (found) {
-						if (pair[0].equals("slow_to_recruit")) {
-							cell.setCellValue(2);
-						} else if (pair[0].equals("heat")) {
-							cell.setCellValue(3);
-						} else if (pair[0].equals("cold")) {
-							cell.setCellValue(3);
-						} else if (pair[0].equals("stealthy40")) {
-							String additional = getAttr("6C00", rowNumber-1);
-							boolean glamour = false;
-							if (largeBitmap("illusion", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2]) {
-								glamour = true;
-							}
-							cell.setCellValue(40 + Integer.parseInt(additional.equals("")?"0":additional) + (glamour?25:0));
-						} else if (pair[0].equals("coldres15")) {
-							String additional = getAttr("C900", rowNumber-1);
-							boolean cold = false;
-							if (largeBitmap("cold", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("DC00", rowNumber-1).length() > 0) {
-								cold = true;
-							}
-							cell.setCellValue(15 + Integer.parseInt(additional.equals("")?"0":additional) + (cold?10:0));
-						} else if (pair[0].equals("fireres15")) {
-							String additional = getAttr("C600", rowNumber-1);
-							boolean heat = false;
-							if (largeBitmap("heat", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("3C01", rowNumber-1).length() > 0) {
-								heat = true;
-							}
-							cell.setCellValue(15 + Integer.parseInt(additional.equals("")?"0":additional) + (heat?10:0));
-						} else if (pair[0].equals("poisonres15")) {
-							String additional = getAttr("C800", rowNumber-1);
-							boolean poisoncloud = false;
-							if (largeBitmap("undead", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || largeBitmap("inanimate", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("6A00", rowNumber-1).length() > 0) {
-								poisoncloud = true;
-							}
-							cell.setCellValue(15 + Integer.parseInt(additional.equals("")?"0":additional) + (poisoncloud?10:0));
-						} else if (pair[0].equals("shockres15")) {
-							String additional = getAttr("C700", rowNumber-1);
-							cell.setCellValue(15 + Integer.parseInt(additional.equals("")?"0":additional));
-						} else if (pair[0].equals("noleader")) {
-							String additional = getAttr("9D00", rowNumber-1);
-							XSSFCell baseLeaderCell = row.getCell(248, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							baseLeaderCell.setCellValue("0");
-							if (!"".equals(additional)) {
-								cell.setCellValue(additional);
-							} else {
-								cell.setCellValue("0");
-							}
-						} else if (pair[0].equals("poorleader")) {
-							String additional = getAttr("9D00", rowNumber-1);
-							XSSFCell baseLeaderCell = row.getCell(248, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							baseLeaderCell.setCellValue("10");
-							if (!"".equals(additional)) {
-								cell.setCellValue(Integer.toString(10+Integer.parseInt(additional)));
-							} else {
-								cell.setCellValue("10");
-							}
-						} else if (pair[0].equals("goodleader")) {
-							String additional = getAttr("9D00", rowNumber-1);
-							XSSFCell baseLeaderCell = row.getCell(248, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							baseLeaderCell.setCellValue("80");
-							if (!"".equals(additional)) {
-								cell.setCellValue(Integer.toString(80+Integer.parseInt(additional)));
-							} else {
-								cell.setCellValue("80");
-							}
-						} else if (pair[0].equals("expertleader")) {
-							String additional = getAttr("9D00", rowNumber-1);
-							XSSFCell baseLeaderCell = row.getCell(248, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							baseLeaderCell.setCellValue("120");
-							if (!"".equals(additional)) {
-								cell.setCellValue(Integer.toString(120+Integer.parseInt(additional)));
-							} else {
-								cell.setCellValue("120");
-							}
-						} else if (pair[0].equals("superiorleader")) {
-							String additional = getAttr("9D00", rowNumber-1);
-							XSSFCell baseLeaderCell = row.getCell(248, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							baseLeaderCell.setCellValue("160");
-							if (!"".equals(additional)) {
-								cell.setCellValue(Integer.toString(160+Integer.parseInt(additional)));
-							} else {
-								cell.setCellValue("160");
-							}
-						} else if (pair[0].equals("poormagicleader")) {
-							cell.setCellValue("10");
-						} else if (pair[0].equals("okmagicleader")) {
-							cell.setCellValue("40");
-						} else if (pair[0].equals("goodmagicleader")) {
-							cell.setCellValue("80");
-						} else if (pair[0].equals("expertmagicleader")) {
-							cell.setCellValue("120");
-						} else if (pair[0].equals("superiormagicleader")) {
-							cell.setCellValue("160");
-						} else if (pair[0].equals("poorundeadleader")) {
-							cell.setCellValue("10");
-						} else if (pair[0].equals("okundeadleader")) {
-							cell.setCellValue("40");
-						} else if (pair[0].equals("goodundeadleader")) {
-							cell.setCellValue("80");
-						} else if (pair[0].equals("expertundeadleader")) {
-							cell.setCellValue("120");
-						} else if (pair[0].equals("superiorundeadleader")) {
-							cell.setCellValue("160");
-						} else if (pair[0].equals("misc2")) {
-							XSSFCell handCell = row.getCell(40, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							handCell.setCellValue(0);
-							XSSFCell headCell = row.getCell(41, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							headCell.setCellValue(0);
-							XSSFCell bodyCell = row.getCell(42, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							bodyCell.setCellValue(0);
-							XSSFCell footCell = row.getCell(43, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							footCell.setCellValue(0);
-							XSSFCell miscCell = row.getCell(44, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							miscCell.setCellValue(2);
-						} else if (pair[0].equals("mounted")) {
-							XSSFCell footCell = row.getCell(43, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							footCell.setCellValue(0);
-							cell.setCellValue(1);
-						} else {
-							cell.setCellValue(1);
-						}
-					} else {
-						if (pair[0].equals("slow_to_recruit")) {
-							cell.setCellValue(1);
-						} else if (pair[0].equals("heat")) {
-							cell.setCellValue(getAttr("3C01", rowNumber-1));
-						} else if (pair[0].equals("cold")) {
-							cell.setCellValue(getAttr("DC00", rowNumber-1));
-						} else if (pair[0].equals("coldres15")) {
-							boolean cold = false;
-							if (largeBitmap("cold", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("DC00", rowNumber-1).length() > 0) {
-								cold = true;
-							}
-							String additional = getAttr("C900", rowNumber-1);
-							int coldres = Integer.parseInt(additional.equals("")?"0":additional) + (cold?10:0);
-							cell.setCellValue(coldres==0?"":Integer.toString(coldres));
-						} else if (pair[0].equals("fireres15")) {
-							boolean heat = false;
-							if (largeBitmap("heat", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("3C01", rowNumber-1).length() > 0) {
-								heat = true;
-							}
-							String additional = getAttr("C600", rowNumber-1);
-							int coldres = Integer.parseInt(additional.equals("")?"0":additional) + (heat?10:0);
-							cell.setCellValue(coldres==0?"":Integer.toString(coldres));
-						} else if (pair[0].equals("poisonres15")) {
-							boolean poisoncloud = false;
-							if (largeBitmap("undead", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || largeBitmap("inanimate", 248, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, values)[rowNumber-2] || getAttr("6A00", rowNumber-1).length() > 0) {
-								poisoncloud = true;
-							}
-							String additional = getAttr("C800", rowNumber-1);
-							int poisonres = Integer.parseInt(additional.equals("")?"0":additional) + (poisoncloud?10:0);
-							cell.setCellValue(poisonres==0?"":Integer.toString(poisonres));
-						} else if (pair[0].equals("shockres15")) {
-							String additional = getAttr("C700", rowNumber-1);
-							int shockres = Integer.parseInt(additional.equals("")?"0":additional);
-							cell.setCellValue(shockres==0?"":Integer.toString(shockres));
-						} else if (pair[0].equals("stealthy40")) {
-							String additional = getAttr("6C00", rowNumber-1);
-							cell.setCellValue(additional == null || additional.equals("") ? "" : additional);
-						} else if (pair[0].equals("immobile")
-								|| pair[0].equals("teleport")
-								|| pair[0].equals("float")
-								|| pair[0].equals("bluntres")
-								|| pair[0].equals("slashres")
-								|| pair[0].equals("pierceres")
-								) {
-							cell.setCellValue("");
-						} else if (pair[0].equals("noleader")
-								|| pair[0].equals("poorleader")
-								|| pair[0].equals("goodleader")
-								|| pair[0].equals("expertleader")
-								|| pair[0].equals("superiorleader")
-								|| pair[0].equals("poormagicleader")
-								|| pair[0].equals("okmagicleader")
-								|| pair[0].equals("goodmagicleader")
-								|| pair[0].equals("expertmagicleader")
-								|| pair[0].equals("superiormagicleader")
-								|| pair[0].equals("poorundeadleader")
-								|| pair[0].equals("okundeadleader")
-								|| pair[0].equals("goodundeadleader")
-								|| pair[0].equals("expertundeadleader")
-								|| pair[0].equals("superiorundeadleader")
-								|| pair[0].equals("misc2")
-								) {
-						} else {
-							cell.setCellValue("");
-						}
-					}
-				}
-			}
-			
-			/*stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.MONSTER);
-			int i = 0;
-			byte[] c = new byte[16];
-			stream.skip(248);
-			while ((stream.read(c, 0, 16)) != -1) {
-				boolean found = false;
-				System.out.print("(" + (i+1) + ") ");
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				//System.out.print(high + low + " ");
-				int val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print("1:{");
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value1[j].equals("")?("*****"+(j+1)+"*****"):value1[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				high = String.format("%02X", c[3]);
-				low = String.format("%02X", c[2]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 2:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value2[j].equals("")?("*****"+(j+1)+"*****"):value2[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				high = String.format("%02X", c[5]);
-				low = String.format("%02X", c[4]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 3:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value3[j].equals("")?("*****"+(j+1)+"*****"):value3[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-
-				high = String.format("%02X", c[7]);
-				low = String.format("%02X", c[6]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 4:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value4[j].equals("")?("*****"+(j+1)+"*****"):value4[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-
-				high = String.format("%02X", c[9]);
-				low = String.format("%02X", c[8]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 5:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value5[j].equals("")?("*****"+(j+1)+"*****"):value5[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				high = String.format("%02X", c[11]);
-				low = String.format("%02X", c[10]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 6:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value6[j].equals("")?(j+1):value6[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				high = String.format("%02X", c[13]);
-				low = String.format("%02X", c[12]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 7:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value7[j].equals("")?(j+1):value7[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				high = String.format("%02X", c[15]);
-				low = String.format("%02X", c[14]);
-				//System.out.print(high + low + " ");
-				val = Integer.decode("0X" + high + low);
-				if (val > 0) {
-					System.out.print(" 8:{");
-					found = false;
-					for (int j=0; j < 16; j++) {
-						if ((val & MASK[j]) != 0) {
-							System.out.print((found?",":"") + (value8[j].equals("")?(j+1):value8[j]));
-							found = true;
-						}
-					}
-					System.out.print("}");
-				}
-				
-				if (!found) {
-					//System.out.println("");
-				}
-				System.out.println(" ");
-				stream.skip(248l);
-				i++;
-				if (i >= Starts.MONSTER_COUNT) {
-					break;
-				}
-			}
-			stream.close();*/
-
-			// realm
-			stream = new FileInputStream(EXE_NAME);			
-			stream.skip(Starts.MONSTER);
-			i = 0;
-			int k = 0;
-			Set<Integer> posSet = new HashSet<Integer>();
-			long numFound = 0;
-			c = new byte[2];
-			stream.skip(64);
-			while ((stream.read(c, 0, 2)) != -1) {
-				String high = String.format("%02X", c[1]);
-				String low = String.format("%02X", c[0]);
-				int weapon = Integer.decode("0X" + high + low);
-				if (weapon == 0) {
-					stream.skip(46l - numFound*2l);
-					int numRealms = 0;
-					// Values
-					for (int x = 0; x < numFound; x++) {
-						byte[] d = new byte[4];
-						stream.read(d, 0, 4);
-						String high1 = String.format("%02X", d[3]);
-						String low1 = String.format("%02X", d[2]);
-						high = String.format("%02X", d[1]);
-						low = String.format("%02X", d[0]);
-						//System.out.print(low + high + " ");
-						if (posSet.contains(x)) {
-							int fire = new BigInteger(high1 + low1 + high + low, 16).intValue();//Integer.decode("0X" + high + low);
-							//System.out.print(i+1 + "\t" + fire);
-							//System.out.println("");
-							XSSFRow row = sheet.getRow(i+1);
-							XSSFCell cell = row.getCell(233+numRealms, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);							
-							cell.setCellValue(fire);
-							numRealms++;
-						}
-						//stream.skip(2);
-					}
-					
-//					System.out.println("");
-					stream.skip(262l - 46l - numFound*4l);
-					numFound = 0;
-					posSet.clear();
-					k = 0;
-					i++;
-				} else {
-					//System.out.print(low + high + " ");
-					if ((low + high).equals("5A02")) {
-						posSet.add(k);
-					}
-					k++;
-					numFound++;
-				}				
-				if (i >= Starts.MONSTER_COUNT) {
-					break;
-				}
-			}
-			stream.close();
-			
-			// patience
-			putAttribute(sheet, "CD01", 104);
-
-			// stormimmune
-			putAttribute(sheet, "AF00", 94);
-			
-			// regeneration
-			putAttribute(sheet, "BD00", 151);
-
-			// secondshape
-			putAttribute(sheet, "C200", 210);
-
-			// firstshape
-			putAttribute(sheet, "C300", 209);
-
-			// shapechange
-			putAttribute(sheet, "C100", 208);
-
-			// secondtmpshape
-			putAttribute(sheet, "C400", 211);
-			
-			// landshape
-			putAttribute(sheet, "F500", 212);
-			
-			// watershape
-			putAttribute(sheet, "F600", 213);
-			
-			// forestshape
-			putAttribute(sheet, "4201", 214);
-			
-			// plainshape
-			putAttribute(sheet, "4301", 215);
-			
-			// damagerev
-			putAttribute(sheet, "CA00", 144, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return Integer.toString(Integer.parseInt(value)-1);
-				}
-			});
-
-			// bloodvengeance
-			putAttribute(sheet, "9E01", 231);
-			
-			// nobadevents
-			putAttribute(sheet, "EB00", 178);
-			
-			// bringeroffortune
-			putAttribute(sheet, "E400", 232);
-			
-			// darkvision
-			putAttribute(sheet, "1901", 133);
-			
-			// fear
-			putAttribute(sheet, "B700", 138);
-			
-			// voidsanity
-			putAttribute(sheet, "1501", 132);
-			
-			// standard
-			putAttribute(sheet, "6700", 117);
-			
-			// formationfighter
-			putAttribute(sheet, "6E01", 115);
-			
-			// undisciplined
-			putAttribute(sheet, "6F01", 114);
-			
-			// bodyguard
-			putAttribute(sheet, "9801", 121);
-			
-			// summon
-			putAttribute(sheet, "A400,A500,A600", 223);
-			putAttribute(sheet, "A400", 224, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "A500", 224, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return "2";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "A600", 224, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return "3";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "A400,A500,A600", 224, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return null;
-				}
-			});
-
-			// inspirational
-			putAttribute(sheet, "7001", 118);
-			
-			// pillagebonus
-			putAttribute(sheet, "8300", 187);
-			
-			// berserk
-			putAttribute(sheet, "BE00", 139);
-			
-			// pathcost
-			putAttribute(sheet, "F300", 45);
-			
-			// default startdom
-			putAttribute(sheet, "F300", 46, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-			});
-			// startdom
-			putAttribute(sheet, "F200", 46, new CallbackAdapter() {
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			
-			// waterbreathing
-			putAttribute(sheet, "6F00", 122);
-
-			// batstartsum1
-			putAttribute(sheet, "B401", 227);
-			// batstartsum2
-			putAttribute(sheet, "B501", 228);
-			// batstartsum3
-			putAttribute(sheet, "B601", 236);
-			// batstartsum4
-			putAttribute(sheet, "B701", 237);
-			// batstartsum5
-			putAttribute(sheet, "B801", 238);
-
-			// batstartsum1d6
-			putAttribute(sheet, "B901", 239);
-			// batstartsum2d6
-			putAttribute(sheet, "BA01", 240);
-			// batstartsum3d6
-			putAttribute(sheet, "BB01", 241);
-			// batstartsum4d6
-			putAttribute(sheet, "BC01", 242);
-			// batstartsum5d6
-			putAttribute(sheet, "BD01", 243);
-			// batstartsum6d6
-			putAttribute(sheet, "BE01", 244);
-
-			// autosummon (#summon1-5)
-			putAttribute(sheet, "6B00,8F00", 225);
-			putAttribute(sheet, "6B00", 226, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return "?";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "8F00", 226, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return "?";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "6B00,8F00", 226, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return null;
-				}
-			});
-			
-			// domsummon
-			putMultipleAttributes(sheet, "A101,DB00,F100", 64l, 46l, 229, Starts.MONSTER, Starts.MONSTER_SIZE, Starts.MONSTER_COUNT, null);
-			
-			// turmoil summon
-			putAttribute(sheet, "AD00", 245);
-			
-			// cold summon
-			putAttribute(sheet, "9200", 246);
-			
-			// stormpower
-			putAttribute(sheet, "AE00", 161);
-			
-			// firepower
-			putAttribute(sheet, "B100", 162);
-
-			// coldpower
-			putAttribute(sheet, "B000", 163);
-
-			// darkpower
-			putAttribute(sheet, "2501", 164);
-			
-			// chaospower
-			putAttribute(sheet, "A001", 165);
-			
-			// magicpower
-			putAttribute(sheet, "4401", 166);
-			
-			// winterpower
-			putAttribute(sheet, "EA00", 167);
-			
-			// springpower
-			putAttribute(sheet, "E700", 168);
-			
-			// summerpower
-			putAttribute(sheet, "E800", 169);
-			
-			// fallpower
-			putAttribute(sheet, "E900", 170);
-			
-			// nametype
-			putAttribute(sheet, "FB00", 219);
-			
-			// blind
-			putAttribute(sheet, "AB00", 134);
-			
-			// eyes
-			putAttribute(sheet, "B200", 279, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return Integer.toString((Integer.parseInt(value) + 2));
-				}
-			});
-			
-			// supplybonus
-			putAttribute(sheet, "7A00", 192);
-			
-			// slave
-			putAttribute(sheet, "7C01", 116);
-			
-			// awe
-			putAttribute(sheet, "6900", 136);
-			
-			// siegebonus
-			putAttribute(sheet, "7D00", 190);
-			
-			// researchbonus
-			putAttribute(sheet, "7900", 195);
-			
-			// chaosrec
-			putAttribute(sheet, "CA01", 186);
-			
-			// invulnerability
-			putAttribute(sheet, "7E01", 124);
-			
-			// iceprot
-			putAttribute(sheet, "BF00", 123);
-			
-			// reinvigoration
-			putAttribute(sheet, "7500", 34);
-			
-			// ambidextrous
-			putAttribute(sheet, "D900", 32);
-			
-			// spy
-			putAttribute(sheet, "D600", 102);
-			
-			// scale walls
-			putAttribute(sheet, "E301", 247);
-			
-			// dream seducer (succubus)
-			putAttribute(sheet, "D200", 106);
-			
-			// seduction
-			putAttribute(sheet, "2A01", 105);
-			
-			// assassin
-			putAttribute(sheet, "D500", 103);
-			
-			// explode on death
-			putAttribute(sheet, "2901", 249);
-			
-			// taskmaster
-			putAttribute(sheet, "7B01", 119);
-			
-			// unique
-			putAttribute(sheet, "1301", 216);
-			
-			// poisoncloud
-			putAttribute(sheet, "6A00", 145);
-			
-			// startaff
-			putAttribute(sheet, "B900", 250);
-			
-			// uwregen
-			putAttribute(sheet, "DD00", 251);
-			
-			// patrolbonus
-			putAttribute(sheet, "AA00", 188);
-			
-			// castledef
-			putAttribute(sheet, "D700", 189);
-			
-			// sailingshipsize
-			putAttribute(sheet, "7000", 98);
-			
-			// sailingmaxunitsize
-			putAttribute(sheet, "9A01", 99);
-			
-			// incunrest
-			putAttribute(sheet, "DF00", 193, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					double val = Double.parseDouble(value)/10d;
-					if (val < 1 && val > -1) {
-						return Double.toString(val);
-					}
-					return Integer.toString((int)val);
-				}
-			});
-			
-			// barbs
-			putAttribute(sheet, "BC00", 153, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-			});
-			
-			// inn
-			putAttribute(sheet, "4E01", 47);
-			
-			// stonebeing
-			putAttribute(sheet, "1801", 80);
-			
-			// shrinkhp
-			putAttribute(sheet, "5001", 252);
-			
-			// growhp
-			putAttribute(sheet, "4F01", 253);
-			
-			// transformation
-			putAttribute(sheet, "FD01", 254);
-			
-			// heretic
-			putAttribute(sheet, "B800", 206);
-			
-			// popkill
-			putAttribute(sheet, "2001", 194, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					return Integer.toString(Integer.parseInt(value)*10);
-				}
-			});
-			
-			// autohealer
-			putAttribute(sheet, "6201", 175);
-			
-			// fireshield
-			putAttribute(sheet, "A300", 142);
-			
-			// startingaff
-			putAttribute(sheet, "E200", 255);
-			
-			// fixedresearch
-			putAttribute(sheet, "F800", 256);
-			
-			// divineins
-			putAttribute(sheet, "C201", 257);
-			
-			// halt
-			putAttribute(sheet, "4701", 137);
-			
-			// crossbreeder
-			putAttribute(sheet, "AF01", 201);
-
-			// reclimit
-			putAttribute(sheet, "7D01", 14);
-			
-			// fixforgebonus
-			putAttribute(sheet, "C501", 172);
-
-			// mastersmith
-			putAttribute(sheet, "6B01", 173);
-
-			// lamiabonus
-			putAttribute(sheet, "A900", 258);
-
-			// homesick
-			putAttribute(sheet, "FD00", 113);
-
-			// banefireshield
-			putAttribute(sheet, "DE00", 143);
-
-			// animalawe
-			putAttribute(sheet, "A200", 135);
-
-			// autodishealer
-			putAttribute(sheet, "6301", 176);
-
-			// shatteredsoul
-			putAttribute(sheet, "4801", 181);
-
-			// voidsum
-			putAttribute(sheet, "CE00", 205);
-
-			// makepearls
-			putAttribute(sheet, "AE01", 202);
-
-			// inspiringres
-			putAttribute(sheet, "5501", 197);
-
-			// drainimmune
-			putAttribute(sheet, "1101", 196);
-			
-			// diseasecloud
-			putAttribute(sheet, "AC00", 146);
-
-			// inquisitor
-			putAttribute(sheet, "D300", 74);
-
-			// beastmaster
-			putAttribute(sheet, "7101", 120);
-
-			// douse
-			putAttribute(sheet, "7400", 198);
-
-			// preanimator
-			putAttribute(sheet, "6C01", 259);
-
-			// dreanimator
-			putAttribute(sheet, "6D01", 260);
-
-			// mummify
-			putAttribute(sheet, "FF01", 261);
-			
-			// onebattlespell
-			putAttribute(sheet, "D100", 262, new CallbackAdapter() {
-				// Hack to get Pazuzu Natural Storm 
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-
-			// fireattuned
-			putAttribute(sheet, "F501", 263);									
-
-			// airattuned
-			putAttribute(sheet, "F601", 264);
-
-			// waterattuned
-			putAttribute(sheet, "F701", 265);
-
-			// earthattuned
-			putAttribute(sheet, "F801", 266);
-
-			// astralattuned
-			putAttribute(sheet, "F901", 267);
-
-			// deathattuned
-			putAttribute(sheet, "FA01", 268);
-
-			// natureattuned
-			putAttribute(sheet, "FB01", 269);
-
-			// bloodattuned
-			putAttribute(sheet, "FC01", 270);
-
-			// magicboost F
-			putAttribute(sheet, "0A00", 271);
-
-			// magicboost A
-			putAttribute(sheet, "0B00", 272);
-
-			// magicboost W
-			putAttribute(sheet, "0C00", 273);
-
-			// magicboost E
-			putAttribute(sheet, "0D00", 274);
-
-			// magicboost S
-			putAttribute(sheet, "0E00", 275);
-
-			// magicboost D
-			putAttribute(sheet, "0F00", 276);
-
-			// magicboost N
-			putAttribute(sheet, "1000", 277);
-
-			// magicboost ALL
-			putAttribute(sheet, "1600", 278);
-
-			// heatrec
-			putAttribute(sheet, "EA01", 280, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("10")) {
-						return "0";
-					}
-					return "1";
-				}
-			});
-
-			// coldrec
-			putAttribute(sheet, "EB01", 281, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("10")) {
-						return "0";
-					}
-					return "1";
-				}
-			});
-
-			// spread chaos
-			putAttribute(sheet, "D801", 282, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("100")) {
-						return "1";
-					}
-					return "";
-				}
-			});
-
-			// spread death
-			putAttribute(sheet, "D801", 283, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("103")) {
-						return "1";
-					}
-					return "";
-				}
-			});
-			
-			// spread order
-			putAttribute(sheet, "D901", 288, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("100")) {
-						return "1";
-					}
-					return "";
-				}
-			});
-
-			// spread growth
-			putAttribute(sheet, "D901", 289, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					if (value.equals("103")) {
-						return "1";
-					}
-					return "";
-				}
-			});
-			
-			// corpseeater
-			putAttribute(sheet, "EC00", 284);
-
-			// poisonskin
-			putAttribute(sheet, "0602", 285);
-
-			// bug
-			putAttribute(sheet, "AB01", 286);
-
-			// uwbug
-			putAttribute(sheet, "AC01", 287);
-
-			// spreaddom
-			putAttribute(sheet, "9C00", 291);
-
-			// reform
-			putAttribute(sheet, "8A01", 292);
-
-			// battlesum5
-			putAttribute(sheet, "8E01", 293);
-			
-			// acidsplash
-			putAttribute(sheet, "F101", 294);
-			
-			// drake
-			putAttribute(sheet, "F201", 295);
-
-			// prophetshape
-			putAttribute(sheet, "0402", 296);
-
-			// horror
-			putAttribute(sheet, "8701", 297);
-
-			// insane
-			putAttribute(sheet, "3501", 180);
-			
-			// sacr
-			putAttribute(sheet, "D800", 199);
-			
-			// enchrebate50
-			putAttribute(sheet, "1002", 298);
-			
-			// leper
-			putAttribute(sheet, "7C00", 182);
-			
-			// resources
-			putAttribute(sheet, "9701", 174);
-
-			// slimer
-			putAttribute(sheet, "9C01", 147);
-
-			// mindslime
-			putAttribute(sheet, "9201", 148);
-
-			// corrupt
-			putAttribute(sheet, "E000", 107, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-			});
-			
-			// petrify
-			putAttribute(sheet, "6800", 154, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-			});
-			
-			// eyeloss
-			putAttribute(sheet, "F400", 155);
-			
-			// ethtrue
-			putAttribute(sheet, "0401", 157, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return "1";
-				}
-			});			
-
-			// gemprod fire
-			putAttribute(sheet, "1E00", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "F";
-				}
-			});
-			
-			// gemprod air
-			putAttribute(sheet, "1F00", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "A";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod water
-			putAttribute(sheet, "2000", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "W";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod earth
-			putAttribute(sheet, "2100", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "E";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod astral
-			putAttribute(sheet, "2200", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "S";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod death
-			putAttribute(sheet, "2300", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "D";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod nature
-			putAttribute(sheet, "2400", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "N";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// gemprod blood
-			putAttribute(sheet, "2500", 185, new CallbackAdapter() {
-				@Override
-				public String found(String value) {
-					return value + "B";
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			}, true);
-			
-			// itemslots
-			putAttribute(sheet, "B600", 40, new CallbackAdapter(){
-				// hand
-				@Override
-				public String found(String value) {
-					int numHands = 0;
-					int val = Integer.parseInt(value);
-					if ((val & 0x0002) != 0) {
-						numHands++;
-					}
-					if ((val & 0x0004) != 0) {
-						numHands++;
-					}
-					if ((val & 0x0008) != 0) {
-						numHands++;
-					}
-					if ((val & 0x0010) != 0) {
-						numHands++;
-					}
-					return Integer.toString(numHands);
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "B600", 41, new CallbackAdapter(){
-				// head
-				@Override
-				public String found(String value) {
-					int numHeads = 0;
-					int val = Integer.parseInt(value);
-					if ((val & 0x0080) != 0) {
-						numHeads++;
-					}
-					if ((val & 0x0100) != 0) {
-						numHeads++;
-					}
-					if ((val & 0x0200) != 0) {
-						numHeads++;
-					}
-					return Integer.toString(numHeads);
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "B600", 42, new CallbackAdapter(){
-				// body
-				@Override
-				public String found(String value) {
-					int numBody = 0;
-					int val = Integer.parseInt(value);
-					if ((val & 0x0400) != 0) {
-						numBody++;
-					}
-					return Integer.toString(numBody);
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "B600", 43, new CallbackAdapter(){
-				// foot
-				@Override
-				public String found(String value) {
-					int numFoot = 0;
-					int val = Integer.parseInt(value);
-					if ((val & 0x0800) != 0) {
-						numFoot++;
-					}
-					return Integer.toString(numFoot);
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			putAttribute(sheet, "B600", 44, new CallbackAdapter(){
-				// misc
-				@Override
-				public String found(String value) {
-					int numMisc = 0;
-					int val = Integer.parseInt(value);
-					if ((val & 0x1000) != 0) {
-						numMisc++;
-					}
-					if ((val & 0x2000) != 0) {
-						numMisc++;
-					}
-					if ((val & 0x4000) != 0) {
-						numMisc++;
-					}
-					if ((val & 0x8000) != 0) {
-						numMisc++;
-					}
-					if ((val & 0x10000) != 0) {
-						numMisc++;
-					}
-					return Integer.toString(numMisc);
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			
-			// startage
-			putAttribute(sheet, "1D01", 38, new CallbackAdapter(){
-				@Override
-				public String found(String value) {
-					int age = Integer.parseInt(value);
-					if (age == -1) {
-						age = 0;
-					}
-					return Integer.toString((int)(age+age*.1));
-				}
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			
-			// maxage
-			putAttribute(sheet, "1C01", 39, new CallbackAdapter(){
-				@Override
-				public String notFound() {
-					return null;
-				}
-			});
-			
-			// heroarrivallimit
-			putAttribute(sheet, "1602", 299);
-			
-			// sailsize
-			putAttribute(sheet, "1702", 300);
-			
-			// uwdamage
-			putAttribute(sheet, "0201", 301);
-			
-			// landdamage
-			putAttribute(sheet, "0E02", 302);
-			
-			// rpcost
-			putBytes2(240, 303, sheet);
-
-			// fixedname
-			File heroesFile = new File("heroes.txt");
-			Set<Integer> heroes = new HashSet<Integer>();
-			File namesFile = new File("names.txt");
-			List<String> names = new ArrayList<String>();
-			FileReader herosFileReader = new FileReader(heroesFile);
-			FileReader namesFileReader = new FileReader(namesFile);
-			BufferedReader bufferedReader = new BufferedReader(herosFileReader);
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				heroes.add(Integer.parseInt(line));
-			}
-			bufferedReader.close();
-			bufferedReader = new BufferedReader(namesFileReader);
-			while ((line = bufferedReader.readLine()) != null) {
-				names.add(line);
-			}
-			bufferedReader.close();
-			int nameIndex = 0;
-			for (int row = 1; row <= Starts.MONSTER_COUNT; row++) {
-				String unique = getAttr("1301", row);
-				if (row == 621 || row == 980 ||row == 981||row==994||row==995||row==996||row==997||
-					row==1484 || row==1485|| row==1486|| row==1487 || (row >= 2765 && row <=2781)) {
-					unique = "0";
-				}
-				if (heroes.contains(row) || (unique != null && unique.equals("1"))) {
-					System.out.println(names.get(nameIndex++));
-				} else {
-					System.out.println("");
-				}
-			}
-
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.MONSTER_MAGIC);
 			
 			// magic
-			c = new byte[4];
+			byte[] c = new byte[4];
 			while ((stream.read(c, 0, 4)) != -1) {
 				String high = String.format("%02X", c[1]);
 				String low = String.format("%02X", c[0]);
@@ -1839,17 +321,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					monsterMagic.put(id, monMagic);
 				}
 				
-				//System.out.print("id: " + Integer.decode("0X" + high + low));
 				stream.read(c, 0, 4);
 				high = String.format("%02X", c[1]);
 				low = String.format("%02X", c[0]);
 				int path = Integer.decode("0X" + high + low);
-				//System.out.print(" path: " + Integer.decode("0X" + high + low));
 				stream.read(c, 0, 4);
 				high = String.format("%02X", c[1]);
 				low = String.format("%02X", c[0]);
 				int value = Integer.decode("0X" + high + low);
-				//System.out.println(" value: " + Integer.decode("0X" + high + low));
 				switch (path) {
 				case 0:
 					monMagic.F = value;
@@ -1951,56 +430,536 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 			}
-			for (int j = 1; j < Starts.MONSTER_COUNT; j++) {
-				Magic monMagic = monsterMagic.get(j);
-				if (monMagic != null) {
-					XSSFRow row = sheet.getRow(j);
-					XSSFCell cell = row.getCell(48, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.F));
-					cell = row.getCell(49, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.A));
-					cell = row.getCell(50, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.W));
-					cell = row.getCell(51, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.E));
-					cell = row.getCell(52, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.S));
-					cell = row.getCell(53, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.D));
-					cell = row.getCell(54, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.N));
-					cell = row.getCell(55, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.B));
-					cell = row.getCell(56, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-					cell.setCellValue(magicStrip(monMagic.H));
-					//System.out.print(magout(monMagic.F) + magout(monMagic.A ) + magout(monMagic.W) + magout(monMagic.E) + magout(monMagic.S) + magout(monMagic.D) + magout(monMagic.N) + magout(monMagic.B) + magout(monMagic.H));
-					
-					if (monMagic.rand != null) {
-						int count = 0;
-						for (RandomMagic ranMag : monMagic.rand) {
-							cell = row.getCell(57 + count*4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							cell.setCellValue(magicStrip(ranMag.rand));
-							cell = row.getCell(58 + count*4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							cell.setCellValue(magicStrip(ranMag.nbr));
-							cell = row.getCell(59 + count*4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							cell.setCellValue(magicStrip(ranMag.link));
-							cell = row.getCell(60 + count*4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-							cell.setCellValue(magicStrip(ranMag.mask));
-							count++;
-							if (count == 4) {
-								count = 62;
+			stream.close();
+	        
+			stream = new FileInputStream(EXE_NAME);			
+			stream.skip(startIndex);
+			
+			// Name
+			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
+	        Reader in = new BufferedReader(isr);
+	        int rowNumber = 1;
+			while ((ch = in.read()) > -1) {
+				StringBuffer name = new StringBuffer();
+				while (ch != 0) {
+					name.append((char)ch);
+					ch = in.read();
+				}
+				if (name.length() == 0) {
+					continue;
+				}
+				if (name.toString().equals("end")) {
+					break;
+				}
+				in.close();
+				
+				Monster monster = new Monster();
+				monster.parameters = new HashMap<String, Object>();
+				monster.parameters.put("id", rowNumber);
+				monster.parameters.put("name", name.toString());
+				monster.parameters.put("ap", getBytes2(startIndex + 40));
+				monster.parameters.put("mapmove", getBytes2(startIndex + 42));
+				monster.parameters.put("size", getBytes2(startIndex + 44));
+				monster.parameters.put("ressize", getBytes2(startIndex + 44));
+				monster.parameters.put("hp", getBytes2(startIndex + 46));
+				monster.parameters.put("prot", getBytes2(startIndex + 48));
+				monster.parameters.put("str", getBytes2(startIndex + 50));
+				monster.parameters.put("enc", getBytes2(startIndex + 52));
+				monster.parameters.put("prec", getBytes2(startIndex + 54));
+				monster.parameters.put("att", getBytes2(startIndex + 56));
+				monster.parameters.put("def", getBytes2(startIndex + 58));
+				monster.parameters.put("mr", getBytes2(startIndex + 60));
+				monster.parameters.put("mor", getBytes2(startIndex + 62));
+				monster.parameters.put("rcost", getBytes2(startIndex + 236));
+				monster.parameters.put("wpn1", getBytes2(startIndex + 208) == 0 ? "" : getBytes2(startIndex + 208));
+				monster.parameters.put("wpn2", getBytes2(startIndex + 210) == 0 ? "" : getBytes2(startIndex + 210));
+				monster.parameters.put("wpn3", getBytes2(startIndex + 212) == 0 ? "" : getBytes2(startIndex + 212));
+				monster.parameters.put("wpn4", getBytes2(startIndex + 214) == 0 ? "" : getBytes2(startIndex + 214));
+				monster.parameters.put("wpn5", getBytes2(startIndex + 216) == 0 ? "" : getBytes2(startIndex + 216));
+				monster.parameters.put("wpn6", getBytes2(startIndex + 218) == 0 ? "" : getBytes2(startIndex + 218));
+				monster.parameters.put("wpn7", getBytes2(startIndex + 220) == 0 ? "" : getBytes2(startIndex + 220));
+				monster.parameters.put("armor1", getBytes2(startIndex + 228) == 0 ? "" : getBytes2(startIndex + 228));
+				monster.parameters.put("armor2", getBytes2(startIndex + 230) == 0 ? "" : getBytes2(startIndex + 230));
+				monster.parameters.put("armor3", getBytes2(startIndex + 232) == 0 ? "" : getBytes2(startIndex + 232));
+				monster.parameters.put("basecost", getBytes2(startIndex + 234));
+				monster.parameters.put("rpcost", getBytes2(startIndex + 240));
+
+				List<AttributeValue> attributes = getAttributes(startIndex + Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP);
+				for (AttributeValue attr : attributes) {
+					for (int x = 0; x < KNOWN_MONSTER_ATTRS.length; x++) {
+						if (KNOWN_MONSTER_ATTRS[x][0].equals(attr.attribute)) {
+							if (KNOWN_MONSTER_ATTRS[x][1].endsWith("#")) {
+								int i = 1;
+								for (String value : attr.values) {
+									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value));
+									i++;
+								}
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("startage")) {
+								int age = Integer.parseInt(attr.values.get(0));
+								if (age == -1) {
+									age = 0;
+								}
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)(age+age*.1)));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("heatrec")) {
+								int val = Integer.parseInt(attr.values.get(0));
+								if (val == 10) {
+									val = 0;
+								} else {
+									val = 1;
+								}
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("coldrec")) {
+								int val = Integer.parseInt(attr.values.get(0));
+								if (val == 10) {
+									val = 0;
+								} else {
+									val = 1;
+								}
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("barbs")) {
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("corrupt")) {
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("ethtrue")) {
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("incunrest")) {
+								double val = Double.parseDouble(attr.values.get(0))/10d;
+								if (val < 1 && val > -1) {
+									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Double.toString(val));
+								} else {
+									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)val));
+								}
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("petrify")) {
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("eyes")) {
+								int age = Integer.parseInt(attr.values.get(0));
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(age+2));
+							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A400")) {
+	 							monster.parameters.put("n_summon", "1");
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A500")) {
+	 							monster.parameters.put("n_summon", "2");
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A600")) {
+	 							monster.parameters.put("n_summon", "3");
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod fire")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "F";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod air")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "A";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod water")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "W";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod earth")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "E";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod astral")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "S";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod death")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "D";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod nature")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "N";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod blood")) {
+								String gemprod = "";
+								if (monster.parameters.get("gemprod") != null) {
+									gemprod = monster.parameters.get("gemprod").toString();
+								}
+								gemprod += attr.values.get(0) + "B";
+	 							monster.parameters.put("gemprod", gemprod);
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("pathcost")) {
+								if (monster.parameters.get("startdom") == null) {
+									monster.parameters.put("startdom", 1);
+								}
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("spreadchaos/death")) {
+								if (attr.values.get(0).equals("100")) {
+									monster.parameters.put("spreadchaos", 1);
+								} else if (attr.values.get(0).equals("103")) {
+									monster.parameters.put("spreaddeath", 1);
+								}
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("spreadorder/growth")) {
+								if (attr.values.get(0).equals("100")) {
+									monster.parameters.put("spreadorder", 1);
+								} else if (attr.values.get(0).equals("103")) {
+									monster.parameters.put("spreadgrowth", 1);
+								}
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("damagerev")) {
+								int val = Integer.parseInt(attr.values.get(0));
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val-1));
+							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("popkill")) {
+								int val = Integer.parseInt(attr.values.get(0));
+								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val*10));
+							} else {
+	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
 							}
-							//System.out.print(ranMag.rand + "\t" + ranMag.nbr + "\t" + ranMag.link + "\t" + ranMag.mask + "\t");
 						}
 					}
 				}
-				//System.out.println("");
+				
+				List<String> largeBitmap = largeBitmap(startIndex + 248, values);
+				for (String bit : largeBitmap) {
+					monster.parameters.put(bit, 1);
+				}
+
+				if (monster.parameters.containsKey("slow_to_recruit")) {
+					monster.parameters.put("rt", "2");
+				} else {
+					monster.parameters.put("rt", "1");
+				}
+				
+				if (largeBitmap.contains("heat")) {
+					monster.parameters.put("heat", "3");
+				}
+				
+				if (largeBitmap.contains("cold")) {
+					monster.parameters.put("cold", "3");
+				}
+				
+				String additionalLeader = "0";
+				if (monster.parameters.get("additional leadership") != null) {
+					additionalLeader = monster.parameters.get("additional leadership").toString();
+				}
+				monster.parameters.put("leader", 40+Integer.parseInt(additionalLeader));
+				if (largeBitmap.contains("noleader")) {
+					monster.parameters.put("baseleadership", 0);
+					if (!"".equals(additionalLeader)) {
+						monster.parameters.put("leader", additionalLeader);
+					} else {
+						monster.parameters.put("leader", 0);
+					}
+				}
+				if (largeBitmap.contains("poorleader")) {
+					monster.parameters.put("baseleadership", 10);
+					if (!"".equals(additionalLeader)) {
+						monster.parameters.put("leader", 10+Integer.parseInt(additionalLeader));
+					} else {
+						monster.parameters.put("leader", 10);
+					}
+				}
+				if (largeBitmap.contains("goodleader")) {
+					monster.parameters.put("baseleadership", 80);
+					if (!"".equals(additionalLeader)) {
+						monster.parameters.put("leader", 80+Integer.parseInt(additionalLeader));
+					} else {
+						monster.parameters.put("leader", 80);
+					}
+				}
+				if (largeBitmap.contains("expertleader")) {
+					monster.parameters.put("baseleadership", 120);
+					if (!"".equals(additionalLeader)) {
+						monster.parameters.put("leader", 120+Integer.parseInt(additionalLeader));
+					} else {
+						monster.parameters.put("leader", 120);
+					}
+				}
+				if (largeBitmap.contains("superiorleader")) {
+					monster.parameters.put("baseleadership", 160);
+					if (!"".equals(additionalLeader)) {
+						monster.parameters.put("leader", 160+Integer.parseInt(additionalLeader));
+					} else {
+						monster.parameters.put("leader", 160);
+					}
+				}
+				if (largeBitmap.contains("poormagicleader")) {
+					monster.parameters.put("magicleader", 10);
+				}
+				if (largeBitmap.contains("okmagicleader")) {
+					monster.parameters.put("magicleader", 40);
+				}
+				if (largeBitmap.contains("goodmagicleader")) {
+					monster.parameters.put("magicleader", 80);
+				}
+				if (largeBitmap.contains("expertmagicleader")) {
+					monster.parameters.put("magicleader", 120);
+				}
+				if (largeBitmap.contains("superiormagicleader")) {
+					monster.parameters.put("magicleader", 160);
+				}
+				if (largeBitmap.contains("poorundeadleader")) {
+					monster.parameters.put("undeadleader", 10);
+				}
+				if (largeBitmap.contains("okundeadleader")) {
+					monster.parameters.put("undeadleader", 40);
+				}
+				if (largeBitmap.contains("goodundeadleader")) {
+					monster.parameters.put("undeadleader", 80);
+				}
+				if (largeBitmap.contains("expertundeadleader")) {
+					monster.parameters.put("undeadleader", 120);
+				}
+				if (largeBitmap.contains("superiorundeadleader")) {
+					monster.parameters.put("undeadleader", 160);
+				}
+				
+				if (largeBitmap.contains("coldres15")) {
+					String additionalCold = "0";
+					if (monster.parameters.get("coldres") != null) {
+						additionalCold = monster.parameters.get("coldres").toString();
+					}
+					boolean cold = false;
+					if (largeBitmap.contains("cold") || monster.parameters.get("cold") != null) {
+						cold = true;
+					}
+					monster.parameters.put("coldres", 15 + Integer.parseInt(additionalCold.equals("")?"0":additionalCold) + (cold?10:0));
+				} else {
+					String additionalCold = "0";
+					if (monster.parameters.get("coldres") != null) {
+						additionalCold = monster.parameters.get("coldres").toString();
+					}
+					boolean cold = false;
+					if (largeBitmap.contains("cold") || monster.parameters.get("cold") != null) {
+						cold = true;
+					}
+					int coldres = Integer.parseInt(additionalCold.equals("")?"0":additionalCold) + (cold?10:0);
+					monster.parameters.put("coldres", coldres==0?"":Integer.toString(coldres));
+				}
+				if (largeBitmap.contains("fireres15")) {
+					String additionalFire = "0";
+					if (monster.parameters.get("fireres") != null) {
+						additionalFire = monster.parameters.get("fireres").toString();
+					}
+					boolean heat = false;
+					if (largeBitmap.contains("heat") || monster.parameters.get("heat") != null) {
+						heat = true;
+					}
+					monster.parameters.put("fireres", 15 + Integer.parseInt(additionalFire.equals("")?"0":additionalFire) + (heat?10:0));
+				} else {
+					String additionalFire = "0";
+					if (monster.parameters.get("fireres") != null) {
+						additionalFire = monster.parameters.get("fireres").toString();
+					}
+					boolean heat = false;
+					if (largeBitmap.contains("heat") || monster.parameters.get("heat") != null) {
+						heat = true;
+					}
+					int fireres = Integer.parseInt(additionalFire.equals("")?"0":additionalFire) + (heat?10:0);
+					monster.parameters.put("fireres", fireres==0?"":Integer.toString(fireres));
+				}
+				if (largeBitmap.contains("poisonres15")) {
+					String additionalPoisin = "0";
+					if (monster.parameters.get("poisonres") != null) {
+						additionalPoisin = monster.parameters.get("poisonres").toString();
+					}
+					boolean poisoncloud = false;
+					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.parameters.get("poisoncloud") != null) {
+						poisoncloud = true;
+					}
+					monster.parameters.put("poisonres", 15 + Integer.parseInt(additionalPoisin.equals("")?"0":additionalPoisin) + (poisoncloud?10:0));
+				} else {
+					String additionalPoison = "0";
+					if (monster.parameters.get("poisonres") != null) {
+						additionalPoison = monster.parameters.get("poisonres").toString();
+					}
+					boolean poisoncloud = false;
+					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.parameters.get("poisoncloud") != null) {
+						poisoncloud = true;
+					}
+					int poisonres = Integer.parseInt(additionalPoison.equals("")?"0":additionalPoison) + (poisoncloud?10:0);
+					monster.parameters.put("poisonres", poisonres==0?"":Integer.toString(poisonres));
+				}
+				if (largeBitmap.contains("shockres15")) {
+					String additionalShock = "0";
+					if (monster.parameters.get("shockres") != null) {
+						additionalShock = monster.parameters.get("shockres").toString();
+					}
+					monster.parameters.put("shockres", 15 + Integer.parseInt(additionalShock.equals("")?"0":additionalShock));
+				} else {
+					String additionalShock = "0";
+					if (monster.parameters.get("shockres") != null) {
+						additionalShock = monster.parameters.get("shockres").toString();
+					}
+					int shockres = Integer.parseInt(additionalShock.equals("")?"0":additionalShock);
+					monster.parameters.put("shockres", shockres==0?"":Integer.toString(shockres));
+				}
+				if (largeBitmap.contains("stealthy40")) {
+					String additionalStealth = "0";
+					if (monster.parameters.get("stealthy") != null) {
+						additionalStealth = monster.parameters.get("stealthy").toString();
+					}
+					boolean glamour = false;
+					if (monster.parameters.get("illusion") != null) {
+						glamour = true;
+					}
+					monster.parameters.put("stealthy", 40 + Integer.parseInt(additionalStealth.equals("")?"0":additionalStealth) + (glamour?25:0));
+				} else {
+					String additionalStealth = "0";
+					if (monster.parameters.get("stealthy") != null) {
+						additionalStealth = monster.parameters.get("stealthy").toString();
+					}
+					monster.parameters.put("stealthy", additionalStealth == null || additionalStealth.equals("0") ? "" : additionalStealth);
+				}
+				
+				// magic
+				Magic monMagic = monsterMagic.get(rowNumber);
+				if (monMagic != null) {
+					monster.parameters.put("F", magicStrip(monMagic.F));
+					monster.parameters.put("A", magicStrip(monMagic.A));
+					monster.parameters.put("W", magicStrip(monMagic.W));
+					monster.parameters.put("E", magicStrip(monMagic.E));
+					monster.parameters.put("S", magicStrip(monMagic.S));
+					monster.parameters.put("D", magicStrip(monMagic.D));
+					monster.parameters.put("N", magicStrip(monMagic.N));
+					monster.parameters.put("B", magicStrip(monMagic.B));
+					monster.parameters.put("H", magicStrip(monMagic.H));
+					
+					if (monMagic.rand != null) {
+						int count = 1;
+						for (RandomMagic ranMag : monMagic.rand) {
+							monster.parameters.put("rand"+count, magicStrip(ranMag.rand));
+							monster.parameters.put("nbr"+count, magicStrip(ranMag.nbr));
+							monster.parameters.put("link"+count, magicStrip(ranMag.link));
+							monster.parameters.put("mask"+count, magicStrip(ranMag.mask));
+
+							count++;
+						}
+					}
+				}
+
+				if (largeBitmap.contains("misc2")) {
+					monster.parameters.put("hand", 0);
+					monster.parameters.put("head", 0);
+					monster.parameters.put("body", 0);
+					monster.parameters.put("foot", 0);
+					monster.parameters.put("misc", 2);
+				}
+				if (monster.parameters.containsKey("itemslots")) {
+					String slots = monster.parameters.get("itemslots").toString();
+					int numHands = 0;
+					int numHeads = 0;
+					int numBody = 0;
+					int numFoot = 0;
+					int numMisc = 0;
+					long val = Long.parseLong(slots);
+					if ((val & 0x0002) != 0) {
+						numHands++;
+					}
+					if ((val & 0x0004) != 0) {
+						numHands++;
+					}
+					if ((val & 0x0008) != 0) {
+						numHands++;
+					}
+					if ((val & 0x0010) != 0) {
+						numHands++;
+					}
+					if ((val & 0x0080) != 0) {
+						numHeads++;
+					}
+					if ((val & 0x0100) != 0) {
+						numHeads++;
+					}
+					if ((val & 0x0200) != 0) {
+						numHeads++;
+					}
+					if ((val & 0x0400) != 0) {
+						numBody++;
+					}
+					if ((val & 0x0800) != 0) {
+						numFoot++;
+					}
+					if ((val & 0x1000) != 0) {
+						numMisc++;
+					}
+					if ((val & 0x2000) != 0) {
+						numMisc++;
+					}
+					if ((val & 0x4000) != 0) {
+						numMisc++;
+					}
+					if ((val & 0x8000) != 0) {
+						numMisc++;
+					}
+					if ((val & 0x10000) != 0) {
+						numMisc++;
+					}
+					monster.parameters.put("hand", numHands);
+					monster.parameters.put("head", numHeads);
+					monster.parameters.put("body", numBody);
+					monster.parameters.put("foot", numFoot);
+					monster.parameters.put("misc", numMisc);
+				} else if (!largeBitmap.contains("misc2")) {
+					monster.parameters.put("hand", 2);
+					monster.parameters.put("head", 1);
+					monster.parameters.put("body", 1);
+					monster.parameters.put("foot", 1);
+					monster.parameters.put("misc", 2);
+				}
+				if (largeBitmap.contains("mounted")) {
+					monster.parameters.put("foot", 0);
+				}
+
+				monsterList.add(monster);
+
+				stream = new FileInputStream(EXE_NAME);		
+				startIndex = startIndex + Starts.MONSTER_SIZE;
+				stream.skip(startIndex);
+				isr = new InputStreamReader(stream, "ISO-8859-1");
+		        in = new BufferedReader(isr);
+
+				rowNumber++;
 			}
+			in.close();
 			stream.close();
 
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("BaseU.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+
+			int rowNum = 0;
+			for (Monster monster : monsterList) {
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < unit_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(unit_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				for (int i = 0; i < unit_columns.length; i++) {
+					Object object = monster.parameters.get(unit_columns[i]);
+					if (object != null) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				rowNum++;
+			}
 			wb.write(fos);
 			fos.close();
-			
+			wb.close();
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -2014,6 +973,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
+	}
+
+	private static class Monster {
+		Map<String, Object> parameters;
 	}
 
 }
