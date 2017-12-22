@@ -15,9 +15,11 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -43,7 +45,9 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 	public static void run() {
 		FileInputStream stream = null;
         List<Weapon> weaponList = new ArrayList<Weapon>();
-		try {
+
+        try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("weapons.txt"));
 	        long startIndex = Starts.WEAPON;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
@@ -192,7 +196,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
 					attributesNum++;
 				}
-
+				dumpTextFile(weapon, writer);
 				rowNum++;
 			}
 			
@@ -221,8 +225,24 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
-	}	
+	}
 	
+	private static void dumpTextFile(Weapon weapon, BufferedWriter writer) throws IOException {
+		Object name = weapon.parameters.get("name");
+		Object id = weapon.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : weapon.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		printAttributes(weapon.attributes, writer);
+		printEffect(weapon.effect, writer);
+		writer.newLine();
+	}
+		
 	private static class Weapon {
 		Map<String, Object> parameters;
 		Effect effect;

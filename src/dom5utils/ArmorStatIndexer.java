@@ -15,9 +15,11 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -45,6 +47,7 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
         List<Armor> armorList = new ArrayList<Armor>();
 
 		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("armors.txt"));
 	        long startIndex = Starts.ARMOR;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
@@ -146,6 +149,7 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				
+				
 				// protections_by_armor
 				for (Protection prot : armor.protections) {
 					if (protectionsNum == 0) {
@@ -177,7 +181,7 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
 					attributesNum++;
 				}
-
+				dumpTextFile(armor, writer);
 				rowNum++;
 			}
 			
@@ -192,6 +196,9 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 			wb3.write(fos3);
 			fos3.close();
 			wb3.close();
+
+			writer.close();
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -206,7 +213,26 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 			}
 		}
 				
-	}	
+	}
+	
+	private static void dumpTextFile(Armor armor, BufferedWriter writer) throws IOException {
+		Object name = armor.parameters.get("name");
+		Object id = armor.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : armor.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		printAttributes(armor.attributes, writer);
+		for (Protection prot : armor.protections) {
+			writer.write("\tZone " + prot.zone_number + ": " + prot.protection);
+			writer.newLine();
+		}
+		writer.newLine();
+	}
 	
 	private static class Protection {
 		int zone_number;

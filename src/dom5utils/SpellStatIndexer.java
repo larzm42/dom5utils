@@ -15,9 +15,11 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -45,6 +47,7 @@ public class SpellStatIndexer extends AbstractStatIndexer {
         List<Spell> spellList = new ArrayList<Spell>();
 
 		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("spells.txt"));
 	        long startIndex = Starts.SPELL;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
@@ -231,6 +234,8 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attribute.raw_value);
 					attributesNum++;
 				}
+				
+				dumpTextFile(spell, writer);
 
 				rowNum++;
 			}
@@ -262,6 +267,22 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 		}
 				
 	}	
+	
+	private static void dumpTextFile(Spell spell, BufferedWriter writer) throws IOException {
+		Object name = spell.parameters.get("name");
+		Object id = spell.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : spell.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		printAttributes(spell.attributes, writer);
+		printEffect(spell.effect, writer);
+		writer.newLine();
+	}
 	
 	private static class Spell {
 		Map<String, Object> parameters;

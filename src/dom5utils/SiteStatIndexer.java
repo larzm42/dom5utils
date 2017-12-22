@@ -15,16 +15,20 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -116,11 +120,14 @@ public class SiteStatIndexer extends AbstractStatIndexer {
         List<Site> siteList = new ArrayList<Site>();
 
 		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("items.txt"));
+			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("itemsUnknown.txt"));
 	        long startIndex = Starts.SITE;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
-			
+			Set<String> unknown = new HashSet<String>();
+
 			// Name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
 	        Reader in = new BufferedReader(isr);
@@ -140,7 +147,7 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				in.close();
 
 				Site site = new Site();
-				site.parameters = new HashMap<String, Object>();
+				site.parameters = new TreeMap<String, Object>();
 				site.parameters.put("id", rowNumber);
 				site.parameters.put("name", name.toString());
 				short rarity = getBytes1(startIndex + 42);
@@ -193,6 +200,9 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 								}
 
 							}
+						} else {
+							site.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+ 							unknown.add(attr.attribute);
 						}
 					}
 				}
@@ -352,8 +362,16 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 					}
 				}
+				
+				dumpTextFile(site, writer);
 				rowNum++;
 			}
+			
+			dumpUnknown(unknown, writerUnknown);
+
+			writer.close();
+			writerUnknown.close();
+			
 			wb.write(fos);
 			fos.close();
 			wb.close();
@@ -372,6 +390,21 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			}
 		}
 	}
+	
+	private static void dumpTextFile(Site site, BufferedWriter writer) throws IOException {
+		Object name = site.parameters.get("name");
+		Object id = site.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : site.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id") && entry.getValue() != null && !entry.getValue().equals("")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		writer.newLine();
+	}
+
 	private static class Site {
 		Map<String, Object> parameters;
 	}

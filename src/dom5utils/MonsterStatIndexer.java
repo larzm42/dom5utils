@@ -15,16 +15,21 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -301,11 +306,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
         List<Monster> monsterList = new ArrayList<Monster>();
 
 		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("units.txt"));
+			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("unitsUnknown.txt"));
 	        long startIndex = Starts.MONSTER;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.MONSTER_MAGIC);
-			
+			Set<String> unknown = new HashSet<String>();
+
 			// magic
 			byte[] c = new byte[4];
 			while ((stream.read(c, 0, 4)) != -1) {
@@ -454,7 +462,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				in.close();
 				
 				Monster monster = new Monster();
-				monster.parameters = new HashMap<String, Object>();
+				monster.parameters = new TreeMap<String, Object>();
 				monster.parameters.put("id", rowNumber);
 				monster.parameters.put("name", name.toString());
 				monster.parameters.put("ap", getBytes2(startIndex + 40));
@@ -625,6 +633,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 							} else {
 	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
 							}
+						} else {
+ 							monster.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+ 							unknown.add(attr.attribute);
 						}
 					}
 				}
@@ -954,8 +965,17 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 					}
 				}
+				
+				dumpTextFile(monster, writer);
+
 				rowNum++;
 			}
+			
+			dumpUnknown(unknown, writerUnknown);
+			
+			writer.close();
+			writerUnknown.close();
+
 			wb.write(fos);
 			fos.close();
 			wb.close();
@@ -973,6 +993,20 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 			}
 		}
+	}
+	
+	private static void dumpTextFile(Monster monster, BufferedWriter writer) throws IOException {
+		Object name = monster.parameters.get("name");
+		Object id = monster.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : monster.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id") && entry.getValue() != null && !entry.getValue().equals("")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		writer.newLine();
 	}
 
 	private static class Monster {

@@ -15,16 +15,20 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -179,10 +183,13 @@ public class ItemStatIndexer extends AbstractStatIndexer {
         List<Item> itemList = new ArrayList<Item>();
 
 		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("items.txt"));
+			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("itemsUnknown.txt"));
 	        long startIndex = Starts.ITEM;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(startIndex);
+			Set<String> unknownAttributes = new TreeSet<String>();
 			
 			// Name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
@@ -203,7 +210,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				in.close();
 				
 				Item item = new Item();
-				item.parameters = new HashMap<String, Object>();
+				item.parameters = new TreeMap<String, Object>();
 				item.parameters.put("id", rowNumber);
 				item.parameters.put("name", name.toString());
 				short constlevel = getBytes1(startIndex + 36);
@@ -226,6 +233,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				item.parameters.put("itemspell", getString(startIndex + 48));
 				
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.ITEM_ATTRIBUTE_OFFSET, Starts.ITEM_ATTRIBUTE_GAP);
+				
 				for (AttributeValue attr : attributes) {
 					for (int x = 0; x < KNOWN_ITEM_ATTRS.length; x++) {
 						if (KNOWN_ITEM_ATTRS[x][0].equals(attr.attribute)) {
@@ -289,6 +297,9 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 									item.parameters.put(KNOWN_ITEM_ATTRS[x][1], attr.values.get(0));
 								}
 							}
+						} else {
+ 							item.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));	
+ 							unknownAttributes.add(attr.attribute);
 						}
 					}
 				}
@@ -343,8 +354,15 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 					}
 				}
+				dumpTextFile(item, writer);
 				rowNum++;
 			}
+
+			dumpUnknown(unknownAttributes, writerUnknown);
+			
+			writerUnknown.close();
+			writer.close();
+			
 			wb.write(fos);
 			fos.close();
 			wb.close();
@@ -363,6 +381,21 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			}
 		}
 	}
+	
+	private static void dumpTextFile(Item item, BufferedWriter writer) throws IOException {
+		Object name = item.parameters.get("name");
+		Object id = item.parameters.get("id");
+		writer.write(name.toString() + "(" + id + ")");
+		writer.newLine();
+		for (Map.Entry<String, Object> entry : item.parameters.entrySet()) {
+			if (!entry.getKey().equals("name") && !entry.getKey().equals("id") && entry.getValue() != null && !entry.getValue().equals("")) {
+				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
+				writer.newLine();
+			}
+		}
+		writer.newLine();
+	}
+
 	private static class Item {
 		Map<String, Object> parameters;
 	}

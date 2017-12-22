@@ -16,19 +16,73 @@ package dom5utils;
 */
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public abstract class AbstractStatIndexer {
 	protected static String EXE_NAME = "Dominions5.exe";
 	
 	private static int MASK[] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080,
 			0x0100, 0x0200, 0x0400, 0x0800, 0x1000, 0x2000, 0x4000, 0x8000};
+
+	static private Map<Integer, String> attrKeys = new HashMap<Integer, String>();
+	static private Map<Integer, String> effectInfoKeys = new HashMap<Integer, String>();
+	static private Map<Long, String> effectModifierKeys = new HashMap<Long, String>();
+
+	static {
+		try {
+			File attributesFile = new File("attribute_keys.csv");
+			FileReader attributesFileReader = new FileReader(attributesFile);
+			BufferedReader bufferedReader = new BufferedReader(attributesFileReader);
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				StringTokenizer tok = new StringTokenizer(line, "\t");
+				Integer attrNum = Integer.parseInt(tok.nextToken());
+				String attrVal = tok.nextToken();
+				attrKeys.put(attrNum, attrVal);
+			}
+			bufferedReader.close();
+			
+			File effectsInfoFile = new File("effects_info.csv");
+			FileReader effectsInfoFileReader = new FileReader(effectsInfoFile);
+			bufferedReader = new BufferedReader(effectsInfoFileReader);
+			while ((line = bufferedReader.readLine()) != null) {
+				StringTokenizer tok = new StringTokenizer(line, "\t");
+				Integer attrNum = Integer.parseInt(tok.nextToken());
+				String attrVal = tok.nextToken();
+				effectInfoKeys.put(attrNum, attrVal);
+			}
+			bufferedReader.close();
+			
+			File effectModBitsFile = new File("effect_modifier_bits.csv");
+			FileReader effectModBitsFileReader = new FileReader(effectModBitsFile);
+			bufferedReader = new BufferedReader(effectModBitsFileReader);
+			while ((line = bufferedReader.readLine()) != null) {
+				StringTokenizer tok = new StringTokenizer(line, "\t");
+				Long attrNum = Long.parseLong(tok.nextToken());
+				String attrVal = tok.nextToken();
+				effectModifierKeys.put(attrNum, attrVal);
+			}
+			bufferedReader.close();
+			
+		} catch (Exception e) {
+			System.err.println("Problem reading file");
+			e.printStackTrace();
+		}
+
+	}
 
 	protected static short getBytes1(long skip) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);			
@@ -187,6 +241,67 @@ public abstract class AbstractStatIndexer {
 		}
 		stream.close();
 		return boolList;
+	}
+	
+	protected static void printAttributes(List<Attribute> attributes, BufferedWriter writer) throws IOException {
+		for (Attribute attr : attributes) {
+			String string = attrKeys.get(attr.attribute);
+			if (string == null) {
+				string = "Unknown Attribute:<" + attr.attribute+">";
+			} else {
+				string = string + "<" + attr.attribute + ">";
+			}
+			writer.write("\t" + string + ": " + attr.raw_value);
+			writer.newLine();
+		}
+	}
+
+	protected static void printEffect(Effect effect, BufferedWriter writer) throws IOException {
+		String string = effectInfoKeys.get(effect.effect_number);
+		if (string == null) {
+			string = "Unknown Effect:<" + effect.effect_number+">";
+		} else {
+			string = string + "<" + effect.effect_number + ">";
+		}
+		writer.write("\teffect:" + string);
+		writer.newLine();
+		writer.write("\tduration: " + effect.duration);
+		writer.newLine();
+		writer.write("\tritual: " + effect.ritual);
+		writer.newLine();
+		writer.write("\traw_argument: " + effect.raw_argument);
+		writer.newLine();
+		writer.write("\trange_base: " + effect.range_base);
+		writer.newLine();
+		writer.write("\trange_per_level: " + effect.range_per_level);
+		writer.newLine();
+		writer.write("\trange_strength_divisor: " + effect.range_strength_divisor);
+		writer.newLine();
+		writer.write("\tarea_base: " + effect.area_base);
+		writer.newLine();
+		writer.write("\tarea_per_level: " + effect.area_per_level);
+		writer.newLine();
+		writer.write("\tarea_battlefield_pct: " + effect.area_battlefield_pct);
+		writer.newLine();
+		writer.write("\tmodifiers_mask: ");
+		writer.newLine();
+		printModiferMask(effect.modifiers_mask, writer);
+	}
+	
+	protected static void printModiferMask(long bitmap, BufferedWriter writer) throws IOException {
+		for (Map.Entry<Long, String> mask : effectModifierKeys.entrySet()) {
+			if ((mask.getKey().longValue() & bitmap) != 0) {
+				writer.write("\t\t" + mask.getValue());
+				writer.newLine();
+			}
+		}
+	}
+	
+	protected static void dumpUnknown(Set<String> attr, BufferedWriter writer) throws IOException {
+		for (String att : attr) {
+			writer.write(att);
+			writer.newLine();
+		}
 	}
 
 	protected static class Attribute {
