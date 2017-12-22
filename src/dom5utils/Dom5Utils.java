@@ -37,7 +37,7 @@ public class Dom5Utils {
 		
 		// Sprites
 		//ItemSpriteIndexer.run();
-		//MonsterSpriteIndexer.run();
+		MonsterSpriteIndexer.run();
 		
 		// Names
 		//NametypeIndexer.run();

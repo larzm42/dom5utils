@@ -106,7 +106,8 @@ public class NationStatIndexer extends AbstractStatIndexer {
 
 				Nation nation = new Nation();
 				nation.parameters = new HashMap<String, Object>();
-				nation.parameters.put("id", rowNumber);
+				nation.parameters.put("id", rowNumber-1);
+				nation.parameters.put("name", name.toString());
 				nation.parameters.put("epithet", getString(startIndex + 36l));
 				nation.parameters.put("abbreviation", getString(startIndex + 72l));
 				String fileNameBase = getString(startIndex + 77l);

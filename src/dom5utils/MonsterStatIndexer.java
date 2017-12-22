@@ -306,8 +306,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
         List<Monster> monsterList = new ArrayList<Monster>();
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("units.txt"));
-			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("unitsUnknown.txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("monsters.txt"));
+			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("monstersUnknown.txt"));
 	        long startIndex = Starts.MONSTER;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
