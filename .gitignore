@@ -1,7 +1,11 @@
-/bin/*
-/items/*
+bin/dom5utils/*
+items/*
+items/desc/*
+items/output/*
 /lib/*
 /monsters/*
+monsters/desc/*
+monsters/output/*
 /spells/*
 /BaseI.xlsx
 /BaseU.xlsx
