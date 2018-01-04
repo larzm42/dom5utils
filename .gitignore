@@ -1,8 +1,8 @@
-/bin/
-/items/
-/lib/
-/monsters/
-/spells/
+/bin/*
+/items/*
+/lib/*
+/monsters/*
+/spells/*
 /BaseI.xlsx
 /BaseU.xlsx
 /Dominions5.03.exe
