@@ -41,14 +41,24 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"alch", "insa", "hp", "protf", "protb", "mr", "morale", "str", "att", "def", "prec", "enc", "mapspeed", "ap", "reinvigoration", "pen", "stealth", 
 			"stealthb", "forest", "mount", "waste", "swamp", "fly", "float", "sailingshipsize", "sailingmaxunitsize", "waterbreathing", "giftofwater", "airbr", 
 			"flytr", "quick", "eth", "trample", "bless", "luck", "fluck", "curse", "disease", "cursed", "taint", "ldr-n", "ldr-u", "ldr-m", "inspirational", 
-			"taskmaster", "fear", "awe", "animalawe", "exp", "chill", "heat", "gold", "F", "A", "W", "E", "S", "D", "N", "B", "H", "firerange", "airrange", 
+			"fear", "awe", "animalawe", "exp", "chill", "heat", "gold", "F", "A", "W", "E", "S", "D", "N", "B", "H", "firerange", "airrange", 
 			"waterrange", "earthrange", "astralrange", "deathrange", "naturerange", "bloodrange", "tmpfiregems", "tmpairgems", "tmpwatergems", "tmpearthgems", 
 			"tmpastralgems", "tmpdeathgems", "tmpnaturegems", "tmpbloodslaves", "gf", "ga", "gw", "ge", "gs", "gd", "gn", "gb", "berserk", "bers", "fireshield", 
-			"banefireshield", "iceprot", "invul", "bloodvengeance", "pillagebonus", "patrolbonus", "castledef", "siegebonus", "supplybonus", "researchbonus", 
+			"banefireshield", "iceprot", "bloodvengeance", "pillagebonus", "patrolbonus", "castledef", "supplybonus", "researchbonus", 
 			"heretic", "douse", "void", "diseasecloud", "poisoncloud", "reaper", "crossbreeder", "ivylord", "spelleffect", "startbattlespell", "autocombatspell", 
 			"itemspell", "ritual", "sumrit", "#sumrit", "sumauto", "#sumauto", "sumbat", "#sumbat", "affliction", "restrictions", "special", "regeneration", 
 			"restricted1", "restricted2", "restricted3", "restricted4", "restricted5", "restricted6", "aging", "corpselord", "lictorlord", "bloodsac", 
-			"mastersmith", "eyeloss", "armysize", "defender", "cannotwear", "reanimH", "reanimD", "dragonmastery", "patience", "retinue", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+			"mastersmith", "eyeloss", "armysize", "defender", "cannotwear", "reanimH", "reanimD", "dragonmastery", "patience", "retinue", 
+			"noforgebouus", "crown", "hpbonus", "twistfate", "nationaldiscount", "mason", "itemcost1", "itemcost2", "blesssacredonly", "returning",
+			"warning", "mapmovebonus", "slowaging", 
+			"transformwearer", "feeblemindprovince", "supayasummonbonus", "curseattacker", "seduction", "bearergainsinsanity", "bearergainsinsanitypermonth", "infernoret",
+			"kokytosret", "heataura", "costdiscountamount", "wintermove", "unhindered", "floating", "spiritsight", "invisibility", "diseasegrinder", "agingreductiontoallunits",
+			"fastcasting", "petrification", "xpgainpermonth", "extralife", "bloodsearcher", "animalawe2", "stormpower", "batstartsum2", "batstartsum3", "batstartsum5d6",
+			"iceprot2", "goldgen", "magiceye", "damagereversal", "mustfightinarena", "inquisitor", "assassin", "spreaddeathormisfortune", "coldaura", "flyingmaxtotalsize",
+			"flyingmapmove", "arenareward", "swiftness", "taskmaster", "leper", "siegebonus", "invulnerable", "horrormarkattacker", "entangle", "minsizetoequip",
+			"maxsizetoequip", "minstrtoequip", "minhandstoequip", "deathgemonkill", "deathexplosion", "chanceofattackbyknights", "singleuse", "domspreader",
+			"allunitslooklikebearertoscouts", "monstermustbepresent", "banishkiller", "onlyuseablebyfliersormounted", "masterritualist", "stunattackers",
+			"end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
 
 	private static String[][] KNOWN_ITEM_ATTRS = {
 			{"C600", "fireres"},
@@ -157,8 +167,107 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"0E01", "dragonmastery"},
 			{"AF01", "crossbreeder"},
 			{"CD01", "patience"},
-			{"B401", "retinue"}
+			{"B401", "retinue"},
+			
+			{"2401", "noforgebonus"},
+			{"2802", "crown"},
+			{"3101", "hpbonus"},
+			{"3902", "twistfate"},
+			{"3E02", "nationaldiscount"},
+			{"5202", "mason"},
+			{"5402", "itemcost1"},
+			{"5502", "itemcost2"},
+			{"6402", "blesssacredonly"},
+			{"8901", "returning"},
+			{"9800", "warning"},
+			{"AA01", "mapmovebonus"},
+			{"DF01", "slowaging"},
+			
+			{"0101", "transformwearer"},
+			{"0701", "feeblemindprovince"},
+			{"0902", "supayasummonbonus"},
+			{"0F01", "curseattacker"},
+			{"2A01", "seduction"},
+			{"3501", "bearergainsinsanity"},
+			{"3801", "bearergainsinsanitypermonth"},
+			{"3901", "infernoret"},
+			{"3A01", "kokytosret"},
+			{"3C01", "heataura"},
+			{"3F02", "costdiscountamount"},
+			{"4002", "wintermove"},
+			{"4102", "unhindered"},
+			{"5E02", "floating"},
+			{"5F02", "spiritsight"},
+			{"6002", "invisibility"},
+			{"6401", "diseasegrinder"},
+			{"6501", "agingreductiontoallunits"},
+			{"6502", "fastcasting"},
+			{"6800", "petrification"},
+			{"7200", "xpgainpermonth"},
+			{"7300", "extralife"},
+			{"7400", "bloodsearcher"},
+			{"A200", "animalawe2"},
+			{"AE00", "stormpower"},
+			{"B501", "batstartsum2"},
+			{"B601", "batstartsum3"},
+			{"BD01", "batstartsum5d6"},
+			{"BF00", "iceprot2"},
+			{"C401", "goldgen"},
+			{"C601", "magiceye"},
+			{"CA00", "damagereversal"},
+			{"CB01", "mustfightinarena"},
+			{"D300", "inquisitor"},
+			{"D500", "assassin"},
+			{"D801", "spreaddeathormisfortune"},
+			{"DC00", "coldaura"},
+			{"E500", "flyingmaxtotalsize"},
+			{"E600", "flyingmapmove"},
+			{"EF00", "arenareward"},
+
+			{"5302", "swiftness"},
+			{"7B01", "taskmaster"},
+			{"7C00", "leper"},
+			{"7D00", "siegebonus"},
+			{"7E01", "invulnerable"},
+			{"7F00", "horrormarkattacker"},
+			{"8000", "entangle"},
+			{"8001", "minsizetoequip"},
+			{"8101", "maxsizetoequip"},
+			{"8201", "minstrtoequip"},
+			{"8301", "minhandstoequip"},
+			{"8600", "deathgemonkill"},
+			{"8700", "deathexplosion"},
+			{"8800", "chanceofattackbyknights"},
+			{"9B00", "singleuse"},
+			{"9C00", "domspreader"},
+			{"A401", "allunitslooklikebearertoscouts"},
+			{"B101", "monstermustbepresent"},
+			{"B201", "banishkiller"},
+			{"C901", "onlyuseablebyfliersormounted"},
+			{"CF01", "masterritualist"},
+			{"DE01", "stunattackers"}
+
+
 	};
+	
+
+//	3702	Startitem - see unit attribute 3602
+//	6901	Extra arm slot? Copper arm only
+//	6A01	Extra arm slot? Copper arm only
+//	7201	? Magic eyes only
+//	DA00	?Seduction gender modifier?
+//	E100	Carcator the pocket lich
+//	E300	Picus' or Procas' axe
+//	E701	?Only usable by Shas?
+//	EE01	?Only usable by Shas?
+	
+//	3701	?Gift of Kurgi & Boots of the Planes?
+//			4D01	?Gift of Kurgi, Lightless Lantern and Nethgul have this?
+//			7800	?Forbidden Light & First Crown?
+//			7B00	?Lychantropos amulet has this at 2?
+//			AF00	? Gift of Kurgi only
+//			CA02	? Black Mirror Only
+
 
 	
 	private static String values[][] = {{"bless", "luck", "", "airshield", "barkskin", "", "", "", "bers", "", "", "", "", "", "", "" },
@@ -235,8 +344,10 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.ITEM_ATTRIBUTE_OFFSET, Starts.ITEM_ATTRIBUTE_GAP);
 				
 				for (AttributeValue attr : attributes) {
+					boolean found = false;
 					for (int x = 0; x < KNOWN_ITEM_ATTRS.length; x++) {
 						if (KNOWN_ITEM_ATTRS[x][0].equals(attr.attribute)) {
+							found = true;
 							if (KNOWN_ITEM_ATTRS[x][1].endsWith("#")) {
 								int i = 1;
 								for (String value : attr.values) {
@@ -297,10 +408,11 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 									item.parameters.put(KNOWN_ITEM_ATTRS[x][1], attr.values.get(0));
 								}
 							}
-						} else {
- 							item.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));	
- 							unknownAttributes.add(attr.attribute);
 						}
+					}
+					if (!found) {
+						item.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+						unknownAttributes.add(attr.attribute);
 					}
 				}
 				

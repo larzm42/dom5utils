@@ -53,7 +53,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"coldpower", "darkpower", "chaospower", "magicpower", "winterpower", "springpower", "summerpower", "fallpower", "forgebonus", "fixforgebonus", 
 			"mastersmith", "resources", "autohealer", "autodishealer", "alch", "nobadevents", "event", "insane", "shatteredsoul", "leper", "taxcollector", 
 			"gem", "gemprod", "chaosrec", "pillagebonus", "patrolbonus", "castledef", "siegebonus", "incprovdef", "supplybonus", "incunrest", "popkill", 
-			"researchbonus", "drainimmune", "inspiringres", "douse", "sacr", "ivylord", "crossbreeder", "makepearls", "pathboost", "allrange", "voidsum", 
+			"researchbonus", "drainimmune", "inspiringres", "douse", "sacr", "crossbreeder", "makepearls", "pathboost", "allrange", "voidsum", 
 			"heretic", "elegist", "shapechange", "firstshape", "secondshape", "secondtmpshape", "landshape", "watershape", "forestshape", "plainshape", 
 			"unique", "fixedname", "special", "nametype", "type", "typeclass", "from", "summon", "n_summon", "autosum", "n_autosum", "batstartsum1", 
 			"batstartsum2", "domsummon1", "domsummon2", "bloodvengeance", "bringeroffortune", "realm1", "realm2", "realm3", "batstartsum3", "batstartsum4", 
@@ -64,7 +64,20 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"magicboostE", "magicboostS", "magicboostD", "magicboostN", "magicboostALL", "eyes", "heatrec", "coldrec", "spreadchaos", "spreaddeath", 
 			"corpseeater", "poisonskin", "bug", "uwbug", "spreadorder", "spreadgrowth", "startitem", "spreaddom", "reform", "battlesum5", "acidsplash", 
 			"drake", "prophetshape", "horror", "enchrebate50", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
-			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", "end"}; 
+			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", 
+			
+			"mummification", "disres", "raiseonkill", "raiseshape", "sendlesserhorrormult", "xploss", "theftofthesunawe", "incorporate", "hpoverslow", "berserkwhenblessed",
+			"dragonmastery", "curseattacker", "uwheataura", "slothresearch", "horrorsonly", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
+			"disbelieveillusions", "firerange", "astralrange", "landreinvigoration", "naturerange", "beartattoo", "horsetattoo", "reincarnation", "wolftattoo", "boartattoo",
+			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templesummon", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurroundable",
+			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
+			"invisibility", "startaffliction", "ivylord", "spellsinging", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
+			"poweroftheturningyear", "fortkill", "thronekill", "forgebonus", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
+			"vineshield", "alchemyBonus", "afflictionresistance", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
+			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
+			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
+			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord",
+			"end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -267,10 +280,157 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"1602", "heroarrivallimit"},
 		{"1702", "sailsize"},
 		{"0201", "uwdamage"},
-		{"0E02", "landdamage"}
-	};
+		{"0E02", "landdamage"},
+		
+		{"0002", "mummification"},
+		{"0102", "disres"},
+		{"0202", "raiseonkill"},
+		{"0302", "raiseshape"},
+		{"0502", "sendlesserhorrormult"},
+		{"0702", "xploss"},
+		{"0802", "theftofthesunawe"},
+		{"0A02", "incorporate"},
+		{"0B02", "hpoverslow"},
+		{"0D02", "berserkwhenblessed"},
+		{"0E01", "dragonmastery"},
+		{"0F01", "curseattacker"},
+		{"0F02", "uwheataura"},
+		{"1001", "slothresearch"},
+		{"1201", "horrorsonly"},
+		{"1302", "mindvessel"},
+		{"1700", "elementrange"},
+		{"1800", "sorceryrange"},
+		{"1E01", "startagemodifier"},
+		{"2601", "illusion"},
+		{"2701", "disbelieveillusions"},
+		{"2800", "firerange"},
+		{"2C00", "astralrange"},
+		{"2C01", "landreinvigoration"},
+		{"2E00", "naturerange"},
+		{"2E02", "beartattoo"},
+		{"2F02", "horsetattoo"},
+		{"3001", "reincarnation"},
+		{"3002", "wolftattoo"},
+		{"3102", "boartattoo"},
+		{"3201", "sleepaura"},
+		{"3202", "snaketattoo"},
+		{"3301", "supplysize"},
+		{"3302", "astralfetters"},
+		{"3400", "foreignmagicboost"},
+		{"3402", "templesummon"},
+		{"3901", "infernoret"},
+		{"3A01", "kokytosret"},
+		{"3D01", "infernalcrossbreedingmult"},
+		{"3D02", "unsurroundable"},
+		{"4502", "combatcaster"},
+		{"4902", "homeshape"},
+		{"4A01", "speciallook"},
+		{"4B01", "aisinglerec"},
+		{"4C02", "nowish"},
+		{"5201", "swarmbody"},
+		{"5202", "mason"},
+		{"5601", "taxcollector"},
+		{"5602", "onisummoner"},
+		{"5D02", "sunawe"},
+		{"5F02", "spiritsight"},
+		{"6001", "defenceorganiser"},
+		{"6002", "invisibility"},
+		{"6102", "startaffliction"},
+		{"6500", "ivylord"},
+		//{"6601", "formationfighter"},
+		{"6802", "spellsinging"},
+		{"6A02", "magicallyattunedresearcher"},
+		{"6E02", "triplegod"},
+		{"6F02", "triplegodmag"},
+		{"7002", "unify"},
+		{"7102", "triple3mon"},
+		{"7202", "poweroftheturningyear"},
+		{"7302", "fortkill"},
+		{"7402", "thronekill"},
+		{"7501", "trampswallow"},
+		{"7600", "forgebonus"},
+		{"7601", "digest"},
+		{"7602", "indepmove"},
+		{"7801", "unteleportable"},
+		{"7802", "reanimpriest"},
+		{"7E02", "stunimmunity"},
+		{"8000", "vineshield"},
+		{"8400", "alchemyBonus"},
+		{"8B00", "domsummon2"},
+		{"9601", "afflictionresistance"},
+		{"9901", "leavespostbattleifwoundedorhaskilled"},
+		{"9B01", "elegist"},
+		{"9D01", "deathcurse"},
+		{"A201", "noriverpass"},
+		{"A301", "makesarmylooksmallerorlarger"},
+		{"A800", "summon5"},
+		{"AD01", "ainorecruit"},
+		{"B001", "autocomslave"},
+		{"C301", "researchwithoutmagic"},
+		{"C500", "captureslaves"},
+		{"CB01", "mustfightinarena"},
+		{"CC00", "deathwail"},
+		{"CC01", "adventurers"},
+		{"D101", "cleanshape"},
+		{"D501", "requireslabtorecruit"},
+		{"D601", "requirestempletorecruit"},
+		{"D701", "horrormarked"},
+		{"DA00", "changetargetgenderforseductionandseductionimmune"},
+		{"DE01", "corpseconstruct"},
+		{"E601", "guardianspiritmodifier"},
+		{"E801", "isashah"},
+		{"E901", "iceforging"},
+		{"EC01", "isayazad"},
+		{"ED00", "corpseeater"},
+		{"ED01", "isadaeva"},
+		{"F000", "flieswhenblessed"},
+		{"F401", "plant"},
+		{"F900", "clockworklord"}
 
+	};
 	
+//	0701	Feeblemind chance in province? Kurgi Only
+//	1202	Aboleth - Can Cast Mind Vessel?
+//	1A01	? Angels and Celestial Beings only
+//	1B01	? Rudra & Devata only
+//	3300	land all magic penalty? Kaijin Only
+//	3602	Startitem - looks to refer to item attribute 3702
+//	3B01	? Void Spectre Only (Voidret/Insanity?)
+//	3F01	? Delgnat Only
+//	4001	? Defiler of Dreams only
+//	4501	? Leshy Plainshape only
+//	4702	? Chariots only
+//	5801	? Buer Only. Spread Heat?
+//	5802	Minprison? Uttervast Only
+//	5902	? Scabiel Only
+//	5C01	? Kurgi Only
+//	6701	? Barbarians & Bakemono-Sho
+//	6801	? Knight & Barbarian commanders
+//	7401	Spritesize? Elementals and Draugr
+//	7502	FarThroneKill? Doom Horrors only
+//	7701	Aciddigest? Eater of the Dead & Ancient Presence only
+//	7702	Indepstay? Maker of Ruins & Eater of Gods only
+//	7A02	? Eater of Dreams only
+//	7B02	Polymorph Immunity? Doom Horrors & God Vessels only
+//	7F00	? Eater of Gods only
+//	8401	? Horrors and God Vessels only
+//	8501	? Slave to Unreason only
+//	8801	Resummon as this shape? Eater of the Dead only
+//	8A00	? Cockatrice only
+//	9101	Turns before reform? Worm mage only
+//	9300	Immortality delay modifier? Vampires and Wraith Lords only
+//	9500	? Vampires only
+//	9F01	? Soultorn has this at 10
+//	B301	?Doom Horrors have this?
+//	BB00	?Spiders & ghost cats have this. Shapechange related?
+//	D201	?God Vessel has this?
+//	D301	?God vessel & legion of gods? (% of moving around?)
+//	D401	? God vessel & Legion of Gods
+//	E401	? Unused unit 10 only
+//	E501	? Unused unit 10 only
+//	F001	?Acid cube has this?
+//	F700	? Siren landshape only (Lure?)
+
 	private static class Magic {
 		public int F;
 		public int A;
@@ -494,8 +654,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP);
 				for (AttributeValue attr : attributes) {
+					boolean found = false;
 					for (int x = 0; x < KNOWN_MONSTER_ATTRS.length; x++) {
 						if (KNOWN_MONSTER_ATTRS[x][0].equals(attr.attribute)) {
+							found = true;
 							if (KNOWN_MONSTER_ATTRS[x][1].endsWith("#")) {
 								int i = 1;
 								for (String value : attr.values) {
@@ -633,10 +795,11 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 							} else {
 	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
 							}
-						} else {
- 							monster.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
- 							unknown.add(attr.attribute);
 						}
+					}
+					if (!found) {
+						monster.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+						unknown.add(attr.attribute);
 					}
 				}
 				

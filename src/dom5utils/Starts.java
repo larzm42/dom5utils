@@ -32,7 +32,7 @@ public class Starts {
 	public static final long ITEM_AND_MONSTER_DESC = 0x001ec070l;
 	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x003165d0l;
 	
-	public static final long MONSTER_TRS_INDEX = 0x001f6d6l;
+	public static final long MONSTER_TRS_INDEX = 0x001f6d4l;
 	
 	public static final long SITE = 0x011454c8l;
 	public static final long SITE_SIZE = 216l;

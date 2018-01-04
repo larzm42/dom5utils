@@ -24,9 +24,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -72,43 +72,21 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 				in.close();
 				
 				Spell spell = new Spell();
-				spell.parameters = new HashMap<String, Object>();
+				spell.parameters = new TreeMap<String, Object>();
 				spell.parameters.put("id", spellNumber);
+				spell.parameters.put("effect_record_id", spellNumber);
 				spell.parameters.put("name", name.toString());
 				spell.parameters.put("school", getBytes1(startIndex + 36l));
 				spell.parameters.put("researchlevel", getBytes1(startIndex + 37l));
 				spell.parameters.put("path1", getBytes1(startIndex + 38l));
-				spell.parameters.put("pathlevel1", getBytes1(startIndex + 40l));
 				spell.parameters.put("path2", getBytes1(startIndex + 39l));
+				spell.parameters.put("pathlevel1", getBytes1(startIndex + 40l));
 				spell.parameters.put("pathlevel2", getBytes1(startIndex + 41l));
-				spell.parameters.put("effect_record_id", spellNumber);
-				spell.parameters.put("effects_count", getBytes2(startIndex + 64l));
-				spell.parameters.put("precision", getBytes1(startIndex + 50l));
 				int fat = getBytes2(startIndex + 42l);
 				spell.parameters.put("fatiguecost", fat%100);
 				spell.parameters.put("gemcost", fat/100);
-				spell.parameters.put("next_spell", getBytes1(startIndex + 88l));
-
+				
 				Effect effect = new Effect();
-				int effect_number = getBytes2(startIndex+46);
-				if (effect_number > 10000) {
-					effect.ritual = 1;
-				} else if (effect_number > 1000) {
-					effect.duration = effect_number / 1000;
-				}
-				effect_number = effect_number % 1000;
-				effect.effect_number = effect_number;
-				effect.record_number = spellNumber;
-				effect.object_type = "Spell";
-				effect.modifiers_mask = getBytes6(startIndex+80);
-				effect.raw_argument = getBytes2(startIndex+56);
-				int raw_range = getBytes2(startIndex+48);
-				if (raw_range > 0) {
-					effect.range_base = raw_range % 1000;
-					effect.range_per_level = raw_range / 1000;
-				} else {
-					effect.range_strength_divisor = -raw_range;
-				}
 				int raw_area = getBytes2(startIndex+44);
 				switch (raw_area) {
 				case 666:
@@ -131,6 +109,52 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 					effect.area_per_level = raw_area / 1000;
 					break;
 				}
+				
+				int effect_number = getBytes2(startIndex+46);
+				if (effect_number > 10000) {
+					effect.ritual = 1;
+				} else if (effect_number > 1000) {
+					effect.duration = effect_number / 1000;
+				}
+				effect_number = effect_number % 1000;
+				effect.effect_number = effect_number;
+
+				int raw_range = getBytes2(startIndex+48);
+				if (raw_range > 0) {
+					effect.range_base = raw_range % 1000;
+					effect.range_per_level = raw_range / 1000;
+				} else {
+					effect.range_strength_divisor = -raw_range;
+				}
+
+				spell.parameters.put("precision", getBytes1(startIndex + 50l));
+
+				spell.parameters.put("Unknown51", getBytes1(startIndex + 51l));
+				spell.parameters.put("Unknown52", getBytes2(startIndex + 52l));
+				spell.parameters.put("Unknown54", getBytes2(startIndex + 54l));
+				
+				effect.raw_argument = getBytes2(startIndex+56);
+
+				spell.parameters.put("Unknown58", getBytes2(startIndex + 58l));
+				spell.parameters.put("Unknown60", getBytes2(startIndex + 60l));
+				spell.parameters.put("Unknown62", getBytes2(startIndex + 62l));
+				spell.parameters.put("Unknown66", getBytes2(startIndex + 66l));
+				spell.parameters.put("Unknown68", getBytes2(startIndex + 68l));
+				spell.parameters.put("Unknown70", getBytes2(startIndex + 70l));
+				spell.parameters.put("Unknown72", getBytes2(startIndex + 72l));
+				spell.parameters.put("Unknown74", getBytes2(startIndex + 74l));
+				spell.parameters.put("Unknown76", getBytes2(startIndex + 76l));
+				spell.parameters.put("Unknown78", getBytes2(startIndex + 78l));
+				spell.parameters.put("Unknown89", getBytes1(startIndex + 89l));
+				spell.parameters.put("Unknown90", getBytes2(startIndex + 90l));
+
+				spell.parameters.put("effects_count", getBytes2(startIndex + 64l));
+				
+				effect.modifiers_mask = getBytes6(startIndex+80);
+				spell.parameters.put("next_spell", getBytes1(startIndex + 88l));
+
+				effect.record_number = spellNumber;
+				effect.object_type = "Spell";
 
 				spell.effect = effect;
 				

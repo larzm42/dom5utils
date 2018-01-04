@@ -43,7 +43,9 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			"const", "ench", "thau", "blood", "heal", "disease", "curse", "horror", "holyfire", "holypow", "scry", "adventure", "other", "sum4", "n_sum4", 
 			"hcom1", "hcom2", "hcom3", "hcom4", "hcom5", "mon1", "mon2", "mon3", "mon4", "mon5", "com1", "com2", "com3", "com4", "com5", "reveal", 
 			"provdef1", "provdef2", "def", "F2", "A2", "W2", "E2", "S2", "D2", "N2", "B2", "awe", "reinvigoration", "airshield", "provdefcom", 
-			"domconflict", "sprite", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
+			"domconflict", "sprite", "nationalrecruits", "natmon","natcom", "throneclustering","wilddefenders", "domconflict", "rituallevelmodifier",
+			"callgodbonus", "magicresistancebonus",
+			"end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
 
 	private static String[][] KNOWN_SITE_ATTRS = {
 			{"0100", "F"},
@@ -100,7 +102,7 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			{"FE01", "poisonres"},
 			{"0302", "darkvision"},
 			{"0102", "aawe"},
-			{"1401", "throne?"},
+			{"1401", "throne"},
 			{"0A01", "fortparts"},
 			{"0601", "reveal"},
 			{"E000", "provdef#"},
@@ -109,7 +111,18 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			{"FF01", "reinvigoration"},
 			{"0002", "airshield"},
 			{"4A00", "provdefcom"},
+			{"7501", "nationalrecruits"},
+			{"7601", "natmon"},
+			{"7701", "natcom"},
+			{"1601", "throneclustering"},
+			{"2401", "wilddefenders"},
+			{"2A00", "domconflict"},
+			{"6A01", "rituallevelmodifier"},
+			{"7101", "callgodbonus"},
+			{"F701", "magicresistancebonus"}
 	};
+	
+
 
 	public static void main(String[] args) {
 		run();
@@ -120,8 +133,8 @@ public class SiteStatIndexer extends AbstractStatIndexer {
         List<Site> siteList = new ArrayList<Site>();
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("items.txt"));
-			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("itemsUnknown.txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("sites.txt"));
+			BufferedWriter writerUnknown = new BufferedWriter(new FileWriter("sitesUnknown.txt"));
 	        long startIndex = Starts.SITE;
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
@@ -163,8 +176,10 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 				
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.SITE_ATTRIBUTE_OFFSET, Starts.SITE_ATTRIBUTE_GAP, 8);
 				for (AttributeValue attr : attributes) {
+					boolean found = false;
 					for (int x = 0; x < KNOWN_SITE_ATTRS.length; x++) {
 						if (KNOWN_SITE_ATTRS[x][0].equals(attr.attribute)) {
+							found = true;
 							if (KNOWN_SITE_ATTRS[x][1].endsWith("#")) {
 								int i = 1;
 								for (String value : attr.values) {
@@ -200,10 +215,11 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 								}
 
 							}
-						} else {
-							site.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
- 							unknown.add(attr.attribute);
 						}
+					}
+					if (!found) {
+						site.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+						unknown.add(attr.attribute);
 					}
 				}
 				
