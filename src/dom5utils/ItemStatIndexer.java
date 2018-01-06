@@ -49,7 +49,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"itemspell", "ritual", "sumrit", "#sumrit", "sumauto", "#sumauto", "sumbat", "#sumbat", "affliction", "restrictions", "special", "regeneration", 
 			"restricted1", "restricted2", "restricted3", "restricted4", "restricted5", "restricted6", "aging", "corpselord", "lictorlord", "bloodsac", 
 			"mastersmith", "eyeloss", "armysize", "defender", "cannotwear", "reanimH", "reanimD", "dragonmastery", "patience", "retinue", 
-			"noforgebouus", "crown", "hpbonus", "twistfate", "nationaldiscount", "mason", "itemcost1", "itemcost2", "blesssacredonly", "returning",
+			"noforgebouus", "crown", "hpbonus", "twistfate", "nationaldiscount1", "nationaldiscount2", "mason", "itemcost1", "itemcost2", "blesssacredonly", "returning",
 			"warning", "mapmovebonus", "slowaging", 
 			"transformwearer", "feeblemindprovince", "supayasummonbonus", "curseattacker", "seduction", "bearergainsinsanity", "bearergainsinsanitypermonth", "infernoret",
 			"kokytosret", "heataura", "costdiscountamount", "wintermove", "unhindered", "floating", "spiritsight", "invisibility", "diseasegrinder", "agingreductiontoallunits",
@@ -173,7 +173,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"2802", "crown"},
 			{"3101", "hpbonus"},
 			{"3902", "twistfate"},
-			{"3E02", "nationaldiscount"},
+			{"3E02", "nationaldiscount#"},
 			{"5202", "mason"},
 			{"5402", "itemcost1"},
 			{"5502", "itemcost2"},
@@ -349,10 +349,18 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 						if (KNOWN_ITEM_ATTRS[x][0].equals(attr.attribute)) {
 							found = true;
 							if (KNOWN_ITEM_ATTRS[x][1].endsWith("#")) {
-								int i = 1;
-								for (String value : attr.values) {
-									item.parameters.put(KNOWN_ITEM_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value)-100);
-									i++;
+								if (KNOWN_ITEM_ATTRS[x][1].startsWith("restricted")) {
+									int i = 1;
+									for (String value : attr.values) {
+										item.parameters.put(KNOWN_ITEM_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value)-100);
+										i++;
+									}
+								} else {
+									int i = 1;
+									for (String value : attr.values) {
+										item.parameters.put(KNOWN_ITEM_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value));
+										i++;
+									}
 								}
 							} else {
 								switch (KNOWN_ITEM_ATTRS[x][1]) {
