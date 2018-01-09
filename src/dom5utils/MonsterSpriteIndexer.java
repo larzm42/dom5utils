@@ -155,7 +155,7 @@ public class MonsterSpriteIndexer {
 		empty: 7280
 		empty: 7286
 		oklara: 7292*/
-	
+		
 		FileInputStream stream = null;
 		try {
 			Path monstersPath = Files.createDirectories(Paths.get("monsters", "output"));
@@ -279,11 +279,17 @@ public class MonsterSpriteIndexer {
 									sortedSet.add(new SortedByOffset(myList));
 								}
 							} else if (entry.getValue().equals("gods")) {
-								if (sortedByOffset.getIntValue() < 2465) {
+								if ((sortedByOffset.getIDValue() < 2932 ||
+									sortedByOffset.getIDValue() > 2954) &&
+									sortedByOffset.getIDValue() != 2963 &&
+									sortedByOffset.getIDValue() != 2964) {
 									sortedSet.add(new SortedByOffset(myList));
 								}
 							} else if (entry.getValue().equals("ur 2")) {
-								if (sortedByOffset.getIntValue() > 2465) {
+								if ((sortedByOffset.getIDValue() > 2932 &&
+									sortedByOffset.getIDValue() < 2954) ||
+									sortedByOffset.getIDValue() == 2963 ||
+									sortedByOffset.getIDValue() == 2964) {
 									sortedSet.add(new SortedByOffset(myList));
 								}
 							} else {
@@ -292,6 +298,10 @@ public class MonsterSpriteIndexer {
 						}
 						Collections.sort(sortedSet);
 						if (first) {
+							if (sortedSet.size() == 0) {
+								System.err.println("Empty Set: " + group);
+								continue;
+							}
 							SortedByOffset sortedByOffset = sortedSet.get(0);
 							groupNegativeOffset = sortedByOffset.getIntValue();
 							groupPositiveOffset = entry.getKey();
@@ -428,6 +438,11 @@ class SortedByOffset implements Comparable<SortedByOffset> {
 			stack.push(tok.nextToken());
 		}
 		return Integer.decode("0X" + stack.pop() + stack.pop());
+	}
+	public Integer getIDValue() {
+		Stack<String> stack = new Stack<String>();
+		StringTokenizer tok = new StringTokenizer(value, ":");
+		return Integer.parseInt(tok.nextToken());
 	}
 	@Override
 	public int compareTo(SortedByOffset o) {
