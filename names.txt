@@ -12,18 +12,11 @@ Raterik
 Niklatu
 Uru'gallu
 Rhianne
-Orcus
-Ptah
-Hathor
-Horus
-Isis
-Set
 Pazuzu
 Oreigenes
+Pedoseion
 Al Khazim
 Mastema
-Shiva
-Odin
 Marius Lorca
 Hierogallus
 Hildegard
@@ -48,9 +41,6 @@ Orokestes
 Angelique d'Armant
 Tomaso del Monferrada
 Vanlade
-Athena
-Zeus
-Tlaloc
 Taurotyrannos
 Torgrin
 Arcopythera
@@ -80,7 +70,6 @@ Ethanim
 Furcas
 Magoth
 Igarak
-Tezcatlipoca
 Ambicephalos
 Panicratos
 Ekishnugal
@@ -90,7 +79,6 @@ Chuzrael
 Mortius
 Belial
 Barathrus
-Pedoseion
 Bathusma
 Limne
 Antrax
@@ -117,26 +105,18 @@ Burkhard Nachtzehrer
 Daidalos
 Asterios
 Holger
-Kurgi
 Umor
+Umor
+Umor
+Kurgi
 Kirke
-Hephasteos
-Skylla
-Nereus
-Triton
 Scabiel
 Alecto
 Megeara
 Tisiphone
-Kali
-Aphrodite
-Lakshmi
 Khshathra Vairya
 Vohu Manah
 Asha Vahishta
-Ammit
-Enki
-Ishtar
 Tjatse
 Buer
 Shubejc
@@ -207,9 +187,7 @@ Arakiel
 Putrescator
 Sabba
 Mother Hydra
-Reginn
 Simeon ben Tabbai
-Idun
 Karya and Petraios
 Karya
 Bandarjuna
@@ -219,51 +197,23 @@ Ashmedai
 Atun Shar
 Dis Mater
 Ba'al Hammon
-Hades
 EnHedu'anna
 Utnapishtim
-Coatlique
-Inanna
-Sin
-Dumuzi
-Ereshkigal
-Huitzilopochtli
-Mictlantecuhtli
-Osiris
-Svetovid
-Cernunnos
-Guanyin
-Longnu
-Longnu
-Thoth
 Sigrdriva
 Nog
 Moss Agate
 Lapis
 Obsidian Eye
-Unity
-Serenity
-Tranquility
-Wholeness
 Eckhart von Kohlbrunn
-Kvälmu
-Ahura Mazda
-Mithra
-Apam Napat
 Vata
-Dahaka
-Ahriman
 Akem Manah
 Indra
 Saurva
 Nanghaithya
 Taurvi
 Zauri
-Aeshma
 Zahak
 Chek Ahau
-Ayar Uchu
-Ayar Cachi
 Keshvar
 Manco-Ocllo
 Chamiabac
@@ -273,24 +223,7 @@ Ahalgana
 Ahalmez
 Ahaltocob
 Mam Lum
-Vucub Caqix
-Sak Xib Chaac
-Chac Xib Chaac
-Kan Xib Chaac
-Ex Xib Chaac
-Python
-Mehen
-Apep
-Kerberos
-Kerberos
-Nidhöggr
-Fafnir
 Thaumas
-Pontos
-Lir
-Phorkys
-Isis Pelagia
-Manannan
 Axiocersa
 Axieros
 Makelo
@@ -299,8 +232,6 @@ Dexithea
 Dexithea
 Lysagora
 Lysagora
-Demonax
-Demonax
 Malgven
 Malgven
 Dahut

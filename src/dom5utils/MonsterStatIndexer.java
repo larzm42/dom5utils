@@ -16,9 +16,11 @@ package dom5utils;
  */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -638,7 +640,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				monster.parameters.put("def", getBytes2(startIndex + 58));
 				monster.parameters.put("mr", getBytes2(startIndex + 60));
 				monster.parameters.put("mor", getBytes2(startIndex + 62));
-				monster.parameters.put("rcost", getBytes2(startIndex + 236));
 				monster.parameters.put("wpn1", getBytes2(startIndex + 208) == 0 ? "" : getBytes2(startIndex + 208));
 				monster.parameters.put("wpn2", getBytes2(startIndex + 210) == 0 ? "" : getBytes2(startIndex + 210));
 				monster.parameters.put("wpn3", getBytes2(startIndex + 212) == 0 ? "" : getBytes2(startIndex + 212));
@@ -650,6 +651,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				monster.parameters.put("armor2", getBytes2(startIndex + 230) == 0 ? "" : getBytes2(startIndex + 230));
 				monster.parameters.put("armor3", getBytes2(startIndex + 232) == 0 ? "" : getBytes2(startIndex + 232));
 				monster.parameters.put("basecost", getBytes2(startIndex + 234));
+				monster.parameters.put("rcost", getBytes2(startIndex + 236));
 				monster.parameters.put("rpcost", getBytes2(startIndex + 240));
 
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP);
@@ -1107,6 +1109,37 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			}
 			in.close();
 			stream.close();
+			
+			// fixedname
+			File heroesFile = new File("heroes.txt");
+			Set<Integer> heroes = new HashSet<Integer>();
+			File namesFile = new File("names.txt");
+			List<String> names = new ArrayList<String>();
+			FileReader herosFileReader = new FileReader(heroesFile);
+			FileReader namesFileReader = new FileReader(namesFile);
+			BufferedReader bufferedReader = new BufferedReader(herosFileReader);
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				heroes.add(Integer.parseInt(line));
+			}
+			bufferedReader.close();
+			bufferedReader = new BufferedReader(namesFileReader);
+			while ((line = bufferedReader.readLine()) != null) {
+				names.add(line);
+			}
+			bufferedReader.close();
+			int nameIndex = 0;
+			for (Monster monster : monsterList) {
+				Object unique = monster.parameters.get("unique");
+				int id = (Integer)(monster.parameters.get("id"));
+				if (id == 621 || id == 980 ||id == 981||id==994||id==995||id==996||id==997||
+					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781)) {
+					unique = "0";
+				}
+				if (heroes.contains(monster.parameters.get("id")) || (unique != null && unique.equals("1"))/* || monster.parameters.get("id").equals("641")*/) {
+					monster.parameters.put("fixedname", names.get(nameIndex++));
+				}
+			}
 
 			XSSFWorkbook wb = new XSSFWorkbook();
 			FileOutputStream fos = new FileOutputStream("BaseU.xlsx");
