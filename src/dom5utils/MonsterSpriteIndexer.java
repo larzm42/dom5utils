@@ -441,7 +441,6 @@ class SortedByOffset implements Comparable<SortedByOffset> {
 		return Integer.decode("0X" + stack.pop() + stack.pop());
 	}
 	public Integer getIDValue() {
-		Stack<String> stack = new Stack<String>();
 		StringTokenizer tok = new StringTokenizer(value, ":");
 		return Integer.parseInt(tok.nextToken());
 	}

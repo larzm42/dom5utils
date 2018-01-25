@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +33,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 public class EventStatIndexer {
+	public static String[] event_columns = {"id", "name", "rarity", "description", "requirements",  "effects", "end"};
+
 	static class Event {
 		String description;
 		int rarity;
@@ -564,30 +572,47 @@ public class EventStatIndexer {
 			requirements(events);
 			effects(events);
 			
-			System.out.println("id\tname\trarity\tdescription\trequirements\teffects\ttest");
-			i = 1;
+			XSSFWorkbook wb = new XSSFWorkbook();
+			FileOutputStream fos = new FileOutputStream("events.xlsx");
+			XSSFSheet sheet = wb.createSheet();
+			
+			int rowNum = 0;
 			for (Event event : events) {
-				System.out.print(i++ + "\t");
-				System.out.print(event.description.substring(0, Math.min(event.description.length(), 30)) + "\t");
-				System.out.print(event.rarity + "\t");
-				System.out.print(event.description + "\t");
+				// Event
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (i = 0; i < event_columns.length; i++) {
+						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(event_columns[i]);
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				
+				row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(rowNum);
+				row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(event.description.substring(0, Math.min(event.description.length(), 30)));
+				row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(event.rarity);
+				row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(event.description);
+
 				boolean first = true;
+				StringBuffer req = new StringBuffer();
 				for (Pair pair : event.requirements) {
-					//if (pair.name.startsWith("0x")) {
-						System.out.print((first?"":"|")+pair.name + " " + pair.value);
-					//}
+					req.append((first?"":"|")+pair.name + " " + pair.value);
 					first = false;
 				}
-				System.out.print("\t");
+				row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(req.toString());
+				StringBuffer eff = new StringBuffer();
 				first=true;
 				for (Pair pair : event.effects) {
-					//if (pair.name.startsWith("0x")) {
-						System.out.print((first?"":"|")+pair.name + " " + pair.value);
-					//}
+					eff.append((first?"":"|")+pair.name + " " + pair.value);
 					first = false;
 				}
-				System.out.println("\t");
+				row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(eff.toString());
+
+				rowNum++;
 			}
+			wb.write(fos);
+			fos.close();
+			wb.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
