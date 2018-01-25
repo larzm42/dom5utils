@@ -156,6 +156,28 @@ public abstract class AbstractStatIndexer {
 		return value;
 	}
 	
+	protected static long getBytes8(long skip) throws IOException {
+		FileInputStream stream = new FileInputStream(EXE_NAME);			
+		long value = 0;
+		byte[] c = new byte[8];
+		stream.skip(skip);
+		while ((stream.read(c, 0, 8)) != -1) {
+			String high0 = String.format("%02X", c[7]);
+			String low0 = String.format("%02X", c[6]);
+			String high1 = String.format("%02X", c[5]);
+			String low1 = String.format("%02X", c[4]);
+			String high2 = String.format("%02X", c[3]);
+			String low2 = String.format("%02X", c[2]);
+			String high3 = String.format("%02X", c[1]);
+			String low3 = String.format("%02X", c[0]);
+			
+			value = new BigInteger(high0 + low0 + high1 + low1 + high2 + low2 + high3 + low3, 16).longValue();
+			break;
+		}
+		stream.close();
+		return value;
+	}
+	
 	protected static String getString(long skip) throws IOException {
 		FileInputStream stream = new FileInputStream(EXE_NAME);			
 		InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
@@ -283,7 +305,7 @@ public abstract class AbstractStatIndexer {
 		writer.newLine();
 		writer.write("\tarea_battlefield_pct: " + effect.area_battlefield_pct);
 		writer.newLine();
-		writer.write("\tmodifiers_mask: ");
+		writer.write("\tmodifiers_mask: " + effect.modifiers_mask);
 		writer.newLine();
 		printModiferMask(effect.modifiers_mask, writer);
 	}
@@ -355,7 +377,7 @@ public abstract class AbstractStatIndexer {
 		int duration;
 		int ritual;
 		String object_type;
-		int raw_argument;
+		long raw_argument;
 		long modifiers_mask;
 		int range_base;
 		int range_per_level;

@@ -34,7 +34,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class SpellStatIndexer extends AbstractStatIndexer {
-	public static String[] spells_columns = {"id","name", "school", "researchlevel", "path1", "pathlevel1", "path2", "pathlevel2", "effect_record_id", "effects_count", "precision", "fatiguecost", "gemcost", "next_spell", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
+	public static String[] spells_columns = {"id","name", "school", "researchlevel", "path1", "pathlevel1", "path2", "pathlevel2", "effect_record_id", "effects_count", "precision", "fatiguecost", "gemcost", "next_spell", "damage", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
 	public static String[] effects_spells_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
 	public static String[] attributes_by_spell_columns = {"spell_number", "attribute", "raw_value", "end"};
 
@@ -128,30 +128,35 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 				}
 
 				spell.parameters.put("precision", getBytes1(startIndex + 50l));
+				spell.parameters.put("damage", getBytes8(startIndex + 56l));
 
-				spell.parameters.put("Unknown51", getBytes1(startIndex + 51l));
-				spell.parameters.put("Unknown52", getBytes2(startIndex + 52l));
-				spell.parameters.put("Unknown54", getBytes2(startIndex + 54l));
+//				spell.parameters.put("Unknown51", getBytes1(startIndex + 51l));
+//				spell.parameters.put("Unknown52", getBytes2(startIndex + 52l));
+//				spell.parameters.put("Unknown54", getBytes2(startIndex + 54l));
 				
-				effect.raw_argument = getBytes2(startIndex+56);
+				effect.raw_argument = getBytes8(startIndex+56);
 
-				spell.parameters.put("Unknown58", getBytes2(startIndex + 58l));
-				spell.parameters.put("Unknown60", getBytes2(startIndex + 60l));
-				spell.parameters.put("Unknown62", getBytes2(startIndex + 62l));
-				spell.parameters.put("Unknown66", getBytes2(startIndex + 66l));
-				spell.parameters.put("Unknown68", getBytes2(startIndex + 68l));
-				spell.parameters.put("Unknown70", getBytes2(startIndex + 70l));
-				spell.parameters.put("Unknown72", getBytes2(startIndex + 72l));
-				spell.parameters.put("Unknown74", getBytes2(startIndex + 74l));
-				spell.parameters.put("Unknown76", getBytes2(startIndex + 76l));
-				spell.parameters.put("Unknown78", getBytes2(startIndex + 78l));
-				spell.parameters.put("Unknown89", getBytes1(startIndex + 89l));
-				spell.parameters.put("Unknown90", getBytes2(startIndex + 90l));
-
+//				spell.parameters.put("Unknown66", getBytes2(startIndex + 66l));
+//				spell.parameters.put("Unknown68", getBytes2(startIndex + 68l));
+//				spell.parameters.put("Unknown70", getBytes2(startIndex + 70l));
+//				spell.parameters.put("Unknown72", getBytes2(startIndex + 72l));
+//				spell.parameters.put("Unknown74", getBytes2(startIndex + 74l));
+//				spell.parameters.put("Unknown76", getBytes2(startIndex + 76l));
+//				spell.parameters.put("Unknown78", getBytes2(startIndex + 78l));
+//				spell.parameters.put("Unknown90", getBytes2(startIndex + 90l));
+//
+//				spell.parameters.put("Unknown66-1", getBytes1(startIndex + 66l));
+//				spell.parameters.put("Unknown67-1", getBytes1(startIndex + 67l));
+//				spell.parameters.put("Unknown68-1", getBytes1(startIndex + 68l));
+//				spell.parameters.put("Unknown69-1", getBytes1(startIndex + 69l));
+//				spell.parameters.put("Unknown70-1", getBytes1(startIndex + 70l));
+//				spell.parameters.put("Unknown71-1", getBytes1(startIndex + 71l));
+//				spell.parameters.put("Unknown72-1", getBytes1(startIndex + 72l));
+//
 				spell.parameters.put("effects_count", getBytes2(startIndex + 64l));
 				
-				effect.modifiers_mask = getBytes6(startIndex+80);
-				spell.parameters.put("next_spell", getBytes1(startIndex + 88l));
+				effect.modifiers_mask = getBytes8(startIndex+80);
+				spell.parameters.put("next_spell", getBytes2(startIndex + 88l));
 
 				effect.record_number = spellNumber;
 				effect.object_type = "Spell";
@@ -231,7 +236,7 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 					row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.duration != 0 ? spell.effect.duration+"" : "");
 					row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.ritual);
 					row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.object_type);
-					row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.raw_argument);
+					row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Long.toString(spell.effect.raw_argument));
 					row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(Long.toString(spell.effect.modifiers_mask));
 					row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.range_base);
 					row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(spell.effect.range_per_level);

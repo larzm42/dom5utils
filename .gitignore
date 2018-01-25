@@ -17,15 +17,12 @@ monsters/output/*
 /armors.txt
 /armors.xlsx
 /armorsUnknown.txt
-/attribute_keys.csv
 /attributes_by_armor.xlsx
 /attributes_by_nation.xlsx
 /attributes_by_spell.xlsx
 /attributes_by_weapon.xlsx
 /coast_leader_types_by_nation.xlsx
 /coast_troop_types_by_nation.xlsx
-/effect_modifier_bits.csv
-/effects_info.csv
 /effects_spells.xlsx
 /effects_weapons.xlsx
 /fort_leader_types_by_nation.xlsx
