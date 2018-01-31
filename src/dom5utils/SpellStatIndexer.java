@@ -269,6 +269,8 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 				rowNum++;
 			}
 			
+			writer.close();
+
 			wb.write(fos);
 			fos.close();
 			wb.close();

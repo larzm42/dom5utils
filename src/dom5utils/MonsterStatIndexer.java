@@ -60,7 +60,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"unique", "fixedname", "special", "nametype", "type", "typeclass", "from", "summon", "n_summon", "autosum", "n_autosum", "batstartsum1", 
 			"batstartsum2", "domsummon1", "domsummon2", "bloodvengeance", "bringeroffortune", "realm1", "realm2", "realm3", "batstartsum3", "batstartsum4", 
 			"batstartsum5", "batstartsum1d6", "batstartsum2d6", "batstartsum3d6", "batstartsum4d6", "batstartsum5d6", "batstartsum6d6", "turmoilsummon", 
-			"coldsummon", "scalewalls", "baseleadership", "explodeondeath", "startaff", "uwregen", "shrinkhp", "growhp", "transformation", "startingaff", 
+			"coldsummon", "scalewalls", "explodeondeath", "startaff", "uwregen", "shrinkhp", "growhp", "transformation", "startingaff", 
 			"fixedresearch", "divineins", "lamiabonus", "preanimator", "dreanimator", "mummify", "onebattlespell", "fireattuned", "airattuned", 
 			"waterattuned", "earthattuned", "astralattuned", "deathattuned", "natureattuned", "bloodattuned", "magicboostF", "magicboostA", "magicboostW", 
 			"magicboostE", "magicboostS", "magicboostD", "magicboostN", "magicboostALL", "eyes", "heatrec", "coldrec", "spreadchaos", "spreaddeath", 
@@ -830,7 +830,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 				monster.parameters.put("leader", 40+Integer.parseInt(additionalLeader));
 				if (largeBitmap.contains("noleader")) {
-					monster.parameters.put("baseleadership", 0);
 					if (!"".equals(additionalLeader)) {
 						monster.parameters.put("leader", additionalLeader);
 					} else {
@@ -838,7 +837,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				if (largeBitmap.contains("poorleader")) {
-					monster.parameters.put("baseleadership", 10);
 					if (!"".equals(additionalLeader)) {
 						monster.parameters.put("leader", 10+Integer.parseInt(additionalLeader));
 					} else {
@@ -846,7 +844,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				if (largeBitmap.contains("goodleader")) {
-					monster.parameters.put("baseleadership", 80);
 					if (!"".equals(additionalLeader)) {
 						monster.parameters.put("leader", 80+Integer.parseInt(additionalLeader));
 					} else {
@@ -854,7 +851,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				if (largeBitmap.contains("expertleader")) {
-					monster.parameters.put("baseleadership", 120);
 					if (!"".equals(additionalLeader)) {
 						monster.parameters.put("leader", 120+Integer.parseInt(additionalLeader));
 					} else {
@@ -862,7 +858,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				if (largeBitmap.contains("superiorleader")) {
-					monster.parameters.put("baseleadership", 160);
 					if (!"".equals(additionalLeader)) {
 						monster.parameters.put("leader", 160+Integer.parseInt(additionalLeader));
 					} else {
@@ -1175,7 +1170,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			wb.write(fos);
 			fos.close();
 			wb.close();
-
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
