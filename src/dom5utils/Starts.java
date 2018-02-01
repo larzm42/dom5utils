@@ -16,52 +16,49 @@ package dom5utils;
  */
 
 public class Starts {
-	public static final long ITEM = 0x00e7fe88l;
+	public static final long ITEM = 0x00e82d58l;
 	public static final long ITEM_SIZE = 232l;
 	public static final long ITEM_ATTRIBUTE_OFFSET = 120l;
 	public static final long ITEM_ATTRIBUTE_GAP = 26l;
-	public static final int ITEM_COUNT = 430;
 	
-	public static final long MONSTER = 0x00f03748l;
+	public static final long MONSTER = 0x00f06980l;
 	public static final long MONSTER_SIZE = 264l;
 	public static final long MONSTER_ATTRIBUTE_OFFSET = 64l;
 	public static final long MONSTER_ATTRIBUTE_GAP = 46l;
-	public static final int MONSTER_COUNT = 3102;
 
-	public static final long MONSTER_MAGIC = 0x01256d58l;
-	public static final long ITEM_AND_MONSTER_DESC = 0x001f02e0l;
-	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x0031d658l;
+	public static final long MONSTER_MAGIC = 0x01259f90l;
+	public static final long ITEM_AND_MONSTER_DESC = 0x001f1bc0l;
+	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x0031f7a0l;
 	
-	public static final long MONSTER_TRS_INDEX = 0x00021cd8l;
+	public static final long MONSTER_TRS_INDEX = 0x0001f098l;
 	
-	public static final long SITE = 0x0114ebd8l;
+	public static final long SITE = 0x01151e10l;
 	public static final long SITE_SIZE = 216l;
 	public static final long SITE_ATTRIBUTE_OFFSET = 44;
 	public static final long SITE_ATTRIBUTE_GAP = 34l;
-	public static final int SITE_COUNT = 1157;
 	
-	public static final long NAMES = 0x00d0d2e4l;
-	public static final long FIXED_NAMES = 0x00e53c7cl;
+	public static final long NAMES = 0x00d0fcccl;
+	public static final long FIXED_NAMES = 0x00e56664l;
 	public static final int NAMES_COUNT = 161;
 	
-	public static final long SPELL = 0x011b8a18l;
+	public static final long SPELL = 0x011bbc50l;
 	public static final long SPELL_SIZE = 216l;
 
-	public static final long SPELL_DESC = 0x003291d8l;
-	public static final long SPELL_DESC_INDEX = 0x0036b370l;
+	public static final long SPELL_DESC = 0x0032b320l;
+	public static final long SPELL_DESC_INDEX = 0x0036dd58l;
 
-	public static final long EVENT = 0x00371170l;
+	public static final long EVENT = 0x00373b58l;
 	
-	public static final long MERCENARY = 0x00ed36cal;
+	public static final long MERCENARY = 0x00ed6902l;
 	public static final long MERCENARY_SIZE = 312l;
 
-	public static final long ARMOR = 0x001c9bb0l;
+	public static final long ARMOR = 0x001cb3b0l;
 	public static final long ARMOR_SIZE = 104l;
 
-	public static final long WEAPON = 0x01279650l;
+	public static final long WEAPON = 0x0127c8c8l;
 	public static final long WEAPON_SIZE = 112l;
 	
-	public static final long NATION = 0x00c3c070l;
+	public static final long NATION = 0x00c3ea58l;
 	public static final long NATION_SIZE = 1752l;
 	
 }
