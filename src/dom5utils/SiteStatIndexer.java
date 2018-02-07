@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -119,7 +119,20 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			{"2A00", "domconflict"},
 			{"6A01", "rituallevelmodifier"},
 			{"7101", "callgodbonus"},
-			{"F701", "magicresistancebonus"}
+			{"F701", "magicresistancebonus"},
+			{"FA00", "firerange"},
+			{"FB00", "airrange"},
+			{"FC00", "waterrange"},
+			{"FD00", "earthrange"},
+			{"FE00", "astralrange"},
+			{"FF00", "deathrange"},
+			{"0001", "naturerange"},
+			{"0101", "bloodrange"},
+			{"0201", "elementrange"},
+			{"0301", "sorceryrange"},
+			{"0401", "allrange"},
+			{"1F00", "incscale"},
+			{"2000", "decscale"}
 	};
 	
 
@@ -139,7 +152,7 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.SITE);
-			Set<String> unknown = new HashSet<String>();
+			Set<String> unknown = new TreeSet<String>();
 
 			// Name
 			InputStreamReader isr = new InputStreamReader(stream, "ISO-8859-1");
@@ -286,6 +299,16 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0101")));
 					value = attributeValue.values.get(0);
 					boolPaths[7] = true;
+				}
+				if (attributes.contains(new AttributeValue("0201"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0201")));
+					value = attributeValue.values.get(0);
+					boolPaths = new boolean[]{true, true, true, true, false, false, false, false};
+				}
+				if (attributes.contains(new AttributeValue("0301"))) {
+					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0301")));
+					value = attributeValue.values.get(0);
+					boolPaths = new boolean[]{false, false, false, false, true, true, true, true};
 				}
 				if (attributes.contains(new AttributeValue("0401"))) {
 					AttributeValue attributeValue = attributes.get(attributes.indexOf(new AttributeValue("0401")));

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -474,7 +475,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 	        int ch;
 			stream = new FileInputStream(EXE_NAME);			
 			stream.skip(Starts.MONSTER_MAGIC);
-			Set<String> unknown = new HashSet<String>();
+			Set<String> unknown = new TreeSet<String>();
 
 			// magic
 			byte[] c = new byte[4];
