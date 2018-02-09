@@ -36,10 +36,10 @@ public class Dom5Utils {
 		EventStatIndexer.run();
 		
 		// Sprites
-		//ItemSpriteIndexer.run();
+		ItemSpriteIndexer.run();
 		MonsterSpriteIndexer.run();
 		
 		// Names
-		//NametypeIndexer.run();
+		NametypeIndexer.run();
 	}
 }

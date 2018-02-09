@@ -112,13 +112,7 @@ public class NationStatIndexer extends AbstractStatIndexer {
 				nation.parameters.put("abbreviation", getString(startIndex + 72l));
 				String fileNameBase = getString(startIndex + 77l);
 				nation.parameters.put("file_name_base", fileNameBase);
-				if (fileNameBase.startsWith("early_")) {
-					nation.parameters.put("era", "1");
-				} else if (fileNameBase.startsWith("mid_")) {
-					nation.parameters.put("era", "2");
-				} else if (fileNameBase.startsWith("late_")) {
-					nation.parameters.put("era", "3");
-				}
+				nation.parameters.put("era", getBytes2(startIndex + 168l));
 				
 		        List<Attribute> attributes = new ArrayList<Attribute>();
 				long newIndex = startIndex+172l;
