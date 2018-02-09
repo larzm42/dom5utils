@@ -23,7 +23,7 @@
 28	Control/Possess
 29	Charm
 30	Dispel
-31	?
+31	Call Horror
 32	Damage (x2 vs Large Creatures) {#dt_large}
 33	Damage (x2 vs Small Creatures) {#dt_small}
 35	Cross Breeding
@@ -108,6 +108,7 @@
 133	Time Stop
 134	Chaining Damage
 135	Raven Feast
+136	Unknown
 500	Dehydrate
 504	Resist Element
 509	Protect against Element
