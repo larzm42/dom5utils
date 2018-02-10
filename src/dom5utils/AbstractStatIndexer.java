@@ -253,6 +253,8 @@ public abstract class AbstractStatIndexer {
 					if ((val & MASK[j]) != 0) {
 						if (!values[k][j].equals("")) {
 							boolList.add(values[k][j]);
+						} else {
+							boolList.add("Unknown Mask(" + k + ":" + MASK[j] + ")");
 						}
 					}
 				}
