@@ -145,6 +145,8 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("ys", new ArrayList<String>(Arrays.asList(new String[]{"9A"})));
 		indexToInt.put("ery 3", new ArrayList<String>(Arrays.asList(new String[]{"53", "54"})));
 		indexToInt.put("mek 1", new ArrayList<String>(Arrays.asList(new String[]{"9E"})));
+		indexToInt.put("phl 2", new ArrayList<String>(Arrays.asList(new String[]{"A1", "A2"})));
+		indexToInt.put("phae", new ArrayList<String>(Arrays.asList(new String[]{"A9", "AA"})));
 		/*
 		macha 3: 1975
 		empty: 5023

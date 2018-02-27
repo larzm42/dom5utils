@@ -31,7 +31,7 @@
 1073741824	Bloodletting (?) {#bloodletting}
 2147483648	Damage Bonus on 1st Attack {#charge}
 4294967296	Unknown Modifier {#4294967296}
-8589934592	Unknown Modifier {#8589934592}
+8589934592	Used in melee too {#usedinmelee}
 17179869184	Unknown Modifier {#17179869184}
 34359738368	Unknown Modifier {#34359738368}
 68719476736	Higher charge bonus cap {#heavyweapon}
