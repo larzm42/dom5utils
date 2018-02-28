@@ -50,7 +50,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"restricted1", "restricted2", "restricted3", "restricted4", "restricted5", "restricted6", "aging", "corpselord", "lictorlord", "bloodsac", 
 			"mastersmith", "eyeloss", "armysize", "defender", "cannotwear", "reanimH", "reanimD", "dragonmastery", "patience", "retinue", 
 			"noforgebouus", "crown", "hpbonus", "twistfate", "nationaldiscount1", "nationaldiscount2", "mason", "itemcost1", "itemcost2", "blesssacredonly", "returning",
-			"warning", "mapmovebonus", "slowaging", 
+			"warning", "mapmovebonus", "slowaging",
 			"transformwearer", "feeblemindprovince", "supayasummonbonus", "curseattacker", "seduction", "bearergainsinsanity", "bearergainsinsanitypermonth", "infernoret",
 			"kokytosret", "heataura", "wintermove", "unhindered", "floating", "spiritsight", "invisibility", "diseasegrinder", "agingreductiontoallunits",
 			"fastcasting", "petrification", "xpgainpermonth", "extralife", "bloodsearcher", "animalawe2", "stormpower", "batstartsum2", "batstartsum3", "batstartsum5d6",
@@ -58,7 +58,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"flyingmapmove", "arenareward", "swiftness", "taskmaster", "leper", "siegebonus", "invulnerable", "horrormarkattacker", "entangle", "minsizetoequip",
 			"maxsizetoequip", "minstrtoequip", "minhandstoequip", "deathgemonkill", "deathexplosion", "chanceofattackbyknights", "singleuse", "domspreader",
 			"allunitslooklikebearertoscouts", "monstermustbepresent", "banishkiller", "onlyuseablebyfliersormounted", "masterritualist", "stunattackers",
-			"end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+			"eatforyouth", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
 
 	private static String[][] KNOWN_ITEM_ATTRS = {
 			{"C600", "fireres"},
@@ -72,10 +72,10 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"9F00", "ldr-u"},
 			{"7001", "inspirational"},
 			{"3401", "morale"},
-			{"A100", "pen"},
+			{"A200", "pen"},
 			{"8300", "pillagebonus"},
 			{"B700", "fear"},
-			{"A000", "mr"},
+			{"A100", "mr"},
 			{"0601", "taint"},
 			{"7500", "reinvigoration"},
 			{"6900", "awe"},
@@ -206,7 +206,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"7200", "xpgainpermonth"},
 			{"7300", "extralife"},
 			{"7400", "bloodsearcher"},
-			{"A200", "animalawe2"},
+			{"8602", "animalawe2"},
 			{"AE00", "stormpower"},
 			{"B501", "batstartsum2"},
 			{"B601", "batstartsum3"},
@@ -245,9 +245,9 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"B201", "banishkiller"},
 			{"C901", "onlyuseablebyfliersormounted"},
 			{"CF01", "masterritualist"},
-			{"DE01", "stunattackers"}
-
-
+			{"DE01", "stunattackers"},
+			{"8A02", "eatforyouth"}
+			
 	};
 	
 

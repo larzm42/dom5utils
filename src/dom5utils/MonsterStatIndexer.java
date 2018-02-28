@@ -203,7 +203,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"B800", "heretic"},
 		{"2001", "popkill"},
 		{"6201", "autohealer"},
-		{"A300", "fireshield"},
+		{"8C02", "fireshield"},
 		{"E200", "startingaff"},
 		{"1E00", "gemprod fire"},
 		{"1F00", "gemprod air"},
