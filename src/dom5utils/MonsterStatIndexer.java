@@ -78,7 +78,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"vineshield", "alchemyBonus", "afflictionresistance", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
-			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord",
+			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave",
 			"end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
@@ -388,7 +388,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"ED01", "isadaeva"},
 		{"F000", "flieswhenblessed"},
 		{"F401", "plant"},
-		{"F900", "clockworklord"}
+		{"F900", "clockworklord"},
+		{"8802", "commaster"},
+		{"8702", "comslave"}
+		
 
 	};
 	
