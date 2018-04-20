@@ -24,17 +24,17 @@
 8388608	May Use Underwater {#uwok}
 16777216	Magic Resistance Negates Easily {#mrnegateseasily}
 33554432	Use Underwater Only {#uwonly}
-67108864	Affects Undead Only {#undeadonly}
+67108864	Unknown Modifier {#67108864}
 134217728	Intrinsic Weapon {#bonus}
-268435456	Can be cast to Underwater province {#touw}
+268435456	No effect on Demons {#demonimmune}
 536870912	No effect on Lifeless {#inanimateimmune}
 1073741824	Bloodletting (?) {#bloodletting}
 2147483648	Damage Bonus on 1st Attack {#charge}
 4294967296	Unknown Modifier {#4294967296}
 8589934592	Used in melee too {#usedinmelee}
 17179869184	Unknown Modifier {#17179869184}
-34359738368	Unknown Modifier {#34359738368}
-68719476736	Higher charge bonus cap {#heavyweapon}
+34359738368	Unknown Modifier {#heavyweapon}
+68719476736	Higher charge bonus cap {#68719476736}
 137438953472	Cannot Repel {#norepel}
 274877906944	Piercing Damage {#pierce}
 549755813888	Bludgeoning Damage {#blunt}

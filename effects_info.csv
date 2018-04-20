@@ -1,7 +1,7 @@
 0	Nothing
 1	Summon
 2	Damage {#dt_normal}
-3	Sleep/Stun {#dt_stun}
+3	Fatigue  {#dt_stun}
 4	Cause Fear (Type I)
 7	Poison (Mortal) {#dt_poison}
 8	Remove Fatigue (?)
@@ -109,9 +109,11 @@
 134	Chaining Damage
 135	Raven Feast
 136	Unknown
+137	Call Ladon
 500	Dehydrate
 504	Resist Element
 509	Protect against Element
+511	Unknown
 514	Resist Poison
 524	Resist Poison
 599	Immunity against Element (?)
