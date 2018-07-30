@@ -432,7 +432,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 					item.parameters.put("autocombatspell", "");
 				}
 				
-				List<String> largeBitmap = largeBitmap(startIndex + 208, values);
+				List<String> largeBitmap = largeBitmap(startIndex + Starts.ITEM_BITMAP_START, values);
 				for (String bit : largeBitmap) {
 					if (bit.equals("airshield")) {
 						item.parameters.put(bit, 80);
@@ -444,7 +444,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				itemList.add(item);
 
 				stream = new FileInputStream(EXE_NAME);		
-				startIndex = startIndex + 232l;
+				startIndex = startIndex + Starts.ITEM_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 		        in = new BufferedReader(isr);
