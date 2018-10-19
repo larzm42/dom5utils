@@ -211,6 +211,8 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 			wb3.write(fos3);
 			fos3.close();
 			wb3.close();
+			
+			writer.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
