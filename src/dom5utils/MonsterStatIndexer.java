@@ -78,7 +78,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"vineshield", "alchemyBonus", "afflictionresistance", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
-			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave",
+			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader",
 			"end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
@@ -193,9 +193,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"5001", "shrinkhp"},
 		{"4F01", "growhp"},
 		{"FD01", "transformation"},
-		{"A101", "domsummon#"},
-		{"DB00", "domsummon#"},
-		{"F100", "domsummon#"},
+		//{"A101", "domsummon#"},
+		//{"DB00", "domsummon#"},
+		//{"F100", "domsummon#"},
 		{"6B00", "autosum"},
 		{"8F00", "autosum"},
 		{"AD00", "turmoilsummon"},
@@ -359,7 +359,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"7E02", "stunimmunity"},
 		{"8000", "vineshield"},
 		{"8400", "alchemyBonus"},
-		{"8B00", "domsummon2"},
+		//{"8B00", "domsummon2"},
 		{"9601", "afflictionresistance"},
 		{"9901", "leavespostbattleifwoundedorhaskilled"},
 		{"9B01", "elegist"},
@@ -390,8 +390,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"F401", "plant"},
 		{"F900", "clockworklord"},
 		{"8802", "commaster"},
-		{"8702", "comslave"}
-		
+		{"8402", "minsizeleader"},
+		{"8702", "comslave"}		
 
 	};
 	
