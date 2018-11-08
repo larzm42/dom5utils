@@ -412,6 +412,10 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 									item.parameters.put("F", 2);
 									item.parameters.put("S", 2);
 									break;
+								case("crown"): //HACK
+									item.parameters.put("type", "crown");
+									item.parameters.put(KNOWN_ITEM_ATTRS[x][1], attr.values.get(0));
+									break;
 								default:
 									item.parameters.put(KNOWN_ITEM_ATTRS[x][1], attr.values.get(0));
 								}
