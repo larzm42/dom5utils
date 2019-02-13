@@ -95,7 +95,7 @@ public class EventStatIndexer {
 		{"3A00", "unique"}, 
 		{"3D00", "monster"}, 
 		{"3C00", "nomonster"},
-		{"3900", "fort"}, 
+		//{"3900", "fort"}, 
 		{"6700", "fort"}, 
 		{"1500", "fullowner"}, 
 		{"1700", "notnation"}, 
