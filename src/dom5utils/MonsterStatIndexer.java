@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -65,7 +64,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"fixedresearch", "divineins", "lamiabonus", "preanimator", "dreanimator", "mummify", "onebattlespell", "fireattuned", "airattuned", 
 			"waterattuned", "earthattuned", "astralattuned", "deathattuned", "natureattuned", "bloodattuned", "magicboostF", "magicboostA", "magicboostW", 
 			"magicboostE", "magicboostS", "magicboostD", "magicboostN", "magicboostALL", "eyes", "heatrec", "coldrec", "spreadchaos", "spreaddeath", 
-			"corpseeater", "poisonskin", "bug", "uwbug", "spreadorder", "spreadgrowth", "startitem", "spreaddom", "reform", "battlesum5", "acidsplash", 
+			"corpseeater", "poisonskin", "bug", "uwbug", "spreadorder", "spreadgrowth", "startitem", "spreaddom", "battlesum5", "acidsplash", 
 			"drake", "prophetshape", "horror", "enchrebate50", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
 			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", 
 			"mummification", "disres", "raiseonkill", "raiseshape", "sendlesserhorrormult", "xploss", "theftofthesunawe", "incorporate", "hpoverslow", "berserkwhenblessed",
@@ -74,19 +73,19 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templesummon", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurroundable",
 			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
 			"invisibility", "startaffliction", "ivylord", "spellsinging", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
-			"poweroftheturningyear", "fortkill", "thronekill", "forgebonus", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
+			"poweroftheturningyear", "fortkill", "thronekill", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
 			"vineshield", "alchemy", "afflictionresistance", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
-			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader",
+			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
 			"end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
-										{"bluntres", "slashres", "pierceres", "slow_to_recruit", "float", "", "teleport", "", "", "domimmortal", "", "", "", "", "", "" },
+										{"bluntres", "slashres", "pierceres", "slow_to_recruit", "float", "stormimmune", "teleport", "snowmove", "swimming", "domimmortal", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
-										{"magicbeing", "", "", "poormagicleader", "okmagicleader", "goodmagicleader", "expertmagicleader", "superiormagicleader", "poorundeadleader", "okundeadleader", "goodundeadleader", "expertundeadleader", "superiorundeadleader", "", "", "" },
-										{"", "", "", "", "", "", "", "", "noleader", "poorleader", "goodleader", "expertleader", "superiorleader", "", "", "" },
+										{"magicbeing", "", "darkvision100", "poormagicleader", "okmagicleader", "goodmagicleader", "expertmagicleader", "superiormagicleader", "poorundeadleader", "okundeadleader", "goodundeadleader", "expertundeadleader", "superiorundeadleader", "", "", "" },
+										{"", "", "", "", "stupid", "", "", "", "noleader", "poorleader", "goodleader", "expertleader", "superiorleader", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" }};
 	
@@ -628,35 +627,34 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				in.close();
 				
 				Monster monster = new Monster();
-				monster.parameters = new TreeMap<String, Object>();
-				monster.parameters.put("id", rowNumber);
-				monster.parameters.put("name", name.toString());
-				monster.parameters.put("ap", getBytes2(startIndex + 40));
-				monster.parameters.put("mapmove", getBytes2(startIndex + 42));
-				monster.parameters.put("size", getBytes2(startIndex + 44));
-				monster.parameters.put("ressize", getBytes2(startIndex + 44));
-				monster.parameters.put("hp", getBytes2(startIndex + 46));
-				monster.parameters.put("prot", getBytes2(startIndex + 48));
-				monster.parameters.put("str", getBytes2(startIndex + 50));
-				monster.parameters.put("enc", getBytes2(startIndex + 52));
-				monster.parameters.put("prec", getBytes2(startIndex + 54));
-				monster.parameters.put("att", getBytes2(startIndex + 56));
-				monster.parameters.put("def", getBytes2(startIndex + 58));
-				monster.parameters.put("mr", getBytes2(startIndex + 60));
-				monster.parameters.put("mor", getBytes2(startIndex + 62));
-				monster.parameters.put("wpn1", getBytes2(startIndex + 208) == 0 ? "" : getBytes2(startIndex + 208));
-				monster.parameters.put("wpn2", getBytes2(startIndex + 210) == 0 ? "" : getBytes2(startIndex + 210));
-				monster.parameters.put("wpn3", getBytes2(startIndex + 212) == 0 ? "" : getBytes2(startIndex + 212));
-				monster.parameters.put("wpn4", getBytes2(startIndex + 214) == 0 ? "" : getBytes2(startIndex + 214));
-				monster.parameters.put("wpn5", getBytes2(startIndex + 216) == 0 ? "" : getBytes2(startIndex + 216));
-				monster.parameters.put("wpn6", getBytes2(startIndex + 218) == 0 ? "" : getBytes2(startIndex + 218));
-				monster.parameters.put("wpn7", getBytes2(startIndex + 220) == 0 ? "" : getBytes2(startIndex + 220));
-				monster.parameters.put("armor1", getBytes2(startIndex + 228) == 0 ? "" : getBytes2(startIndex + 228));
-				monster.parameters.put("armor2", getBytes2(startIndex + 230) == 0 ? "" : getBytes2(startIndex + 230));
-				monster.parameters.put("armor3", getBytes2(startIndex + 232) == 0 ? "" : getBytes2(startIndex + 232));
-				monster.parameters.put("basecost", getBytes2(startIndex + 234));
-				monster.parameters.put("rcost", getBytes2(startIndex + 236));
-				monster.parameters.put("rpcost", getBytes2(startIndex + 240));
+				monster.setId(rowNumber);
+				monster.setName(name.toString());
+				monster.setAp(getBytes2(startIndex + 40));
+				monster.setMapmove(getBytes2(startIndex + 42));
+				monster.setSize(getBytes2(startIndex + 44));
+				monster.setRessize(getBytes2(startIndex + 44));
+				monster.setHp(getBytes2(startIndex + 46));
+				monster.setProt(getBytes2(startIndex + 48));
+				monster.setStr(getBytes2(startIndex + 50));
+				monster.setEnc(getBytes2(startIndex + 52));
+				monster.setPrec(getBytes2(startIndex + 54));
+				monster.setAtt(getBytes2(startIndex + 56));
+				monster.setDef(getBytes2(startIndex + 58));
+				monster.setMr(getBytes2(startIndex + 60));
+				monster.setMor(getBytes2(startIndex + 62));
+				monster.setWpn1(getBytes2(startIndex + 208) == 0 ? null : getBytes2(startIndex + 208));
+				monster.setWpn2(getBytes2(startIndex + 210) == 0 ? null : getBytes2(startIndex + 210));
+				monster.setWpn3(getBytes2(startIndex + 212) == 0 ? null : getBytes2(startIndex + 212));
+				monster.setWpn4(getBytes2(startIndex + 214) == 0 ? null : getBytes2(startIndex + 214));
+				monster.setWpn5(getBytes2(startIndex + 216) == 0 ? null : getBytes2(startIndex + 216));
+				monster.setWpn6(getBytes2(startIndex + 218) == 0 ? null : getBytes2(startIndex + 218));
+				monster.setWpn7(getBytes2(startIndex + 220) == 0 ? null : getBytes2(startIndex + 220));
+				monster.setArmor1(getBytes2(startIndex + 228) == 0 ? null : getBytes2(startIndex + 228));
+				monster.setArmor2(getBytes2(startIndex + 230) == 0 ? null : getBytes2(startIndex + 230));
+				monster.setArmor3(getBytes2(startIndex + 232) == 0 ? null : getBytes2(startIndex + 232));
+				monster.setBasecost(getBytes2(startIndex + 234));
+				monster.setRcost(getBytes2(startIndex + 236));
+				monster.setRpcost(getBytes2(startIndex + 240));
 
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP);
 				for (AttributeValue attr : attributes) {
@@ -667,7 +665,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 							if (KNOWN_MONSTER_ATTRS[x][1].endsWith("#")) {
 								int i = 1;
 								for (String value : attr.values) {
-									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value));
+									monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1].replace("#", i+""), Integer.parseInt(value)));
 									i++;
 								}
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("startage")) {
@@ -675,7 +673,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								if (age == -1) {
 									age = 0;
 								}
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)(age+age*.1)));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)(age+age*.1))));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("heatrec")) {
 								int val = Integer.parseInt(attr.values.get(0));
 								if (val == 10) {
@@ -683,7 +681,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								} else {
 									val = 1;
 								}
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("coldrec")) {
 								int val = Integer.parseInt(attr.values.get(0));
 								if (val == 10) {
@@ -691,332 +689,337 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								} else {
 									val = 1;
 								}
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("barbs")) {
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("corrupt")) {
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("ethtrue")) {
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("incunrest")) {
 								double val = Double.parseDouble(attr.values.get(0))/10d;
 								if (val < 1 && val > -1) {
-									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Double.toString(val));
+									monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Double.toString(val)));
 								} else {
-									monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)val));
+									monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString((int)val)));
 								}
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("petrify")) {
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], "1");
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("eyes")) {
 								int age = Integer.parseInt(attr.values.get(0));
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(age+2));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(age+2)));
 							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A400")) {
-	 							monster.parameters.put("n_summon", "1");
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+	 							monster.addAttribute(new Attr("n_summon", "1"));
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0)));
 							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A500")) {
-	 							monster.parameters.put("n_summon", "2");
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+	 							monster.addAttribute(new Attr("n_summon", "2"));
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0)));
 							} else if (KNOWN_MONSTER_ATTRS[x][0].equals("A600")) {
-	 							monster.parameters.put("n_summon", "3");
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+	 							monster.addAttribute(new Attr("n_summon", "3"));
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod fire")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "F";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod air")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "A";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod water")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "W";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod earth")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "E";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod astral")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "S";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod death")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "D";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod nature")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "N";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("gemprod blood")) {
 								String gemprod = "";
-								if (monster.parameters.get("gemprod") != null) {
-									gemprod = monster.parameters.get("gemprod").toString();
+								if (monster.getAttribute("gemprod") != null) {
+									gemprod = monster.getAttribute("gemprod").toString();
 								}
 								gemprod += attr.values.get(0) + "B";
-	 							monster.parameters.put("gemprod", gemprod);
+	 							monster.addAttribute(new Attr("gemprod", gemprod));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("pathcost")) {
-								if (monster.parameters.get("startdom") == null) {
-									monster.parameters.put("startdom", 1);
+								if (monster.getAttribute("startdom") == null) {
+									monster.addAttribute(new Attr("startdom", 1));
 								}
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("spreadchaos/death")) {
 								if (attr.values.get(0).equals("100")) {
-									monster.parameters.put("spreadchaos", 1);
+									monster.addAttribute(new Attr("spreadchaos", 1));
 								} else if (attr.values.get(0).equals("103")) {
-									monster.parameters.put("spreaddeath", 1);
+									monster.addAttribute(new Attr("spreaddeath", 1));
 								}
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("spreadorder/growth")) {
 								if (attr.values.get(0).equals("100")) {
-									monster.parameters.put("spreadorder", 1);
+									monster.addAttribute(new Attr("spreadorder", 1));
 								} else if (attr.values.get(0).equals("103")) {
-									monster.parameters.put("spreadgrowth", 1);
+									monster.addAttribute(new Attr("spreadgrowth", 1));
 								}
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("damagerev")) {
 								int val = Integer.parseInt(attr.values.get(0));
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val-1));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val-1)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("popkill")) {
 								int val = Integer.parseInt(attr.values.get(0));
-								monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val*10));
+								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val*10)));
 							} else {
-	 							monster.parameters.put(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0));
+	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], attr.values.get(0)));
 							}
 						}
 					}
 					if (!found) {
-						monster.parameters.put("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0));							
+						monster.addAttribute(new Attr("\tUnknown Attribute<" + attr.attribute + ">", attr.values.get(0)));							
 						unknown.add(attr.attribute);
 					}
 				}
 				
 				List<String> largeBitmap = largeBitmap(startIndex + 248, values);
 				for (String bit : largeBitmap) {
-					monster.parameters.put(bit, 1);
+					monster.addAttribute(new Attr(bit, 1));
 				}
 
-				if (monster.parameters.containsKey("slow_to_recruit")) {
-					monster.parameters.put("rt", "2");
+				if (monster.getAttribute("slow_to_recruit") != null) {
+					monster.addAttribute(new Attr("rt", "2"));
 				} else {
-					monster.parameters.put("rt", "1");
+					monster.addAttribute(new Attr("rt", "1"));
 				}
 				
 				if (largeBitmap.contains("heat")) {
-					monster.parameters.put("heat", "3");
+					monster.addAttribute(new Attr("heat", "3"));
 				}
 				
 				if (largeBitmap.contains("cold")) {
-					monster.parameters.put("cold", "3");
+					monster.addAttribute(new Attr("cold", "3"));
 				}
 				
 				String additionalLeader = "0";
-				if (monster.parameters.get("additional leadership") != null) {
-					additionalLeader = monster.parameters.get("additional leadership").toString();
+				if (monster.getAttribute("additional leadership") != null) {
+					additionalLeader = monster.getAttribute("additional leadership").toString();
 				}
-				monster.parameters.put("leader", 40+Integer.parseInt(additionalLeader));
+				monster.addAttribute(new Attr("leader", 40+Integer.parseInt(additionalLeader)));
 				if (largeBitmap.contains("noleader")) {
 					if (!"".equals(additionalLeader)) {
-						monster.parameters.put("leader", additionalLeader);
+						monster.addAttribute(new Attr("leader", additionalLeader));
 					} else {
-						monster.parameters.put("leader", 0);
+						monster.addAttribute(new Attr("leader", 0));
 					}
 				}
 				if (largeBitmap.contains("poorleader")) {
 					if (!"".equals(additionalLeader)) {
-						monster.parameters.put("leader", 10+Integer.parseInt(additionalLeader));
+						monster.addAttribute(new Attr("leader", 10+Integer.parseInt(additionalLeader)));
 					} else {
-						monster.parameters.put("leader", 10);
+						monster.addAttribute(new Attr("leader", 10));
 					}
 				}
 				if (largeBitmap.contains("goodleader")) {
 					if (!"".equals(additionalLeader)) {
-						monster.parameters.put("leader", 80+Integer.parseInt(additionalLeader));
+						monster.addAttribute(new Attr("leader", 80+Integer.parseInt(additionalLeader)));
 					} else {
-						monster.parameters.put("leader", 80);
+						monster.addAttribute(new Attr("leader", 80));
 					}
 				}
 				if (largeBitmap.contains("expertleader")) {
 					if (!"".equals(additionalLeader)) {
-						monster.parameters.put("leader", 120+Integer.parseInt(additionalLeader));
+						monster.addAttribute(new Attr("leader", 120+Integer.parseInt(additionalLeader)));
 					} else {
-						monster.parameters.put("leader", 120);
+						monster.addAttribute(new Attr("leader", 120));
 					}
 				}
 				if (largeBitmap.contains("superiorleader")) {
 					if (!"".equals(additionalLeader)) {
-						monster.parameters.put("leader", 160+Integer.parseInt(additionalLeader));
+						monster.addAttribute(new Attr("leader", 160+Integer.parseInt(additionalLeader)));
 					} else {
-						monster.parameters.put("leader", 160);
+						monster.addAttribute(new Attr("leader", 160));
 					}
 				}
 				if (largeBitmap.contains("poormagicleader")) {
-					monster.parameters.put("magicleader", 10);
+					monster.addAttribute(new Attr("magicleader", 10));
 				}
 				if (largeBitmap.contains("okmagicleader")) {
-					monster.parameters.put("magicleader", 40);
+					monster.addAttribute(new Attr("magicleader", 40));
 				}
 				if (largeBitmap.contains("goodmagicleader")) {
-					monster.parameters.put("magicleader", 80);
+					monster.addAttribute(new Attr("magicleader", 80));
 				}
 				if (largeBitmap.contains("expertmagicleader")) {
-					monster.parameters.put("magicleader", 120);
+					monster.addAttribute(new Attr("magicleader", 120));
 				}
 				if (largeBitmap.contains("superiormagicleader")) {
-					monster.parameters.put("magicleader", 160);
+					monster.addAttribute(new Attr("magicleader", 160));
 				}
 				if (largeBitmap.contains("poorundeadleader")) {
-					monster.parameters.put("undeadleader", 10);
+					monster.addAttribute(new Attr("undeadleader", 10));
 				}
 				if (largeBitmap.contains("okundeadleader")) {
-					monster.parameters.put("undeadleader", 40);
+					monster.addAttribute(new Attr("undeadleader", 40));
 				}
 				if (largeBitmap.contains("goodundeadleader")) {
-					monster.parameters.put("undeadleader", 80);
+					monster.addAttribute(new Attr("undeadleader", 80));
 				}
 				if (largeBitmap.contains("expertundeadleader")) {
-					monster.parameters.put("undeadleader", 120);
+					monster.addAttribute(new Attr("undeadleader", 120));
 				}
 				if (largeBitmap.contains("superiorundeadleader")) {
-					monster.parameters.put("undeadleader", 160);
+					monster.addAttribute(new Attr("undeadleader", 160));
 				}
 				
 				if (largeBitmap.contains("coldres15")) {
 					String additionalCold = "0";
-					if (monster.parameters.get("coldres") != null) {
-						additionalCold = monster.parameters.get("coldres").toString();
+					if (monster.getAttribute("coldres") != null) {
+						additionalCold = monster.getAttribute("coldres").toString();
 					}
 					boolean cold = false;
-					if (largeBitmap.contains("cold") || monster.parameters.get("cold") != null) {
+					if (largeBitmap.contains("cold") || monster.getAttribute("cold") != null) {
 						cold = true;
 					}
-					monster.parameters.put("coldres", 15 + Integer.parseInt(additionalCold.equals("")?"0":additionalCold) + (cold?10:0));
+					monster.addAttribute(new Attr("coldres", 15 + Integer.parseInt(additionalCold.equals("")?"0":additionalCold) + (cold?10:0)));
 				} else {
 					String additionalCold = "0";
-					if (monster.parameters.get("coldres") != null) {
-						additionalCold = monster.parameters.get("coldres").toString();
+					if (monster.getAttribute("coldres") != null) {
+						additionalCold = monster.getAttribute("coldres").toString();
 					}
 					boolean cold = false;
-					if (largeBitmap.contains("cold") || monster.parameters.get("cold") != null) {
+					if (largeBitmap.contains("cold") || monster.getAttribute("cold") != null) {
 						cold = true;
 					}
 					int coldres = Integer.parseInt(additionalCold.equals("")?"0":additionalCold) + (cold?10:0);
-					monster.parameters.put("coldres", coldres==0?"":Integer.toString(coldres));
+					monster.addAttribute(new Attr("coldres", coldres==0?"":Integer.toString(coldres)));
 				}
 				if (largeBitmap.contains("fireres15")) {
 					String additionalFire = "0";
-					if (monster.parameters.get("fireres") != null) {
-						additionalFire = monster.parameters.get("fireres").toString();
+					if (monster.getAttribute("fireres") != null) {
+						additionalFire = monster.getAttribute("fireres").toString();
 					}
 					boolean heat = false;
-					if (largeBitmap.contains("heat") || monster.parameters.get("heat") != null) {
+					if (largeBitmap.contains("heat") || monster.getAttribute("heat") != null) {
 						heat = true;
 					}
-					monster.parameters.put("fireres", 15 + Integer.parseInt(additionalFire.equals("")?"0":additionalFire) + (heat?10:0));
+					monster.addAttribute(new Attr("fireres", 15 + Integer.parseInt(additionalFire.equals("")?"0":additionalFire) + (heat?10:0)));
 				} else {
 					String additionalFire = "0";
-					if (monster.parameters.get("fireres") != null) {
-						additionalFire = monster.parameters.get("fireres").toString();
+					if (monster.getAttribute("fireres") != null) {
+						additionalFire = monster.getAttribute("fireres").toString();
 					}
 					boolean heat = false;
-					if (largeBitmap.contains("heat") || monster.parameters.get("heat") != null) {
+					if (largeBitmap.contains("heat") || monster.getAttribute("heat") != null) {
 						heat = true;
 					}
 					int fireres = Integer.parseInt(additionalFire.equals("")?"0":additionalFire) + (heat?10:0);
-					monster.parameters.put("fireres", fireres==0?"":Integer.toString(fireres));
+					monster.addAttribute(new Attr("fireres", fireres==0?"":Integer.toString(fireres)));
 				}
 				if (largeBitmap.contains("poisonres15")) {
 					String additionalPoisin = "0";
-					if (monster.parameters.get("poisonres") != null) {
-						additionalPoisin = monster.parameters.get("poisonres").toString();
+					if (monster.getAttribute("poisonres") != null) {
+						additionalPoisin = monster.getAttribute("poisonres").toString();
 					}
 					boolean poisoncloud = false;
-					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.parameters.get("poisoncloud") != null) {
+					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.getAttribute("poisoncloud") != null) {
 						poisoncloud = true;
 					}
-					monster.parameters.put("poisonres", 15 + Integer.parseInt(additionalPoisin.equals("")?"0":additionalPoisin) + (poisoncloud?10:0));
+					monster.addAttribute(new Attr("poisonres", 15 + Integer.parseInt(additionalPoisin.equals("")?"0":additionalPoisin) + (poisoncloud?10:0)));
 				} else {
 					String additionalPoison = "0";
-					if (monster.parameters.get("poisonres") != null) {
-						additionalPoison = monster.parameters.get("poisonres").toString();
+					if (monster.getAttribute("poisonres") != null) {
+						additionalPoison = monster.getAttribute("poisonres").toString();
 					}
 					boolean poisoncloud = false;
-					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.parameters.get("poisoncloud") != null) {
+					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.getAttribute("poisoncloud") != null) {
 						poisoncloud = true;
 					}
 					int poisonres = Integer.parseInt(additionalPoison.equals("")?"0":additionalPoison) + (poisoncloud?10:0);
-					monster.parameters.put("poisonres", poisonres==0?"":Integer.toString(poisonres));
+					monster.addAttribute(new Attr("poisonres", poisonres==0?"":Integer.toString(poisonres)));
 				}
 				if (largeBitmap.contains("shockres15")) {
 					String additionalShock = "0";
-					if (monster.parameters.get("shockres") != null) {
-						additionalShock = monster.parameters.get("shockres").toString();
+					if (monster.getAttribute("shockres") != null) {
+						additionalShock = monster.getAttribute("shockres").toString();
 					}
-					monster.parameters.put("shockres", 15 + Integer.parseInt(additionalShock.equals("")?"0":additionalShock));
+					monster.addAttribute(new Attr("shockres", 15 + Integer.parseInt(additionalShock.equals("")?"0":additionalShock)));
 				} else {
 					String additionalShock = "0";
-					if (monster.parameters.get("shockres") != null) {
-						additionalShock = monster.parameters.get("shockres").toString();
+					if (monster.getAttribute("shockres") != null) {
+						additionalShock = monster.getAttribute("shockres").toString();
 					}
 					int shockres = Integer.parseInt(additionalShock.equals("")?"0":additionalShock);
-					monster.parameters.put("shockres", shockres==0?"":Integer.toString(shockres));
+					monster.addAttribute(new Attr("shockres", shockres==0?"":Integer.toString(shockres)));
 				}
 				if (largeBitmap.contains("stealthy40")) {
 					String additionalStealth = "0";
-					if (monster.parameters.get("stealthy") != null) {
-						additionalStealth = monster.parameters.get("stealthy").toString();
+					if (monster.getAttribute("stealthy") != null) {
+						additionalStealth = monster.getAttribute("stealthy").toString();
 					}
 					boolean glamour = false;
-					if (monster.parameters.get("illusion") != null) {
+					if (monster.getAttribute("illusion") != null) {
 						glamour = true;
 					}
-					monster.parameters.put("stealthy", 40 + Integer.parseInt(additionalStealth.equals("")?"0":additionalStealth) + (glamour?25:0));
+					monster.addAttribute(new Attr("stealthy", 40 + Integer.parseInt(additionalStealth.equals("")?"0":additionalStealth) + (glamour?25:0)));
 				} else {
 					String additionalStealth = "0";
-					if (monster.parameters.get("stealthy") != null) {
-						additionalStealth = monster.parameters.get("stealthy").toString();
+					if (monster.getAttribute("stealthy") != null) {
+						additionalStealth = monster.getAttribute("stealthy").toString();
 					}
-					monster.parameters.put("stealthy", additionalStealth == null || additionalStealth.equals("0") ? "" : additionalStealth);
+					monster.addAttribute(new Attr("stealthy", additionalStealth == null || additionalStealth.equals("0") ? "" : additionalStealth));
 				}
-				
+				if (largeBitmap.contains("darkvision100")) {
+					if (monster.getAttribute("spiritsight") == null) {
+						monster.addAttribute(new Attr("darkvision", 100));
+					}
+				}
+
 				// magic
 				Magic monMagic = monsterMagic.get(rowNumber);
 				if (monMagic != null) {
-					monster.parameters.put("F", magicStrip(monMagic.F));
-					monster.parameters.put("A", magicStrip(monMagic.A));
-					monster.parameters.put("W", magicStrip(monMagic.W));
-					monster.parameters.put("E", magicStrip(monMagic.E));
-					monster.parameters.put("S", magicStrip(monMagic.S));
-					monster.parameters.put("D", magicStrip(monMagic.D));
-					monster.parameters.put("N", magicStrip(monMagic.N));
-					monster.parameters.put("B", magicStrip(monMagic.B));
-					monster.parameters.put("H", magicStrip(monMagic.H));
+					monster.addAttribute(new Attr("F", magicStrip(monMagic.F)));
+					monster.addAttribute(new Attr("A", magicStrip(monMagic.A)));
+					monster.addAttribute(new Attr("W", magicStrip(monMagic.W)));
+					monster.addAttribute(new Attr("E", magicStrip(monMagic.E)));
+					monster.addAttribute(new Attr("S", magicStrip(monMagic.S)));
+					monster.addAttribute(new Attr("D", magicStrip(monMagic.D)));
+					monster.addAttribute(new Attr("N", magicStrip(monMagic.N)));
+					monster.addAttribute(new Attr("B", magicStrip(monMagic.B)));
+					monster.addAttribute(new Attr("H", magicStrip(monMagic.H)));
 					
 					if (monMagic.rand != null) {
 						int count = 1;
 						for (RandomMagic ranMag : monMagic.rand) {
-							monster.parameters.put("rand"+count, magicStrip(ranMag.rand));
-							monster.parameters.put("nbr"+count, magicStrip(ranMag.nbr));
-							monster.parameters.put("link"+count, magicStrip(ranMag.link));
-							monster.parameters.put("mask"+count, magicStrip(ranMag.mask));
+							monster.addAttribute(new Attr("rand"+count, magicStrip(ranMag.rand)));
+							monster.addAttribute(new Attr("nbr"+count, magicStrip(ranMag.nbr)));
+							monster.addAttribute(new Attr("link"+count, magicStrip(ranMag.link)));
+							monster.addAttribute(new Attr("mask"+count, magicStrip(ranMag.mask)));
 
 							count++;
 						}
@@ -1024,14 +1027,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 
 				if (largeBitmap.contains("misc2")) {
-					monster.parameters.put("hand", 0);
-					monster.parameters.put("head", 0);
-					monster.parameters.put("body", 0);
-					monster.parameters.put("foot", 0);
-					monster.parameters.put("misc", 2);
+					monster.addAttribute(new Attr("hand", 0));
+					monster.addAttribute(new Attr("head", 0));
+					monster.addAttribute(new Attr("body", 0));
+					monster.addAttribute(new Attr("foot", 0));
+					monster.addAttribute(new Attr("misc", 2));
 				}
-				if (monster.parameters.containsKey("itemslots")) {
-					String slots = monster.parameters.get("itemslots").toString();
+				if (monster.getAttribute("itemslots") != null) {
+					String slots = monster.getAttribute("itemslots").toString();
 					int numHands = 0;
 					int numHeads = 0;
 					int numBody = 0;
@@ -1080,20 +1083,20 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					if ((val & 0x10000) != 0) {
 						numMisc++;
 					}
-					monster.parameters.put("hand", numHands);
-					monster.parameters.put("head", numHeads);
-					monster.parameters.put("body", numBody);
-					monster.parameters.put("foot", numFoot);
-					monster.parameters.put("misc", numMisc);
+					monster.addAttribute(new Attr("hand", numHands));
+					monster.addAttribute(new Attr("head", numHeads));
+					monster.addAttribute(new Attr("body", numBody));
+					monster.addAttribute(new Attr("foot", numFoot));
+					monster.addAttribute(new Attr("misc", numMisc));
 				} else if (!largeBitmap.contains("misc2")) {
-					monster.parameters.put("hand", 2);
-					monster.parameters.put("head", 1);
-					monster.parameters.put("body", 1);
-					monster.parameters.put("foot", 1);
-					monster.parameters.put("misc", 2);
+					monster.addAttribute(new Attr("hand", 2));
+					monster.addAttribute(new Attr("head", 1));
+					monster.addAttribute(new Attr("body", 1));
+					monster.addAttribute(new Attr("foot", 1));
+					monster.addAttribute(new Attr("misc", 2));
 				}
 				if (largeBitmap.contains("mounted")) {
-					monster.parameters.put("foot", 0);
+					monster.addAttribute(new Attr("foot", 0));
 				}
 
 				monsterList.add(monster);
@@ -1129,14 +1132,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			bufferedReader.close();
 			int nameIndex = 0;
 			for (Monster monster : monsterList) {
-				Object unique = monster.parameters.get("unique");
-				int id = (Integer)(monster.parameters.get("id"));
+				Object unique = monster.getAttribute("unique");
+				int id = monster.getId();
 				if (id == 621 || id == 980 ||id == 981||id==994||id==995||id==996||id==997||
 					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781)) {
 					unique = "0";
 				}
-				if (heroes.contains(monster.parameters.get("id")) || (unique != null && unique.equals("1"))/* || monster.parameters.get("id").equals("641")*/) {
-					monster.parameters.put("fixedname", names.get(nameIndex++));
+				if (heroes.contains(monster.getId()) || (unique != null && unique.equals("1"))/* || monster.getAttribute("id").equals("641")*/) {
+					monster.addAttribute(new Attr("fixedname", names.get(nameIndex++)));
 				}
 			}
 
@@ -1155,7 +1158,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 				XSSFRow row = sheet.createRow(rowNum);
 				for (int i = 0; i < unit_columns.length; i++) {
-					Object object = monster.parameters.get(unit_columns[i]);
+					Object object = monster.getAttribute(unit_columns[i]);
 					if (object != null) {
 						row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 					}
@@ -1175,6 +1178,32 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			fos.close();
 			wb.close();
 			
+			XSSFWorkbook wb2 = new XSSFWorkbook();
+			FileOutputStream fos2 = new FileOutputStream("monster.xlsx");
+			XSSFSheet sheet2 = wb2.createSheet();
+
+			rowNum = 0;
+			for (Monster monster : monsterList) {
+				Set<Attr> attributes = monster.getAttributes();
+				if (attributes != null) {
+					for (Attr attr : attributes) {
+						if (attr.getKey().trim().startsWith("Unknown") || attr.getValue() == null || attr.getValue().equals("")) {
+							continue;
+						}
+						XSSFRow row = sheet2.createRow(rowNum);
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(rowNum);
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(monster.getId());
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attr.getKey());
+						row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attr.getValue());
+						rowNum++;
+					}
+				}
+			}
+			
+			wb2.write(fos2);
+			fos2.close();
+			wb2.close();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -1191,11 +1220,11 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 	}
 	
 	private static void dumpTextFile(Monster monster, BufferedWriter writer) throws IOException {
-		Object name = monster.parameters.get("name");
-		Object id = monster.parameters.get("id");
+		Object name = monster.getAttribute("name");
+		Object id = monster.getAttribute("id");
 		writer.write(name.toString() + "(" + id + ")");
 		writer.newLine();
-		for (Map.Entry<String, Object> entry : monster.parameters.entrySet()) {
+		for (Attr entry : monster.getAllAttributes()) {
 			if (!entry.getKey().equals("name") && !entry.getKey().equals("id") && entry.getValue() != null && !entry.getValue().equals("")) {
 				writer.write("\t" + entry.getKey() + ": " + entry.getValue());
 				writer.newLine();
@@ -1204,8 +1233,5 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		writer.newLine();
 	}
 
-	private static class Monster {
-		Map<String, Object> parameters;
-	}
-
+	
 }
