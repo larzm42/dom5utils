@@ -95,68 +95,67 @@ public class ItemSpriteIndexer {
 			}
 			
 			Map<String, List<String>> map = new HashMap<String, List<String>>();
-				stream = new FileInputStream("Dominions5.exe");
-				
-				byte[] b = new byte[32];
-				byte[] c = new byte[2];
+			stream = new FileInputStream("Dominions5.exe");
 
-				stream.skip(Starts.ITEM);
-				int id = 1;
-				Set<String> indexes = new HashSet<String>();
-				while (stream.read(b, 0, 32) != -1) {
-					stream.skip(10);
-					stream.read(c, 0, 2);
-					
-					StringBuffer name = new StringBuffer();
-					for (int i = 0; i < 32; i++) {
-						if (b[i] != 0) {
-							name.append(new String(new byte[] {b[i]}));
-						}
-					}
-					if (name.toString().equals("end")) {
-						break;
-					}
-					String index = String.format("%02X", c[1]);
-					String offset = String.format("%02X", c[0]);
-					indexes.add(index);
-					List<String> list = map.get(index);
-					if (list == null) {
-						list = new ArrayList<String>();
-						map.put(index, list);
-					}
-					list.add(id + ": " + name + ": " + offset + " " + index);
-					System.out.println(id + ":" + name + ": " + offset + " " + index);
-					
-					id++;
-					stream.skip(188);
-				}
-				TreeSet<String> sorted = new TreeSet<String>(new Comparator<String>() {
-					@Override
-					public int compare(String o1, String o2) {
-						return Integer.decode("0X" + o1).compareTo(Integer.decode("0X" + o2));
-					}
-				});
-				sorted.addAll(indexes);
-				int things = 0;
-				Iterator<String> iter = sorted.iterator();
-				while (iter.hasNext()) {
-					String ind = iter.next();
-					System.out.println(ind);
-					List<String> list = map.get(ind);
-					List<SortedByOffset> sortedSet = new ArrayList<SortedByOffset>();
-					for (String myList : list) {
-						sortedSet.add(new SortedByOffset(myList));
-					}
-					Collections.sort(sortedSet);
-					for (SortedByOffset thing : sortedSet) {
-						System.out.println("  " + thing.value);
-						things++;
+			byte[] b = new byte[32];
+			byte[] c = new byte[2];
+
+			stream.skip(Starts.ITEM);
+			int id = 1;
+			Set<String> indexes = new HashSet<String>();
+			while (stream.read(b, 0, 32) != -1) {
+				stream.skip(10);
+				stream.read(c, 0, 2);
+
+				StringBuffer name = new StringBuffer();
+				for (int i = 0; i < 32; i++) {
+					if (b[i] != 0) {
+						name.append(new String(new byte[] {b[i]}));
 					}
 				}
-				System.out.println("------------------------");
-				System.out.println("Indexes:" + indexes.size() + " Items:" + things);
-				
+				if (name.toString().equals("end")) {
+					break;
+				}
+				String index = String.format("%02X", c[1]);
+				String offset = String.format("%02X", c[0]);
+				indexes.add(index);
+				List<String> list = map.get(index);
+				if (list == null) {
+					list = new ArrayList<String>();
+					map.put(index, list);
+				}
+				list.add(id + ": " + name + ": " + offset + " " + index);
+				System.out.println(id + ":" + name + ": " + offset + " " + index);
 
+				id++;
+				stream.skip(196);
+			}
+			TreeSet<String> sorted = new TreeSet<String>(new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					return Integer.decode("0X" + o1).compareTo(Integer.decode("0X" + o2));
+				}
+			});
+			sorted.addAll(indexes);
+			int things = 0;
+			Iterator<String> iter = sorted.iterator();
+			while (iter.hasNext()) {
+				String ind = iter.next();
+				System.out.println(ind);
+				List<String> list = map.get(ind);
+				List<SortedByOffset> sortedSet = new ArrayList<SortedByOffset>();
+				for (String myList : list) {
+					sortedSet.add(new SortedByOffset(myList));
+				}
+				Collections.sort(sortedSet);
+				for (SortedByOffset thing : sortedSet) {
+					System.out.println("  " + thing.value);
+					things++;
+				}
+			}
+			System.out.println("------------------------");
+			System.out.println("Indexes:" + indexes.size() + " Items:" + things);
+				
 			for (Map.Entry<Integer, String> entry : indexes1.entrySet()) {
 				List<String> mappings = indexToInt.get(entry.getValue());
 				if (mappings != null) {

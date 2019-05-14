@@ -35,15 +35,15 @@
 17179869184	Unknown Modifier {#17179869184}
 34359738368	Unknown Modifier {#heavyweapon}
 68719476736	Higher charge bonus cap {#68719476736}
-137438953472	Cannot Repel {#norepel}
+137438953472	Cannot be used for repelling {#norepel}
 274877906944	Piercing Damage {#pierce}
 549755813888	Bludgeoning Damage {#blunt}
 1099511627776	Slashing Damage {#slash}
 2199023255552	Acid Damage {#acid}
 4398046511104	Affects according to Target Size {#sizeresist}
-8796093022208	Grab and Swallow {#trampswallow}
+8796093022208	Only a chance of this being used {#melee50}
 17592186044416	Magic Resistance Hard to Negate {#hardmrneg}
-35184372088832	Unknown Modifier {#35184372088832}
+35184372088832	Attacks cannot be repelled {#unrepel}
 70368744177664	No Effect on Fliers/Floaters {#flyingimmune}
 140737488355328	No Effect on Constructs {#constructimmune}
 281474976710656	Affects Animals Only {#animalonly}

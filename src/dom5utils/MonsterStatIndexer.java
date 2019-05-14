@@ -40,7 +40,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MonsterStatIndexer extends AbstractStatIndexer {
 	public static String[] unit_columns = {"id", "name", "wpn1", "wpn2", "wpn3", "wpn4", "wpn5", "wpn6", "wpn7", "armor1", "armor2", "armor3", "armor4", 
-			"rt", "reclimit", "basecost", "gmon", "gcom", "rcost", "size", "ressize", "hp", "prot", "mr", "mor", "str", "att", "def", "prec", "enc", 
+			"rt", "reclimit", "basecost", "rcost", "size", "ressize", "hp", "prot", "mr", "mor", "str", "att", "def", "prec", "enc", 
 			"mapmove", "ap", "ambidextrous", "mounted", "reinvigoration", "leader", "undeadleader", "magicleader", "startage", "maxage", "hand", "head", 
 			"body", "foot", "misc", "pathcost", "startdom", "inn", "F", "A", "W", "E", "S", "D", "N", "B", "H", "rand1", "nbr1", "link1", "mask1", "rand2", 
 			"nbr2", "link2", "mask2", "rand3", "nbr3", "link3", "mask3", "rand4", "nbr4", "link4", "mask4", "holy", "inquisitor", "mind", "inanimate", 
@@ -68,17 +68,17 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"drake", "prophetshape", "horror", "enchrebate50", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
 			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", 
 			"mummification", "disres", "raiseonkill", "raiseshape", "sendlesserhorrormult", "xploss", "theftofthesunawe", "incorporate", "hpoverslow", "berserkwhenblessed",
-			"dragonmastery", "curseattacker", "uwheataura", "slothresearch", "horrorsonly", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
+			"dragonlord", "curseattacker", "uwheataura", "slothresearch", "horrorsonly", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
 			"disbelieveillusions", "firerange", "astralrange", "landreinvigoration", "naturerange", "beartattoo", "horsetattoo", "reincarnation", "wolftattoo", "boartattoo",
-			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templesummon", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurroundable",
+			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templetrainer", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurr",
 			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
-			"invisibility", "startaffliction", "ivylord", "spellsinging", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
+			"invisibility", "startaffliction", "ivylord", "spellsinger", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
 			"poweroftheturningyear", "fortkill", "thronekill", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
 			"vineshield", "alchemy", "afflictionresistance", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
-			"end"}; 
+			"skirmisher", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -294,7 +294,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"0A02", "incorporate"},
 		{"0B02", "hpoverslow"},
 		{"0D02", "berserkwhenblessed"},
-		{"0E01", "dragonmastery"},
+		{"0E01", "dragonlord"},
 		{"0F01", "curseattacker"},
 		{"0F02", "uwheataura"},
 		{"1001", "slothresearch"},
@@ -319,11 +319,11 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"3301", "supplysize"},
 		{"3302", "astralfetters"},
 		{"3400", "foreignmagicboost"},
-		{"3402", "templesummon"},
+		{"3402", "templetrainer"},
 		{"3901", "infernoret"},
 		{"3A01", "kokytosret"},
 		{"3D01", "infernalcrossbreedingmult"},
-		{"3D02", "unsurroundable"},
+		{"3D02", "unsurr"},
 		{"4502", "combatcaster"},
 		{"4902", "homeshape"},
 		{"4A01", "speciallook"},
@@ -340,7 +340,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"6102", "startaffliction"},
 		{"6500", "ivylord"},
 		//{"6601", "formationfighter"},
-		{"6802", "spellsinging"},
+		{"6802", "spellsinger"},
 		{"6A02", "magicallyattunedresearcher"},
 		{"6E02", "triplegod"},
 		{"6F02", "triplegodmag"},
@@ -390,7 +390,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"F900", "clockworklord"},
 		{"8802", "commaster"},
 		{"8402", "minsizeleader"},
-		{"8702", "comslave"}		
+		{"8702", "comslave"},
+		{"8102", "skirmisher"}
 
 	};
 	
@@ -1178,31 +1179,145 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			fos.close();
 			wb.close();
 			
-			XSSFWorkbook wb2 = new XSSFWorkbook();
-			FileOutputStream fos2 = new FileOutputStream("monster.xlsx");
-			XSSFSheet sheet2 = wb2.createSheet();
+			wb = new XSSFWorkbook();
+			fos = new FileOutputStream("monster.xlsx");
+			sheet = wb.createSheet();
+
+			rowNum = 0;
+			int removedColumns = 0;
+			for (Monster monster : monsterList) {
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < unit_columns.length; i++) {
+						if (unit_columns[i].startsWith("wpn") || unit_columns[i].startsWith("armor") || unit_columns[i].startsWith("realm")) {
+							removedColumns++;
+							continue;
+						}
+						row.getCell(i-removedColumns, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(unit_columns[i].toLowerCase());
+					}
+					rowNum++;
+				}
+				XSSFRow row = sheet.createRow(rowNum);
+				removedColumns = 0;
+				for (int i = 0; i < unit_columns.length; i++) {
+					if (unit_columns[i].startsWith("wpn") || unit_columns[i].startsWith("armor") || unit_columns[i].startsWith("realm")) {
+						removedColumns++;
+						continue;
+					}
+					Object object = monster.getAttribute(unit_columns[i]);
+					if (object != null) {
+						row.getCell(i-removedColumns, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+					}
+				}
+				
+				rowNum++;
+			}
+			
+			wb.write(fos);
+			fos.close();
+			wb.close();
+			
+			wb = new XSSFWorkbook();
+			fos = new FileOutputStream("monster_weapon.xlsx");
+			sheet = wb.createSheet();
 
 			rowNum = 0;
 			for (Monster monster : monsterList) {
-				Set<Attr> attributes = monster.getAttributes();
-				if (attributes != null) {
-					for (Attr attr : attributes) {
-						if (attr.getKey().trim().startsWith("Unknown") || attr.getValue() == null || attr.getValue().equals("")) {
-							continue;
-						}
-						XSSFRow row = sheet2.createRow(rowNum);
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < unit_columns.length; i++) {
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("id");
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("monster_id");
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("weapon_id");
+					}
+					rowNum++;
+				}
+				for (int i = 0; i < unit_columns.length; i++) {
+					if (!unit_columns[i].startsWith("wpn")) {
+						continue;
+					}
+					Object object = monster.getAttribute(unit_columns[i]);
+					if (object != null) {
+						XSSFRow row = sheet.createRow(rowNum);
 						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(rowNum);
 						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(monster.getId());
-						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attr.getKey());
-						row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(attr.getValue());
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
 						rowNum++;
 					}
 				}
 			}
 			
-			wb2.write(fos2);
-			fos2.close();
-			wb2.close();
+			wb.write(fos);
+			fos.close();
+			wb.close();
+
+			wb = new XSSFWorkbook();
+			fos = new FileOutputStream("monster_armor.xlsx");
+			sheet = wb.createSheet();
+
+			rowNum = 0;
+			for (Monster monster : monsterList) {
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < unit_columns.length; i++) {
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("id");
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("monster_id");
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("armor_id");
+					}
+					rowNum++;
+				}
+				for (int i = 0; i < unit_columns.length; i++) {
+					if (!unit_columns[i].startsWith("armor")) {
+						continue;
+					}
+					Object object = monster.getAttribute(unit_columns[i]);
+					if (object != null) {
+						XSSFRow row = sheet.createRow(rowNum);
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(rowNum);
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(monster.getId());
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+						rowNum++;
+					}
+				}
+			}
+			
+			wb.write(fos);
+			fos.close();
+			wb.close();
+
+			wb = new XSSFWorkbook();
+			fos = new FileOutputStream("monster_realm.xlsx");
+			sheet = wb.createSheet();
+
+			rowNum = 0;
+			for (Monster monster : monsterList) {
+				if (rowNum == 0) {
+					XSSFRow row = sheet.createRow(rowNum);
+					for (int i = 0; i < unit_columns.length; i++) {
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("id");
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("monster_id");
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue("realm");
+					}
+					rowNum++;
+				}
+				for (int i = 0; i < unit_columns.length; i++) {
+					if (!unit_columns[i].startsWith("realm")) {
+						continue;
+					}
+					Object object = monster.getAttribute(unit_columns[i]);
+					if (object != null) {
+						XSSFRow row = sheet.createRow(rowNum);
+						row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(rowNum);
+						row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(monster.getId());
+						row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).setCellValue(object.toString());
+						rowNum++;
+					}
+				}
+			}
+			
+			wb.write(fos);
+			fos.close();
+			wb.close();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

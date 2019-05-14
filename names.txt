@@ -100,6 +100,7 @@ Pathos
 Percival
 Carcator
 Zirru
+Ludolf von Achenbach
 Ulrich Patrifagus
 Burkhard Nachtzehrer
 Daidalos
@@ -242,3 +243,10 @@ Melite
 Nausicaa
 Geryon
 Eurytion
+Erzsebet
+Mircalla
+Artur von Dirksen
+Lothar Blumenreuter
+Orlak
+Ruthven
+Hellenbrecht
