@@ -68,7 +68,7 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("tir 1", new ArrayList<String>(Arrays.asList(new String[]{"52"})));
 		indexToInt.put("fom 1", new ArrayList<String>(Arrays.asList(new String[]{"55", "56"})));
 		indexToInt.put("eriu 2", new ArrayList<String>(Arrays.asList(new String[]{"59", "5A"})));
-		indexToInt.put("man 2", new ArrayList<String>(Arrays.asList(new String[]{"5D"})));
+		indexToInt.put("man 2", new ArrayList<String>(Arrays.asList(new String[]{"5D", "5E"})));
 		indexToInt.put("man 3", new ArrayList<String>(Arrays.asList(new String[]{"61"})));
 		indexToInt.put("tien 1", new ArrayList<String>(Arrays.asList(new String[]{"65"})));
 		indexToInt.put("tien 2", new ArrayList<String>(Arrays.asList(new String[]{"69"})));
