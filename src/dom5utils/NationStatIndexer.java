@@ -109,16 +109,16 @@ public class NationStatIndexer extends AbstractStatIndexer {
 				nation.parameters.put("id", rowNumber-1);
 				nation.parameters.put("name", name.toString());
 				nation.parameters.put("epithet", getString(startIndex + 36l));
-				nation.parameters.put("abbreviation", getString(startIndex + 72l));
-				String fileNameBase = getString(startIndex + 77l);
+				nation.parameters.put("abbreviation", getString(startIndex + 74l));
+				String fileNameBase = getString(startIndex + 79l);
 				nation.parameters.put("file_name_base", fileNameBase);
-				nation.parameters.put("era", getBytes2(startIndex + 168l));
+				nation.parameters.put("era", getBytes2(startIndex + 172l));
 				
 		        List<Attribute> attributes = new ArrayList<Attribute>();
-				long newIndex = startIndex+172l;
+				long newIndex = startIndex+176l;
 				
 				int attrib = getBytes4(newIndex);
-				long valueIndex = newIndex + 388l;
+				long valueIndex = newIndex + 384l;
 				long value = getBytes4(valueIndex);
 				while (attrib != 0) {
 					attributes.add(new Attribute(rowNumber-1, attrib, value));
