@@ -643,19 +643,19 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				monster.setDef(getBytes2(startIndex + 58));
 				monster.setMr(getBytes2(startIndex + 60));
 				monster.setMor(getBytes2(startIndex + 62));
-				monster.setWpn1(getBytes2(startIndex + 208) == 0 ? null : getBytes2(startIndex + 208));
-				monster.setWpn2(getBytes2(startIndex + 210) == 0 ? null : getBytes2(startIndex + 210));
-				monster.setWpn3(getBytes2(startIndex + 212) == 0 ? null : getBytes2(startIndex + 212));
-				monster.setWpn4(getBytes2(startIndex + 214) == 0 ? null : getBytes2(startIndex + 214));
-				monster.setWpn5(getBytes2(startIndex + 216) == 0 ? null : getBytes2(startIndex + 216));
-				monster.setWpn6(getBytes2(startIndex + 218) == 0 ? null : getBytes2(startIndex + 218));
-				monster.setWpn7(getBytes2(startIndex + 220) == 0 ? null : getBytes2(startIndex + 220));
-				monster.setArmor1(getBytes2(startIndex + 228) == 0 ? null : getBytes2(startIndex + 228));
-				monster.setArmor2(getBytes2(startIndex + 230) == 0 ? null : getBytes2(startIndex + 230));
-				monster.setArmor3(getBytes2(startIndex + 232) == 0 ? null : getBytes2(startIndex + 232));
-				monster.setBasecost(getBytes2(startIndex + 234));
-				monster.setRcost(getBytes2(startIndex + 236));
-				monster.setRpcost(getBytes2(startIndex + 240));
+				monster.setWpn1(getBytes2(startIndex + 208 + 24) == 0 ? null : getBytes2(startIndex + 208 + 24));
+				monster.setWpn2(getBytes2(startIndex + 210 + 24) == 0 ? null : getBytes2(startIndex + 210 + 24));
+				monster.setWpn3(getBytes2(startIndex + 212 + 24) == 0 ? null : getBytes2(startIndex + 212 + 24));
+				monster.setWpn4(getBytes2(startIndex + 214 + 24) == 0 ? null : getBytes2(startIndex + 214 + 24));
+				monster.setWpn5(getBytes2(startIndex + 216 + 24) == 0 ? null : getBytes2(startIndex + 216 + 24));
+				monster.setWpn6(getBytes2(startIndex + 218 + 24) == 0 ? null : getBytes2(startIndex + 218 + 24));
+				monster.setWpn7(getBytes2(startIndex + 220 + 24) == 0 ? null : getBytes2(startIndex + 220 + 24));
+				monster.setArmor1(getBytes2(startIndex + 228 + 24) == 0 ? null : getBytes2(startIndex + 228 + 24));
+				monster.setArmor2(getBytes2(startIndex + 230 + 24) == 0 ? null : getBytes2(startIndex + 230 + 24));
+				monster.setArmor3(getBytes2(startIndex + 232 + 24) == 0 ? null : getBytes2(startIndex + 232 + 24));
+				monster.setBasecost(getBytes2(startIndex + 234 + 24));
+				monster.setRcost(getBytes2(startIndex + 236 + 24));
+				monster.setRpcost(getBytes2(startIndex + 240 + 24));
 
 				List<AttributeValue> attributes = getAttributes(startIndex + Starts.MONSTER_ATTRIBUTE_OFFSET, Starts.MONSTER_ATTRIBUTE_GAP);
 				for (AttributeValue attr : attributes) {
@@ -808,7 +808,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 				}
 				
-				List<String> largeBitmap = largeBitmap(startIndex + 248, values);
+				List<String> largeBitmap = largeBitmap(startIndex + 272, values);
 				for (String bit : largeBitmap) {
 					monster.addAttribute(new Attr(bit, 1));
 				}

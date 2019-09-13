@@ -232,7 +232,7 @@ public class MonsterSpriteIndexer {
 					System.out.println(id + ":" + name + ": " + offset + " " + index);
 					
 					id++;
-					stream.skip(226);
+					stream.skip(226 + 24);
 				}
 				TreeSet<String> sorted = new TreeSet<String>(new Comparator<String>() {
 					@Override

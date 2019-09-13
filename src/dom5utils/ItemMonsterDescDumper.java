@@ -68,7 +68,7 @@ public class ItemMonsterDescDumper {
 				}
 				monsters.put(id, name.toString().toUpperCase());
 				id++;
-				stream.skip(226);
+				stream.skip(226 + 24);
 			}
 			stream.close();
 
