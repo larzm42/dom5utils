@@ -34,7 +34,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class WeaponStatIndexer extends AbstractStatIndexer {
-	public static String[] weapons_columns = {"id", "name", "effect_record_id", "att", "def", "len", "nratt", "ammo", "secondaryeffect", "secondaryeffectalways", "rcost", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
+	public static String[] weapons_columns = {"id", "name", "effect_record_id", "att", "def", "len", "nratt", "ammo", "secondaryeffect", "secondaryeffectalways", "rcost", "weapon", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
 	public static String[] effects_weapons_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
 	public static String[] attributes_by_weapons_columns = {"weapon_number", "attribute", "raw_value", "end"};
 
@@ -74,6 +74,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 				Weapon weapon = new Weapon();
 				weapon.parameters = new HashMap<String, Object>();
 				weapon.parameters.put("id", weaponNumber);
+				weapon.parameters.put("weapon", weaponNumber);
 				weapon.parameters.put("name", name.toString());
 				weapon.parameters.put("effect_record_id", weaponNumber);
 				weapon.parameters.put("att", getBytes2(startIndex + 48));
