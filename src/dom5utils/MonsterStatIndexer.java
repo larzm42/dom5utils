@@ -78,7 +78,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
-			"skirmisher", "end"}; 
+			"skirmisher", "ironvul", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -391,7 +391,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8802", "commaster"},
 		{"8402", "minsizeleader"},
 		{"8702", "comslave"},
-		{"8102", "skirmisher"}
+		{"8102", "skirmisher"},
+		{"B102", "ironvul"}
 
 	};
 	
@@ -1136,7 +1137,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				Object unique = monster.getAttribute("unique");
 				int id = monster.getId();
 				if (id == 621 || id == 980 ||id == 981||id==994||id==995||id==996||id==997||
-					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781)) {
+					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781) || id==3382 || id==3383) {
 					unique = "0";
 				}
 				if (heroes.contains(monster.getId()) || (unique != null && unique.equals("1"))/* || monster.getAttribute("id").equals("641")*/) {

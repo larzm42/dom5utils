@@ -334,7 +334,7 @@ public class EventStatIndexer {
 	public static void requirements(List<Event> events) throws IOException {
 		FileInputStream stream = new FileInputStream("Dominions5.exe");			
 		stream.skip(Starts.EVENT);
-		stream.skip(1200l);
+		stream.skip(1400l);
 		
 		int i = 0;
 		long numFound = 0;
@@ -366,7 +366,7 @@ public class EventStatIndexer {
 					stream.skip(6);
 				}
 				
-				stream.skip(1528l - 30l - numFound*8l);
+				stream.skip(Starts.EVENT_SIZE - 30l - numFound*8l);
 				numFound = 0;
 				i++;
 			} else {
@@ -385,7 +385,7 @@ public class EventStatIndexer {
 	public static void effects(List<Event> events) throws IOException {
 		FileInputStream stream = new FileInputStream("Dominions5.exe");			
 		stream.skip(Starts.EVENT);
-		stream.skip(1200l);
+		stream.skip(1400l);
 
 		int i = 0;
 		long numFound = 0;
@@ -431,7 +431,7 @@ public class EventStatIndexer {
 						}
 					}
 				}
-				stream.skip(1528l - 40l - numFound*8l);
+				stream.skip(Starts.EVENT_SIZE - 40l - numFound*8l);
 				numFound = 0;
 				i++;
 			} else {
@@ -539,7 +539,7 @@ public class EventStatIndexer {
 				events.add(event);
 
 				stream = new FileInputStream("Dominions5.exe");		
-				startIndex = startIndex + 1528l;
+				startIndex = startIndex + Starts.EVENT_SIZE;
 				stream.skip(startIndex);
 				isr = new InputStreamReader(stream, "ISO-8859-1");
 				in = new BufferedReader(isr);
@@ -549,7 +549,7 @@ public class EventStatIndexer {
 				
 			stream = new FileInputStream("Dominions5.exe");			
 			stream.skip(Starts.EVENT);
-			stream.skip(1200l);
+			stream.skip(1400l);
 			
 			// rarity
 			int i = 0;
@@ -562,7 +562,7 @@ public class EventStatIndexer {
 					tmp = new BigInteger("FFFFFF" + low, 16).intValue();
 				}
 				events.get(i).rarity = tmp;
-				stream.skip(1526l);
+				stream.skip(Starts.EVENT_SIZE - 2l);
 				i++;
 				if (i >= events.size()) {
 					break;

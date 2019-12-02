@@ -148,6 +148,9 @@ public class MonsterSpriteIndexer {
 		indexToInt.put("phl 2", new ArrayList<String>(Arrays.asList(new String[]{"A1", "A2"})));
 		indexToInt.put("phl 3", new ArrayList<String>(Arrays.asList(new String[]{"A5", "A6"})));
 		indexToInt.put("phae", new ArrayList<String>(Arrays.asList(new String[]{"A9", "AA"})));
+		indexToInt.put("ind", new ArrayList<String>(Arrays.asList(new String[]{"B1", "B2"})));
+		indexToInt.put("ubar", new ArrayList<String>(Arrays.asList(new String[]{"B5"})));
+		indexToInt.put("naba", new ArrayList<String>(Arrays.asList(new String[]{"B9"})));
 		/*
 		macha 3: 1975
 		empty: 5023
@@ -380,6 +383,9 @@ public class MonsterSpriteIndexer {
 						}
 						if (entry.getValue().equals("hob 1")) {
 							tweak = 6;
+						}
+						if (entry.getValue().equals("ubar")) {
+							tweak = 14;
 						}
 						
 						for (SortedByOffset ugh : sortedSet) {
