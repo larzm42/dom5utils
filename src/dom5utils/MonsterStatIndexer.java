@@ -50,7 +50,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"corrupt", "heal", "immortal", "domimmortal", "reinc", "noheal", "neednoteat", "homesick", "undisciplined", "formationfighter", "slave", "standard", 
 			"inspirational", "taskmaster", "beastmaster", "bodyguard", "waterbreathing", "iceprot", "invulnerable", "slashres", "bluntres", "pierceres", 
 			"shockres", "fireres", "coldres", "poisonres", "voidsanity", "darkvision", "blind", "animalawe", "awe", "halt", "fear", "berserk", "cold", 
-			"heat", "fireshield", "banefireshield", "damagerev", "poisoncloud", "diseasecloud", "slimer", "mindslime", "disbel", "reform", "regeneration", 
+			"heat", "fireshield", "banefireshield", "damagerev", "poisoncloud", "diseasecloud", "slimer", "mindslime", "reform", "regeneration", 
 			"reanimator", "barbs", "petrify", "eyeloss", "ethereal", "ethtrue", "deathcurse", "trample", "trampswallow", "stormpower", "firepower", 
 			"coldpower", "darkpower", "chaospower", "magicpower", "winterpower", "springpower", "summerpower", "fallpower", "forgebonus", "fixforgebonus", 
 			"mastersmith", "resources", "autohealer", "autodishealer", "alch", "nobadevents", "event", "insane", "shatteredsoul", "leper", "taxcollector", 
@@ -69,7 +69,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", 
 			"mummification", "disres", "raiseonkill", "raiseshape", "sendlesserhorrormult", "xploss", "theftofthesunawe", "incorporate", "hpoverslow", "berserkwhenblessed",
 			"dragonlord", "curseattacker", "uwheataura", "slothresearch", "horrorsonly", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
-			"disbelieveillusions", "firerange", "astralrange", "landreinvigoration", "naturerange", "beartattoo", "horsetattoo", "reincarnation", "wolftattoo", "boartattoo",
+			"disbelieve", "firerange", "astralrange", "landreinvigoration", "naturerange", "beartattoo", "horsetattoo", "reincarnation", "wolftattoo", "boartattoo",
 			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templetrainer", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurr",
 			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
 			"invisibility", "startaffliction", "ivylord", "spellsinger", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
@@ -78,7 +78,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
-			"skirmisher", "ironvul", "end"}; 
+			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -192,9 +192,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"5001", "shrinkhp"},
 		{"4F01", "growhp"},
 		{"FD01", "transformation"},
-		//{"A101", "domsummon#"},
+		{"A101", "domsummon#"},
 		//{"DB00", "domsummon#"},
-		//{"F100", "domsummon#"},
+		{"F100", "domsummon#"},
 		{"6B00", "autosum"},
 		{"8F00", "autosum"},
 		{"AD00", "turmoilsummon"},
@@ -303,8 +303,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"1700", "elementrange"},
 		{"1800", "sorceryrange"},
 		{"1E01", "startagemodifier"},
-		{"2601", "illusion"},
-		{"2701", "disbelieveillusions"},
+		{"2601", "illusionary"},
+		{"2701", "disbelieve"},
 		{"2800", "firerange"},
 		{"2C00", "astralrange"},
 		{"2C01", "landreinvigoration"},
@@ -392,7 +392,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8402", "minsizeleader"},
 		{"8702", "comslave"},
 		{"8102", "skirmisher"},
-		{"B102", "ironvul"}
+		{"B102", "ironvul"},
+		{"AE02", "heathensummon"},
+		{"B002", "unseen"}
 
 	};
 	
