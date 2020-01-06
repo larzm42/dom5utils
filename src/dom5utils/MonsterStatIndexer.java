@@ -394,7 +394,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8102", "skirmisher"},
 		{"B102", "ironvul"},
 		{"AE02", "heathensummon"},
-		{"B002", "unseen"}
+		{"B002", "unseen"},
+		{"3602", "startitem"}
 
 	};
 	
@@ -403,7 +404,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 //	1A01	? Angels and Celestial Beings only
 //	1B01	? Rudra & Devata only
 //	3300	land all magic penalty? Kaijin Only
-//	3602	Startitem - looks to refer to item attribute 3702
 //	3B01	? Void Spectre Only (Voidret/Insanity?)
 //	3F01	? Delgnat Only
 //	4001	? Defiler of Dreams only
@@ -437,7 +437,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 //	D401	? God vessel & Legion of Gods
 //	E401	? Unused unit 10 only
 //	E501	? Unused unit 10 only
-//	F001	?Acid cube has this?
+//	F001	? Acid cube has this?
 //	F700	? Siren landshape only (Lure?)
 
 	private static class Magic {

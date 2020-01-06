@@ -58,7 +58,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"flyingmapmove", "arenareward", "swiftness", "taskmaster", "leper", "siegebonus", "invulnerable", "horrormarkattacker", "entangle", "minsizetoequip",
 			"maxsizetoequip", "minstrtoequip", "minhandstoequip", "deathgemonkill", "deathexplosion", "chanceofattackbyknights", "singleuse", "domspreader",
 			"allunitslooklikebearertoscouts", "monstermustbepresent", "banishkiller", "onlyuseablebyfliersormounted", "masterritualist", "stunattackers",
-			"eatforyouth", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+			"eatforyouth", "startitem", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
 
 	private static String[][] KNOWN_ITEM_ATTRS = {
 			{"C600", "fireres"},
@@ -246,12 +246,12 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"C901", "onlyuseablebyfliersormounted"},
 			{"CF01", "masterritualist"},
 			{"DE01", "stunattackers"},
-			{"8A02", "eatforyouth"}
+			{"8A02", "eatforyouth"},
+			{"3702", "startitem"}
 			
 	};
 	
 
-//	3702	Startitem - see unit attribute 3602
 //	6901	Extra arm slot? Copper arm only
 //	6A01	Extra arm slot? Copper arm only
 //	7201	? Magic eyes only
