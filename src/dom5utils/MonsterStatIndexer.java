@@ -58,7 +58,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"researchbonus", "drainimmune", "inspiringres", "douse", "sacr", "crossbreeder", "makepearls", "pathboost", "allrange", "voidsum", 
 			"heretic", "elegist", "shapechange", "firstshape", "secondshape", "secondtmpshape", "landshape", "watershape", "forestshape", "plainshape", "xpshape",
 			"unique", "fixedname", "special", "nametype", "summon", "n_summon", "autosum", "n_autosum", "batstartsum1", 
-			"batstartsum2", "domsummon1", "domsummon2", "bloodvengeance", "bringeroffortune", "realm1", "realm2", "realm3", "batstartsum3", "batstartsum4", 
+			"batstartsum2", "domsummon", "domsummon20", "raredomsummon", "bloodvengeance", "bringeroffortune", "realm1", "realm2", "realm3", "batstartsum3", "batstartsum4", 
 			"batstartsum5", "batstartsum1d6", "batstartsum2d6", "batstartsum3d6", "batstartsum4d6", "batstartsum5d6", "batstartsum6d6", "turmoilsummon", 
 			"coldsummon", "scalewalls", "explodeondeath", "startaff", "uwregen", "shrinkhp", "growhp", "transformation", "startingaff", 
 			"fixedresearch", "divineins", "lamiabonus", "preanimator", "dreanimator", "mummify", "onebattlespell", "fireattuned", "airattuned", 
@@ -78,7 +78,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
-			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "end"}; 
+			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "captureslaves", "immortaltimer","immortalrespawn", "nomovepen", "wolf", "dungeon", 
+			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -192,9 +193,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"5001", "shrinkhp"},
 		{"4F01", "growhp"},
 		{"FD01", "transformation"},
-		{"A101", "domsummon#"},
-		//{"DB00", "domsummon#"},
-		{"F100", "domsummon#"},
+		{"A101", "raredomsummon"},
+		{"DB00", "domsummon20"},
+		{"F100", "domsummon"},
 		{"6B00", "autosum"},
 		{"8F00", "autosum"},
 		{"AD00", "turmoilsummon"},
@@ -222,7 +223,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"A900", "lamiabonus"},
 		{"FD00", "homesick"},
 		{"DE00", "banefireshield"},
-		{"A200", "animalawe"},
+		{"8602", "animalawe"},
 		{"6301", "autodishealer"},
 		{"4801", "shatteredsoul"},
 		{"CE00", "voidsum"},
@@ -395,27 +396,39 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"B102", "ironvul"},
 		{"AE02", "heathensummon"},
 		{"B002", "unseen"},
-		{"3602", "startitem"}
+		{"3602", "startitem"},
+		{"8202", "captureslaves"},
+		{"9300", "immortaltimer"},
+		{"9500", "immortalrespawn"},
+		{"4700", "nomovepen"},
+		{"9302", "wolf"},
+		{"E101", "dungeon"},
+		{"7401", "graphicsize"},
+		{"9002", "twiceborn"},
+		{"1202", "aboleth"},
+		{"5C01", "tmpastralgems"},
+		{"AD02", "sun"},
+		{"5801", "tmpfiregems"},
+		{"4001", "defiler"},
+		{"7F02", "mountedbeserk"},
+		{"9E02", "lanceok"},
+		{"A002", "startheroab"},
+		{"5802", "minprison"},
+		{"8D02", "uwfireshield"}
 
 	};
 	
 //	0701	Feeblemind chance in province? Kurgi Only
-//	1202	Aboleth - Can Cast Mind Vessel?
 //	1A01	? Angels and Celestial Beings only
 //	1B01	? Rudra & Devata only
 //	3300	land all magic penalty? Kaijin Only
 //	3B01	? Void Spectre Only (Voidret/Insanity?)
 //	3F01	? Delgnat Only
-//	4001	? Defiler of Dreams only
 //	4501	? Leshy Plainshape only
 //	4702	? Chariots only
-//	5801	? Buer Only. Spread Heat?
-//	5802	Minprison? Uttervast Only
 //	5902	? Scabiel Only
-//	5C01	? Kurgi Only
 //	6701	? Barbarians & Bakemono-Sho
 //	6801	? Knight & Barbarian commanders
-//	7401	Spritesize? Elementals and Draugr
 //	7502	FarThroneKill? Doom Horrors only
 //	7701	Aciddigest? Eater of the Dead & Ancient Presence only
 //	7702	Indepstay? Maker of Ruins & Eater of Gods only
@@ -427,8 +440,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 //	8801	Resummon as this shape? Eater of the Dead only
 //	8A00	? Cockatrice only
 //	9101	Turns before reform? Worm mage only
-//	9300	Immortality delay modifier? Vampires and Wraith Lords only
-//	9500	? Vampires only
 //	9F01	? Soultorn has this at 10
 //	B301	?Doom Horrors have this?
 //	BB00	?Spiders & ghost cats have this. Shapechange related?
