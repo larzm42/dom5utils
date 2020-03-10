@@ -199,7 +199,7 @@
 730	Only castable in forted province
 731	Can only be cast by {Spl: #onlymnr}
 732	Unit gets magic of target {Spl: #polygetmagic}
-733	<Unknown Attribute>
+733	Sets current province as home {Spl: #sethome}
 734	<Unknown Attribute>
 735	<Unknown Attribute>
 736	<Unknown Attribute>
@@ -210,5 +210,5 @@
 741	Requires sun presence
 742	AInocast
 746	<Unknown Attribute>
-747	<Unknown Attribute>
+747	Cost is multiplied by size
 900	<Unknown Attribute>
