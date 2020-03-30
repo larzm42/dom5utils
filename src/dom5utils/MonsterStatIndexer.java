@@ -42,7 +42,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 	public static String[] unit_columns = {"id", "name", "wpn1", "wpn2", "wpn3", "wpn4", "wpn5", "wpn6", "wpn7", "armor1", "armor2", "armor3", "armor4", 
 			"rt", "reclimit", "basecost", "rcost", "size", "ressize", "hp", "prot", "mr", "mor", "str", "att", "def", "prec", "enc", 
 			"mapmove", "ap", "ambidextrous", "mounted", "reinvigoration", "leader", "undeadleader", "magicleader", "startage", "maxage", "hand", "head", 
-			"body", "foot", "misc", "pathcost", "startdom", "inn", "F", "A", "W", "E", "S", "D", "N", "B", "H", "rand1", "nbr1", "link1", "mask1", "rand2", 
+			"body", "foot", "misc", "crownonly", "pathcost", "startdom", "inn", "F", "A", "W", "E", "S", "D", "N", "B", "H", "rand1", "nbr1", "link1", "mask1", "rand2", 
 			"nbr2", "link2", "mask2", "rand3", "nbr3", "link3", "mask3", "rand4", "nbr4", "link4", "mask4", "holy", "inquisitor", "mind", "inanimate", 
 			"undead", "demon", "magicbeing", "stonebeing", "animal", "coldblood", "female", "forestsurvival", "mountainsurvival", "wastesurvival", 
 			"swampsurvival", "cavesurvival", "aquatic", "amphibian", "pooramphibian", "float", "flying", "stormimmune", "teleport", "immobile", 
@@ -1055,6 +1055,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					int numBody = 0;
 					int numFoot = 0;
 					int numMisc = 0;
+					boolean crownOnly = false;
 					long val = Long.parseLong(slots);
 					if ((val & 0x0002) != 0) {
 						numHands++;
@@ -1098,11 +1099,17 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					if ((val & 0x10000) != 0) {
 						numMisc++;
 					}
+					if ((val & 0x40000) != 0) {
+						crownOnly = true;
+					}
 					monster.addAttribute(new Attr("hand", numHands));
 					monster.addAttribute(new Attr("head", numHeads));
 					monster.addAttribute(new Attr("body", numBody));
 					monster.addAttribute(new Attr("foot", numFoot));
 					monster.addAttribute(new Attr("misc", numMisc));
+					if (crownOnly) {
+						monster.addAttribute(new Attr("crownonly", "1"));
+					}
 				} else if (!largeBitmap.contains("misc2")) {
 					monster.addAttribute(new Attr("hand", 2));
 					monster.addAttribute(new Attr("head", 1));
