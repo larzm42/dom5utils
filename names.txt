@@ -251,3 +251,7 @@ Orlak
 Ruthven
 Hellenbrecht
 Bilqis
+Nordri
+Sudri
+Austri
+Vestri
