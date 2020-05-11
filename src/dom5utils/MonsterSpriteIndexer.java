@@ -386,7 +386,7 @@ public class MonsterSpriteIndexer {
 							tweak = 6;
 						}
 						if (entry.getValue().equals("ubar")) {
-							tweak = 14;
+							tweak = -18;
 						}
 						
 						for (SortedByOffset ugh : sortedSet) {
