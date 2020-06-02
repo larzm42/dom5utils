@@ -385,9 +385,6 @@ public class MonsterSpriteIndexer {
 						if (entry.getValue().equals("hob 1")) {
 							tweak = 6;
 						}
-						if (entry.getValue().equals("ubar")) {
-							tweak = -18;
-						}
 						
 						for (SortedByOffset ugh : sortedSet) {
 							int val = groupPositiveOffset - groupNegativeOffset + ugh.getIntValue()+2+tweak;
