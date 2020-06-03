@@ -75,10 +75,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"invisibility", "startaffliction", "ivylord", "spellsinger", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
 			"poweroftheturningyear", "fortkill", "thronekill", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
 			"vineshield", "alchemy", "woundfend", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
-			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "captureslaves", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
+			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "slaver", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
-			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "captureslaves", "immortaltimer","immortalrespawn", "nomovepen", "wolf", "dungeon", 
+			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "immortaltimer","immortalrespawn", "nomovepen", "wolf", "dungeon", 
 			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
@@ -102,10 +102,11 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"CD01", "patience"},
 		{"AF00", "stormimmune"},
 		{"BD00", "regeneration"},
+		{"C100", "shapechange"},
 		{"C200", "secondshape"},
 		{"C300", "firstshape"},
-		{"C100", "shapechange"},
 		{"C400", "secondtmpshape"},
+		{"C500", "secondshape"},
 		{"1C01", "maxage"},
 		{"CA00", "damagerev"},
 		{"9E01", "bloodvengeance"},
@@ -370,7 +371,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"AD01", "ainorecruit"},
 		{"B001", "autocomslave"},
 		{"C301", "researchwithoutmagic"},
-		{"C500", "captureslaves"},
 		{"CB01", "mustfightinarena"},
 		{"CC00", "deathwail"},
 		{"CC01", "adventurers"},
@@ -397,7 +397,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"AE02", "heathensummon"},
 		{"B002", "unseen"},
 		{"3602", "startitem"},
-		{"8202", "captureslaves"},
+		{"8202", "slaver"},
 		{"9300", "immortaltimer"},
 		{"9500", "immortalrespawn"},
 		{"4700", "nomovepen"},
@@ -707,8 +707,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								}
 								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val)));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("barbs")) {
-	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
-							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("corrupt")) {
 	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("ethtrue")) {
 	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
@@ -1158,7 +1156,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				Object unique = monster.getAttribute("unique");
 				int id = monster.getId();
 				if (id == 621 || id == 980 ||id == 981||id==994||id==995||id==996||id==997||
-					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781) || id==3382 || id==3383) {
+					id==1484 || id==1485|| id==1486|| id==1487 || (id >= 2765 && id <=2781) || id==3382 || id==3383 ||
+					id==3244 || id==3245 || id==3251 || id==3252 || id==3253 || id==3254 || id==3255 ||
+					id==3425 || id==3426 || id==3427 || id==3428) {
 					unique = "0";
 				}
 				if (heroes.contains(monster.getId()) || (unique != null && unique.equals("1"))/* || monster.getAttribute("id").equals("641")*/) {

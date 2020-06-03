@@ -1,5 +1,3 @@
-Grigorius
-Echidna
 Etimmu
 Buriol
 Nycafor
@@ -23,7 +21,6 @@ Hildegard
 Sporsnjall
 Alcastos
 Rago
-Menopathos
 Farbaute
 Caractor
 Caelos
@@ -150,9 +147,9 @@ Deepthought
 Auluudh
 Mchumba
 Zilammu
+Emberstream
 Ferdiad
 Cu Chulainn
-Tuan
 Macha
 Tuan
 Delgnat
@@ -175,7 +172,6 @@ Baba Yaga
 Koschei
 Alexej
 Ba'an Rachis
-Ditan
 Sheshai
 Ahiman
 Talmai
@@ -238,20 +234,31 @@ Malgven
 Dahut
 Dahut
 U'an
+Alcyonaeus
+Achillia
+Phlegyas
 Ladon
 Melite
 Nausicaa
 Geryon
 Eurytion
-Erzsebet
-Mircalla
-Artur von Dirksen
-Lothar Blumenreuter
-Orlak
-Ruthven
-Hellenbrecht
+Steropes
+Vod
+Myrddin
+Morgaine
+Perkuna Tete
+Sojobo
+Tamamo-no-Mae
+Zennyo Ryuo
+Old Bear Thunder
+Yngvar
+Mamich Lum
+Thomas
+Coradin
 Bilqis
-Nordri
-Sudri
-Austri
-Vestri
+Gullveig
+Urd
+Verdandi
+Skuld
+Al-Malik al-Aswad
+'Umm Ghulah

@@ -44,7 +44,7 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			"hcom1", "hcom2", "hcom3", "hcom4", "hcom5", "mon1", "mon2", "mon3", "mon4", "mon5", "com1", "com2", "com3", "com4", "com5", "reveal", 
 			"provdef1", "provdef2", "def", "F2", "A2", "W2", "E2", "S2", "D2", "N2", "B2", "awe", "reinvigoration", "airshield", "provdefcom", 
 			"domconflict", "sprite", "nationalrecruits", "natmon","natcom", "throneclustering","wilddefenders", "domconflict", "rituallevelmodifier",
-			"callgodbonus", "magicresistancebonus", "bringgold",
+			"callgodbonus", "magicresistancebonus", "bringgold", "scorch",
 			"end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
 
 	private static String[][] KNOWN_SITE_ATTRS = {
@@ -133,7 +133,8 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			{"0401", "allrange"},
 			{"1F00", "incscale"},
 			{"2000", "decscale"},
-			{"7F01", "bringgold"}
+			{"7F01", "bringgold"},
+			{"7602", "scorch"}
 	};
 	
 
