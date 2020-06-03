@@ -47,20 +47,20 @@ public class ItemMonsterDescDumper {
 		
 		FileInputStream stream = null;
 		try {
-			byte[] b32 = new byte[32];
+			byte[] b34 = new byte[34];
 			byte[] c = new byte[2];
 
 			stream = new FileInputStream("Dominions5.exe");
 			stream.skip(Starts.MONSTER);
 			int id = 1;
-			while (stream.read(b32, 0, 32) != -1) {
+			while (stream.read(b34, 0, 34) != -1) {
 				stream.skip(4);
 				stream.read(c, 0, 2);
 				
 				StringBuffer name = new StringBuffer();
-				for (int i = 0; i < 32; i++) {
-					if (b32[i] != 0) {
-						name.append(new String(new byte[] {b32[i]}));
+				for (int i = 0; i < 34; i++) {
+					if (b34[i] != 0) {
+						name.append(new String(new byte[] {b34[i]}));
 					}
 				}
 				if (name.toString().equals("end")) {
@@ -68,7 +68,7 @@ public class ItemMonsterDescDumper {
 				}
 				monsters.put(id, name.toString().toUpperCase());
 				id++;
-				stream.skip(226 + 24);
+				stream.skip(224 + 24);
 			}
 			stream.close();
 
