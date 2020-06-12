@@ -74,7 +74,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
 			"invisibility", "startaffliction", "ivylord", "spellsinger", "magicallyattunedresearcher", "triplegod", "triplegodmag", "unify", "triple3mon",
 			"poweroftheturningyear", "fortkill", "thronekill", "digest", "indepmove", "unteleportable", "reanimpriest", "stunimmunity",
-			"vineshield", "alchemy", "woundfend", "leavespostbattleifwoundedorhaskilled", "makesarmylooksmallerorlarger",
+			"vineshield", "alchemy", "woundfend", "leavespostbattleifwoundedorhaskilled", "falsearmy",
 			"summon5", "ainorecruit", "autocomslave", "researchwithoutmagic", "slaver", "mustfightinarena", "deathwail", "adventurers", "cleanshape", "requireslabtorecruit",
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
@@ -366,7 +366,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"9B01", "elegist"},
 		{"9D01", "deathcurse"},
 		{"A201", "noriverpass"},
-		{"A301", "makesarmylooksmallerorlarger"},
+		{"A301", "falsearmy"},
 		{"A800", "summon5"},
 		{"AD01", "ainorecruit"},
 		{"B001", "autocomslave"},
@@ -562,6 +562,18 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 							monRandomMagic.nbr = 1;
 							monRandomMagic.link = value;
 							monRandomMagic.rand = 100;
+						} else if (path == 52) {
+							monRandomMagic.mask = 30720;
+							monRandomMagic.nbr = 1;
+							monRandomMagic.link = value;
+							monRandomMagic.rand = 100;
+						} else if (path == 53) {
+							monRandomMagic.mask = 32640;
+							monRandomMagic.nbr = 1;
+							monRandomMagic.link = value;
+							monRandomMagic.rand = 100;
+						} else if (path == 56) {
+							// Don't know what this is
 						} else {
 							monRandomMagic.mask = path;
 							monRandomMagic.nbr = 1;
@@ -573,8 +585,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								monRandomMagic.rand = value;
 							}
 						}
-						randomMagicList.add(monRandomMagic);
-						monMagic.rand = randomMagicList;
+						if (path != 56) {
+							randomMagicList.add(monRandomMagic);
+							monMagic.rand = randomMagicList;
+						}
 					} else {
 						boolean found = false;
 						for (RandomMagic ranMagic : randomMagicList) {
@@ -587,6 +601,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								found = true;
 							}
 							if (ranMagic.mask == 1920 && path == 51 && ranMagic.link == value) {
+								ranMagic.nbr++;
+								found = true;
+							}
+							if (ranMagic.mask == 30720 && path == 52 && ranMagic.link == value) {
+								ranMagic.nbr++;
+								found = true;
+							}
+							if (ranMagic.mask == 32640 && path == 53 && ranMagic.link == value) {
 								ranMagic.nbr++;
 								found = true;
 							}
@@ -603,6 +625,18 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 								monRandomMagic.nbr = 1;
 								monRandomMagic.link = value;
 								monRandomMagic.rand = 100;
+							} else if (path == 52) {
+								monRandomMagic.mask = 30720;
+								monRandomMagic.nbr = 1;
+								monRandomMagic.link = value;
+								monRandomMagic.rand = 100;
+							} else if (path == 53) {
+								monRandomMagic.mask = 32640;
+								monRandomMagic.nbr = 1;
+								monRandomMagic.link = value;
+								monRandomMagic.rand = 100;
+							} else if (path == 56) {
+								// Don't know what this is
 							} else {
 								monRandomMagic.mask = path;
 								monRandomMagic.nbr = 1;
@@ -614,7 +648,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 									monRandomMagic.rand = value;
 								}
 							}
-							randomMagicList.add(monRandomMagic);
+							if (path !=  56) {
+								randomMagicList.add(monRandomMagic);
+							}
 						}
 					}
 				}
