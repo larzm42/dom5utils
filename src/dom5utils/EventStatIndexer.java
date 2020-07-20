@@ -54,9 +54,39 @@ public class EventStatIndexer {
 		String value;
 	}
 	
+//	0x6A00		This nation must be present		#req_nation	(Value is nation number)
+//	0x4100		Maximum population			#req_maxpop 	(Value is Dekapop)
+//	0x3900		Max times can occur			#req_unique		(Value is numbr of times)
+//	0xDD00		Target performing order 		#req_targorder  (Value is order)
+//	0xDE00		Target must have at least 1 in this path #req_targpath1 (Value is magic path)
+//	0xDF00		Target must have at least 2 in this path #req_targpath2 (Value is magic path)
+//	0xE100		Target must have at least 3 in this path #req_targpath3 (Value is magic path)
+//	0xE200		Target must have at least 4 in this path #req_targpath4 (Value is magic path)
+//	0x5300		Requires Enchantment Active 		#req_ench	(Value is Enchantment)
+//	0xE800		Target must be carrying gems		No command	(Value is gem type)
+//	0x6E00		Next event occurs after X months	#delay		(Value is number of months)
+//	0x6F00		Next event occurs after X months(+/- 25%) #delay25	(Value is nr of months)
+//	0x7000		Next event occurs after X months(+/- 50%) #delay50	(Value is nr of months)
+//	0x7500		Target gains a Horror Mark		#gainmark
+//	0x8900		Chance next delay event will be skipped #delayskip	(Value is percentage)
+//	0x8500		Open Arena for participants		#arena
+//	0x8600		Arena occurs				#resolvearena1
+//	0x8700		Peoples Arena occurs			#resolvearena2
+//	
+//	For reference when reading req_targorder the following correspond with the Event Chain commands:
+//
+//		100 Investigate
+//		101 Continue
+//		102 Accept
+//		103 Decline
+//		104 Withdraw
+//		105 Attack
+//		106 Subterfuge
+//		107 Magic
+	
 	static String[][] requirementMapping = {
 		{"1300", "mydominion"}, 
-		{"1200", "nation"}, 
+		{"6A00", "nation"}, 
 		{"1000", "maxdominion"}, 
 		{"0200", "minpop"}, 
 		{"0400", "temple"}, 
@@ -95,7 +125,7 @@ public class EventStatIndexer {
 		{"3A00", "unique"}, 
 		{"3D00", "monster"}, 
 		{"3C00", "nomonster"},
-		//{"3900", "fort"}, 
+		{"3900", "unique"}, 
 		{"6700", "fort"}, 
 		{"1500", "fullowner"}, 
 		{"1700", "notnation"}, 
@@ -136,14 +166,16 @@ public class EventStatIndexer {
 		{"0800", "mintroops"}, 
 		{"2600", "maxturn"}, 
 		{"3E00", "claimedthrone"}, 
-		{"7A00", "targpath1"}, 
-		{"7B00", "targpath2"}, 
-		{"7C00", "targpath3"}, 
-		{"7D00", "targpath4"}, 
+		{"DE00", "targpath1"}, 
+		{"DF00", "targpath2"}, 
+		{"E100", "targpath3"}, 
+		{"E200", "targpath4"}, 
 		{"7800", "targmnr"}, 
 		{"4800", "preach"}, 
-		{"7900", "targorder"}, 
-		{"4700", "story"}, 
+		{"DD00", "targorder"}, 
+		{"4700", "story"},
+		{"4100", "maxpop"},
+		{"5300", "ench"},
 		
 	};
 	
