@@ -79,7 +79,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
 			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "immortaltimer","immortalrespawn", "nomovepen", "wolf", "dungeon", 
-			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "end"}; 
+			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "Unknown_0701", "Unknown_1A01", "Unknown_1B01", "Unknown_3300", "Unknown_3B01", "Unknown_3F01", "Unknown_4501", "Unknown_4702", "Unknown_5902", "Unknown_6701", "Unknown_6801", "Unknown_7502", "Unknown_7701", "Unknown_7702", "Unknown_7A02", "Unknown_7B02", "Unknown_7F00", "Unknown_8401", "Unknown_8501", "Unknown_8801", "Unknown_8A00", "Unknown_9101", "Unknown_9F01", "Unknown_B301", "Unknown_BB00", "Unknown_D201", "Unknown_D301", "Unknown_D401", "Unknown_E401", "Unknown_E501", "Unknown_F001", "Unknown_F700", "end"}; 
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -293,14 +293,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"0502", "sendlesserhorrormult"},
 		{"0702", "xploss"},
 		{"0802", "theftofthesunawe"},
-		{"0A02", "incorporate"},
 		{"0B02", "hpoverslow"},
 		{"0D02", "berserkwhenblessed"},
 		{"0E01", "dragonlord"},
 		{"0F01", "curseattacker"},
 		{"0F02", "uwheataura"},
 		{"1001", "slothresearch"},
-		{"1201", "horrorsonly"},
+		{"1201", "horrorsonly"}, // This appears to be responsible for doom and greater horror desertion, not entirely certain of the mechanics of this however
 		{"1302", "mindvessel"},
 		{"1700", "elementrange"},
 		{"1800", "sorceryrange"},
@@ -385,7 +384,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"E901", "iceforging"},
 		{"EC01", "isayazad"},
 		{"ED00", "corpseeater"},
-		{"ED01", "isadaeva"},
+		{"ED01", "isadaeva"},	
 		{"F000", "flieswhenblessed"},
 		{"F401", "plant"},
 		{"F900", "clockworklord"},
@@ -417,42 +416,63 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8D02", "uwfireshield"},
 		{"BA02", "saltvul"},
 		{"A902", "landenc"},
-		{"B702", "plaguedoctor"}
-
+		{"B702", "plaguedoctor"},
+		
+		{"5902", "curseluckshield"},
+		{"3200", "pathboostuw"},
+		{"3300", "pathboostland"},
+		{"4702", "noarmormapmovepenalty"},
+		{"7502", "farthronekill"},
+		
+		// WAS: incorporate, but if set it avoids the if (hp over max) current hp = max hp code (which fits the mod manual description of hpoverflow)
+		{"0A02", "hpoverflow"},
+		// This is actually incorporate and its value is how many hp are added to the swallower every digest, to a maximum of 10000
+		{"7701", "incorporate"},
+		
+		{"7702", "indepstay"},
+		{"7B02", "polymorphimmune"},
+		// Like a vine shield but it horror marks instead
+		{"7F00", "horrormark"},
+		{"9101", "deathdisease"},
+		{"B301", "allret"},
+		{"BB00", "percentpathreduction"},
+		{"F001", "aciddigest"},
+		{"F700", "beckon"},
+		
 	};
 	
-//	0701	Feeblemind chance in province? Kurgi Only
-//	1A01	? Angels and Celestial Beings only
-//	1B01	? Rudra & Devata only
-//	3300	land all magic penalty? Kaijin Only
-//	3B01	? Void Spectre Only (Voidret/Insanity?)
-//	3F01	? Delgnat Only
-//	4501	? Leshy Plainshape only
-//	4702	? Chariots only
-//	5902	? Scabiel Only
-//	6701	? Barbarians & Bakemono-Sho
-//	6801	? Knight & Barbarian commanders
-//	7502	FarThroneKill? Doom Horrors only
-//	7701	Aciddigest? Eater of the Dead & Ancient Presence only
-//	7702	Indepstay? Maker of Ruins & Eater of Gods only
-//	7A02	? Eater of Dreams only
-//	7B02	Polymorph Immunity? Doom Horrors & God Vessels only
-//	7F00	? Eater of Gods only
-//	8401	? Horrors and God Vessels only
-//	8501	? Slave to Unreason only
-//	8801	Resummon as this shape? Eater of the Dead only
-//	8A00	? Cockatrice only
-//	9101	Turns before reform? Worm mage only
-//	9F01	? Soultorn has this at 10
-//	B301	?Doom Horrors have this?
-//	BB00	?Spiders & ghost cats have this. Shapechange related?
-//	D201	?God Vessel has this?
-//	D301	?God vessel & legion of gods? (% of moving around?)
-//	D401	? God vessel & Legion of Gods
-//	E401	? Unused unit 10 only
-//	E501	? Unused unit 10 only
-//	F001	? Acid cube has this?
-//	F700	? Siren landshape only (Lure?)
+//	0701	Feeblemind chance in province? Kurgi Only [seems unused]
+//	1A01	? Angels and Celestial Beings only [seems unused]
+//	1B01	? Rudra & Devata only [seems unused]
+//	3300	land all magic penalty? Kaijin Only [correct, land pathboost]
+//	3B01	? Void Spectre Only (Voidret/Insanity?) [seems unused]
+//	3F01	? Delgnat Only [used but unknown function]
+//	4501	? Leshy Plainshape only [leads to taking (maxhp*value)/100 damage in certain unknown circumstances]
+//	4702	? Chariots only [immunity to map move armour penalty]
+//	5902	? Scabiel Only FATEWEAVING
+//	6701	? Barbarians & Bakemono-Sho [seems unused]
+//	6801	? Knight & Barbarian commanders [used but unknown function]
+//	7502	FarThroneKill? Doom Horrors only [correct]
+//	7701	Aciddigest? Eater of the Dead & Ancient Presence only [was actually incorporate and old "incorporate" 0x20a was in fact hpoverflow]
+//	7702	Indepstay? Maker of Ruins & Eater of Gods only [correct]
+//	7A02	? Eater of Dreams only [has to do with checking for friendly fire]
+//	7B02	Polymorph Immunity? Doom Horrors & God Vessels only [correct]
+//	7F00	? Eater of Gods only [horror mark shield, #horrormark mod command]
+//	8401	? Horrors and God Vessels only [seems unused]
+//	8501	? Slave to Unreason only [seems unused]
+//	8801	Resummon as this shape? Eater of the Dead only [more or less correct, it looks like it will immediately turn the monster into the ID of its magnitude, kinda like firstshape but it has less checks on it]
+//	8A00	? Cockatrice only [checked only in apparently unused item attribute dec 99 or 0x63, unclear what purpose]
+//	9101	Turns before reform? Worm mage only [#deathdisease]
+//	9F01	? Soultorn has this at 10 [used but unknown function, is flatly additive to some value]
+//	B301	?Doom Horrors have this? [allret, all plane returning]
+//	BB00	?Spiders & ghost cats have this. Shapechange related? [this is functionally percentpathreduction]
+//	D201	?God Vessel has this? [some kind of special passive reanimator ability, will require further investigation]
+//	D301	?God vessel & legion of gods? (% of moving around?) [looks like % to desert and go independent every turn]
+//	D401	? God vessel & Legion of Gods [possesses the characteristics of #unique in two different situations, possibly for preventing entry to the hall of fame. Not certain of what these are though.]
+//	E401	? Unused unit 10 only [seems unused]
+//	E501	? Unused unit 10 only [seems unused]
+//	F001	? Acid cube has this? [aciddigest]
+//	F700	? Siren landshape only (Lure?) [correct, mod command is #beckon]
 
 	private static class Magic {
 		public int F;
