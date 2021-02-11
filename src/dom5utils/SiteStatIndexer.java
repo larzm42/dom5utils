@@ -44,7 +44,7 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			"hcom1", "hcom2", "hcom3", "hcom4", "hcom5", "mon1", "mon2", "mon3", "mon4", "mon5", "com1", "com2", "com3", "com4", "com5", "reveal", 
 			"provdef1", "provdef2", "def", "F2", "A2", "W2", "E2", "S2", "D2", "N2", "B2", "awe", "reinvigoration", "airshield", "provdefcom", 
 			"domconflict", "sprite", "nationalrecruits", "natmon","natcom", "throneclustering","wilddefenders", "domconflict", "rituallevelmodifier",
-			"callgodbonus", "magicresistancebonus", "bringgold", "scorch",
+			"callgodbonus", "magicresistancebonus", "bringgold", "scorch", "evil", "scryrange", "addtolimitedrecruitment", "ageratereduction", "dragonlord", "corpselord", "ivylord", "maximizeorder",
 			"end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
 
 	private static String[][] KNOWN_SITE_ATTRS = {
@@ -134,7 +134,21 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			{"1F00", "incscale"},
 			{"2000", "decscale"},
 			{"7F01", "bringgold"},
-			{"7602", "scorch"}
+			{"7602", "scorch"},
+			
+			{"2301", "evil"},
+			{"4900", "scryrange"},
+			{"7901", "addtolimitedrecruitment"},
+			{"7E01", "ageratereduction"},
+			{"8F01", "dragonlord"},
+			{"8E01", "corpselord"},
+			{"8D01", "ivylord"},
+			{"9101", "maximizeorder"}
+			
+// 7902 is used only in code for the unused site effect 0x165. It isn't clear what this does, but it checks for End of Culture...
+// E100 horses vale only, has something to do with the PD altering effects
+// E700 spirit pact only, may be setting pd commander?
+
 	};
 	
 

@@ -58,7 +58,8 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"flyingmapmove", "arenareward", "swiftness", "taskmaster", "leper", "siegebonus", "invulnerable", "horrormarkattacker", "entangle", "minsizetoequip",
 			"maxsizetoequip", "minstrtoequip", "minhandstoequip", "deathgemonkill", "deathexplosion", "chanceofattackbyknights", "singleuse", "domspreader",
 			"allunitslooklikebearertoscouts", "monstermustbepresent", "banishkiller", "onlyuseablebyfliersormounted", "masterritualist", "stunattackers",
-			"eatforyouth", "startitem", "swimming", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+			"eatforyouth", "startitem", "swimming", "localsun", "poisonarmor", "curserandomunits", "voidbanishchance", "voidret", "chancetobecomewerewolf", "stormimmune", "farsail", "lesserhorrorattackchance", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+
 
 	private static String[][] KNOWN_ITEM_ATTRS = {
 			{"C600", "fireres"},
@@ -248,26 +249,44 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"DE01", "stunattackers"},
 			{"8A02", "eatforyouth"},
 			{"3702", "startitem"},
-			{"3B02", "swimming"}
+			{"3B02", "swimming"},
+			
+			{"AD02", "localsun"},
+			{"BC00", "poisonarmor"},
+			{"E100", "curserandomunits"},
+			{"3701", "voidbanishchance"},
+			{"4D01", "voidret"},
+			{"7B00", "chancetobecomewerewolf"},
+			{"AF00", "stormimmune"},
+			{"8902", "farsail"},
+			{"7800", "lesserhorrorattackchance"}
 			
 	};
 	
 
-//	6901	Extra arm slot? Copper arm only
+//	6901	Extra arm slot? Copper arm only [likely extra arm]
 //	6A01	Extra arm slot? Copper arm only
-//	7201	? Magic eyes only
-//	DA00	?Seduction gender modifier?
-//	E100	Carcator the pocket lich
-//	E300	Picus' or Procas' axe
-//	E701	?Only usable by Shas?
-//	EE01	?Only usable by Shas?
+//	7201	? Magic eyes only [prevents healing eye loss]
+//	DA00	?Seduction gender modifier? [code suggests this goes one way only, I am not certain which]
+//	E100	Carcator the pocket lich [curses X units at random in the same province every turn]
+//	E300	Picus' or Procas' axe [seems unused]
+//	E701	?Only usable by Shas? [seems unused]
+//	EE01	?Only usable by Shas? [seems unused]
 	
-//	3701	?Gift of Kurgi & Boots of the Planes?
-//			4D01	?Gift of Kurgi, Lightless Lantern and Nethgul have this?
-//			7800	?Forbidden Light & First Crown?
-//			7B00	?Lychantropos amulet has this at 2?
-//			AF00	? Gift of Kurgi only
-//			CA02	? Black Mirror Only
+//	3701	?Gift of Kurgi & Boots of the Planes? [chance to be sent to void]
+//			4D01	?Gift of Kurgi, Lightless Lantern and Nethgul have this? [void returning]
+//			7800	?Forbidden Light & First Crown? [lesser horror attack chance]
+//			7B00	?Lychantropos amulet has this at 2? [% chance to become werewolf]
+//			AF00	? Gift of Kurgi only [this is just storm immunity, #stormimmune]
+//			CA02	? Black Mirror Only [seems unused]
+
+// 3f02 [unknown effect]
+// 8902 [sail distance increaser, #farsail]
+// 9502 [something to do with eyes and losing them]
+// 9d02 [seems unused]
+// ad02 [counts as sun, #localsun]
+// bc00 [poison barbs, #poisonarmor]
+
 
 
 	

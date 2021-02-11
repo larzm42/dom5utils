@@ -18,28 +18,43 @@ package dom5utils;
 public class Dom5Utils {
 	public static void main(String[] args) {
 		// Stats
+		System.out.println("Beginning item stats"); 
 		ItemStatIndexer.run();
+		System.out.println("Beginning site stats"); 
 		SiteStatIndexer.run();
+		System.out.println("Beginning monster stats"); 
 		MonsterStatIndexer.run();
+		System.out.println("Beginning event stats"); 
 		EventStatIndexer.run();
+		System.out.println("Beginning merc stats"); 
 		MercenaryStatIndexer.run();
+		System.out.println("Beginning armor stats"); 
 		ArmorStatIndexer.run();
+		System.out.println("Beginning wpn stats"); 
 		WeaponStatIndexer.run();
+		System.out.println("Beginning spell stats"); 
 		SpellStatIndexer.run();
+		System.out.println("Beginning nation stats"); 
 		NationStatIndexer.run();
 		
 		// Descriptions
+		System.out.println("Beginning item/monster descr"); 
 		ItemMonsterDescDumper.run();
+		System.out.println("Beginning spell descr"); 
 		SpellDescDumper.run();
 		
 		// Events
+		System.out.println("Beginning event stats"); 
 		EventStatIndexer.run();
 		
 		// Sprites
+		System.out.println("Beginning item sprites"); 
 		ItemSpriteIndexer.run();
+		System.out.println("Beginning monster sprites"); 
 		MonsterSpriteIndexer.run();
 		
 		// Names
+		System.out.println("Beginning names"); 
 		NametypeIndexer.run();
 	}
 }
