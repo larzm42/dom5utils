@@ -51,7 +51,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"inspirational", "taskmaster", "beastmaster", "bodyguard", "waterbreathing", "iceprot", "invulnerable", "slashres", "bluntres", "pierceres", 
 			"shockres", "fireres", "coldres", "poisonres", "voidsanity", "darkvision", "blind", "animalawe", "awe", "halt", "fear", "berserk", "cold", 
 			"heat", "fireshield", "banefireshield", "damagerev", "poisoncloud", "diseasecloud", "slimer", "mindslime", "reform", "regeneration", 
-			"reanimator", "barbs", "petrify", "eyeloss", "ethereal", "ethtrue", "deathcurse", "trample", "trampswallow", "stormpower", "firepower", 
+			"reanimator", "poisonarmor", "petrify", "eyeloss", "ethereal", "ethtrue", "deathcurse", "trample", "trampswallow", "stormpower", "firepower", 
 			"coldpower", "darkpower", "chaospower", "magicpower", "winterpower", "springpower", "summerpower", "fallpower", "forgebonus", "fixforgebonus", 
 			"mastersmith", "resources", "autohealer", "autodishealer", "alch", "nobadevents", "event", "insane", "shatteredsoul", "leper", "taxcollector", 
 			"gem", "gemprod", "chaosrec", "pillagebonus", "patrolbonus", "castledef", "siegebonus", "incprovdef", "supplybonus", "incunrest", "popkill", 
@@ -65,10 +65,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"waterattuned", "earthattuned", "astralattuned", "deathattuned", "natureattuned", "bloodattuned", "magicboostF", "magicboostA", "magicboostW", 
 			"magicboostE", "magicboostS", "magicboostD", "magicboostN", "magicboostALL", "eyes", "heatrec", "coldrec", "spreadchaos", "spreaddeath", 
 			"corpseeater", "poisonskin", "bug", "uwbug", "spreadorder", "spreadgrowth", "startitem", "spreaddom", "battlesum5", "acidsplash", 
-			"drake", "prophetshape", "horror", "enchrebate50", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
+			"drake", "prophetshape", "horror", "enchrebate50p", "heroarrivallimit", "sailsize", "uwdamage", "landdamage", "rpcost", "buffer", 
 			"rand5", "nbr5", "link5", "mask5", "rand6", "nbr6", "link6", "mask6", 
 			"mummification", "disres", "raiseonkill", "raiseshape", "sendlesserhorrormult", "xploss", "theftofthesunawe", "incorporate", "hpoverslow", "berserkwhenblessed",
-			"dragonlord", "curseattacker", "uwheataura", "slothresearch", "horrorsonly", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
+			"dragonlord", "curseattacker", "uwheataura", "slothresearch", "horrordeserter", "mindvessel", "elementrange", "sorceryrange", "startagemodifier",
 			"disbelieve", "firerange", "astralrange", "landreinvigoration", "naturerange", "beartattoo", "horsetattoo", "reincarnation", "wolftattoo", "boartattoo",
 			"sleepaura", "snaketattoo", "supplysize", "astralfetters", "foreignmagicboost", "templetrainer", "infernoret", "kokytosret", "infernalcrossbreedingmult", "unsurr",
 			"combatcaster", "homeshape", "speciallook", "aisinglerec", "nowish", "swarmbody", "mason", "onisummoner", "sunawe", "spiritsight", "defenceorganiser",
@@ -79,7 +79,9 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"requirestempletorecruit", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "flieswhenblessed", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
 			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "immortaltimer","immortalrespawn", "nomovepen", "wolf", "dungeon", 
-			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "end"}; 
+			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "sun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "curseluckshield", "pathboostuw", "pathboostland", "noarmormapmovepenalty", "farthronekill", "hpoverflow", "indepstay", "polymorphimmune", "horrormark", "deathdisease", "allret", "percentpathreduction", "aciddigest", "beckon", "slaverbonus", "carcasscollector", "mindcollar", "labpromotion", "mountaincostrebate", "indepspells", "enchrebate50", "summon1", "randomspell", "deathpower", "deathrec", "norange", "insanify", "reanimator", "defector", "nohof", "batstartsum1d3", "enchrebate10", "end"}; 
+			
+			
 			
 	private static String values[][] = {{"heal", "mounted", "animal", "amphibian", "wastesurvival", "undead", "coldres15", "heat", "neednoteat", "fireres15", "poisonres15", "aquatic", "flying", "trample", "immobile", "immortal" },
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
@@ -188,7 +190,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"7000", "sailingshipsize"},
 		{"9A01", "sailingmaxunitsize"},
 		{"DF00", "incunrest"},
-		{"BC00", "barbs"},
+		{"BC00", "poisonarmor"},
 		{"4E01", "inn"},
 		{"1801", "stonebeing"},
 		{"5001", "shrinkhp"},
@@ -272,7 +274,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8701", "horror"},
 		{"3501", "insane"},
 		{"D800", "sacr"},
-		{"1002", "enchrebate50"},
+		{"EA03", "enchrebate50"}, // formerly 0x210, or 1002
 		{"7C00", "leper"},
 		{"9C01", "slimer"},
 		{"9201", "mindslime"},
@@ -293,14 +295,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"0502", "sendlesserhorrormult"},
 		{"0702", "xploss"},
 		{"0802", "theftofthesunawe"},
-		{"0A02", "incorporate"},
 		{"0B02", "hpoverslow"},
 		{"0D02", "berserkwhenblessed"},
 		{"0E01", "dragonlord"},
 		{"0F01", "curseattacker"},
 		{"0F02", "uwheataura"},
 		{"1001", "slothresearch"},
-		{"1201", "horrorsonly"},
+		{"1201", "horrordeserter"}, // This appears to be responsible for doom and greater horror desertion, not entirely certain of the mechanics of this however
 		{"1302", "mindvessel"},
 		{"1700", "elementrange"},
 		{"1800", "sorceryrange"},
@@ -385,7 +386,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"E901", "iceforging"},
 		{"EC01", "isayazad"},
 		{"ED00", "corpseeater"},
-		{"ED01", "isadaeva"},
+		{"ED01", "isadaeva"},	
 		{"F000", "flieswhenblessed"},
 		{"F401", "plant"},
 		{"F900", "clockworklord"},
@@ -417,42 +418,89 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 		{"8D02", "uwfireshield"},
 		{"BA02", "saltvul"},
 		{"A902", "landenc"},
-		{"B702", "plaguedoctor"}
-
+		{"B702", "plaguedoctor"},
+		
+		{"5902", "curseluckshield"},
+		{"3200", "pathboostuw"},
+		{"3300", "pathboostland"},
+		{"4702", "noarmormapmovepenalty"},
+		{"7502", "farthronekill"},
+		
+		// WAS: incorporate, but if set it avoids the if (hp over max) current hp = max hp code (which fits the mod manual description of hpoverflow)
+		{"0A02", "hpoverflow"},
+		// This is actually incorporate and its value is how many hp are added to the swallower every digest, to a maximum of 10000
+		{"7701", "incorporate"},
+		
+		{"7702", "indepstay"},
+		{"7B02", "polymorphimmune"},
+		// Like a vine shield but it horror marks instead
+		{"7F00", "horrormark"},
+		{"9101", "deathdisease"},
+		{"B301", "allret"},
+		{"BB00", "percentpathreduction"},
+		{"F001", "aciddigest"},
+		{"F700", "beckon"},
+		
+		{"8302", "slaverbonus"},
+		{"9202", "carcasscollector"},
+		{"9A02", "mindcollar"},
+		{"9C02", "labpromotion"},
+		{"A402", "mountaincostrebate"},
+		{"E001", "indepspells"},
+		{"A602", "enchrebate50p"},
+		
+		{"8B00", "summon1"},
+		{"8501", "randomspell"},
+		{"E401", "deathpower"},
+		{"E501", "deathrec"},
+		{"7A02", "norange"},
+		{"3B01", "insanify"},
+		{"D201", "reanimator"},
+		{"D301", "defector"},
+		{"D401", "nohof"},
+		{"B202", "batstartsum1d3"},
+		{"E803", "enchrebate10"},
+		
+		
 	};
 	
-//	0701	Feeblemind chance in province? Kurgi Only
-//	1A01	? Angels and Celestial Beings only
-//	1B01	? Rudra & Devata only
-//	3300	land all magic penalty? Kaijin Only
-//	3B01	? Void Spectre Only (Voidret/Insanity?)
-//	3F01	? Delgnat Only
-//	4501	? Leshy Plainshape only
-//	4702	? Chariots only
-//	5902	? Scabiel Only
+//	0701	Feeblemind chance in province? Kurgi Only [seems unused]
+//	1A01	? Angels and Celestial Beings only [seems unused]
+//	1B01	? Rudra & Devata only [seems unused]
+//	3F01	? Delgnat Only [used but unknown function]
 //	6701	? Barbarians & Bakemono-Sho
 //	6801	? Knight & Barbarian commanders
-//	7502	FarThroneKill? Doom Horrors only
-//	7701	Aciddigest? Eater of the Dead & Ancient Presence only
-//	7702	Indepstay? Maker of Ruins & Eater of Gods only
-//	7A02	? Eater of Dreams only
-//	7B02	Polymorph Immunity? Doom Horrors & God Vessels only
-//	7F00	? Eater of Gods only
-//	8401	? Horrors and God Vessels only
-//	8501	? Slave to Unreason only
-//	8801	Resummon as this shape? Eater of the Dead only
-//	8A00	? Cockatrice only
-//	9101	Turns before reform? Worm mage only
-//	9F01	? Soultorn has this at 10
-//	B301	?Doom Horrors have this?
-//	BB00	?Spiders & ghost cats have this. Shapechange related?
-//	D201	?God Vessel has this?
-//	D301	?God vessel & legion of gods? (% of moving around?)
-//	D401	? God vessel & Legion of Gods
-//	E401	? Unused unit 10 only
-//	E501	? Unused unit 10 only
-//	F001	? Acid cube has this?
-//	F700	? Siren landshape only (Lure?)
+//	4501	? Leshy Plainshape only [leads to taking (maxhp*value)/100 damage in certain unknown circumstances]
+//	8401	? Horrors and God Vessels only [seems unused]
+//	8801	Resummon as this shape? Eater of the Dead only [more or less correct, it looks like it will immediately turn the monster into the ID of its magnitude, kinda like firstshape but it has less checks on it]
+//	8A00	? Cockatrice only [checked only in apparently unused item attribute dec 99 or 0x63, unclear what purpose]
+//	9F01	? Soultorn has this at 10 [used but unknown function, is flatly additive to some value]
+
+//	6601 [seems unused]
+//	8002 [affects start age]
+//	8f02 [likely has something to do with units that emit light, used on things on fire]
+//	9702 [something to do with starting afflictions]
+//	a102 [affects start age, in EA only?]
+//	a202 [seems unused]
+//	a302 [seems unused]
+//	a702 [has to do with what provinces lure is allowed in]
+//	aa02 [might be the terrain masks that temple trainer is allowed in]
+//	ac02 [unknown effect]
+//	b302 Set on birds [seems unused]
+//	b802 [seems unused]
+//	fc00 [affects nametypes?]
+
+//	8b00 [summons 1 of this monster per month, #summon1]
+//	8501	? Slave to Unreason only [#randomspell]
+//	E401	? Unused unit 10 only [#deathpower]
+//	E501	? Unused unit 10 only [#deathrec]
+//	7A02	? Eater of Dreams only [#norange, does not stop while firing]
+//	3B01	? Void Spectre Only (Voidret/Insanity?) [#insanify]
+//	D201	?God Vessel has this? [#reanimator]
+//	D301	?God vessel & legion of gods? (% of moving around?) [#defector]
+//	D401	? God vessel & Legion of Gods [#nohof]
+//	b202 [batstartsum 1d3]
+//	e803 [#enchrebate10]
 
 	private static class Magic {
 		public int F;
@@ -744,10 +792,6 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 									val = 1;
 								}
 								monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], Integer.toString(val)));
-							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("barbs")) {
-	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
-							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("ethtrue")) {
-	 							monster.addAttribute(new Attr(KNOWN_MONSTER_ATTRS[x][1], "1"));
 							} else if (KNOWN_MONSTER_ATTRS[x][1].equals("incunrest")) {
 								double val = Double.parseDouble(attr.values.get(0))/10d;
 								if (val < 1 && val > -1) {
@@ -1199,7 +1243,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					id==3425 || id==3426 || id==3427 || id==3428) {
 					unique = "0";
 				}
-				if (heroes.contains(monster.getId()) || (unique != null && unique.equals("1"))/* || monster.getAttribute("id").equals("641")*/) {
+				if (heroes.contains(monster.getId()) || (unique != null && unique.equals("1")) /*|| (monster.getAttribute("startdom") != null) */ /* || monster.getAttribute("id").equals("641")*/) {
 					monster.addAttribute(new Attr("fixedname", names.get(nameIndex++)));
 				}
 			}
