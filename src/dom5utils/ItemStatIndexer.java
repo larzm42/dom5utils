@@ -268,24 +268,15 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 //	6A01	Extra arm slot? Copper arm only
 //	7201	? Magic eyes only [prevents healing eye loss]
 //	DA00	?Seduction gender modifier? [code suggests this goes one way only, I am not certain which]
-//	E100	Carcator the pocket lich [curses X units at random in the same province every turn]
-//	E300	Picus' or Procas' axe [seems unused]
+//	E300	Picus' or Procas' axe [+2 mr, +5 strength, +10 fear if two or more of these items used]
 //	E701	?Only usable by Shas? [seems unused]
 //	EE01	?Only usable by Shas? [seems unused]
 	
-//	3701	?Gift of Kurgi & Boots of the Planes? [chance to be sent to void]
-//			4D01	?Gift of Kurgi, Lightless Lantern and Nethgul have this? [void returning]
-//			7800	?Forbidden Light & First Crown? [lesser horror attack chance]
-//			7B00	?Lychantropos amulet has this at 2? [% chance to become werewolf]
-//			AF00	? Gift of Kurgi only [this is just storm immunity, #stormimmune]
 //			CA02	? Black Mirror Only [seems unused]
 
 // 3f02 [unknown effect]
-// 8902 [sail distance increaser, #farsail]
 // 9502 [something to do with eyes and losing them]
-// 9d02 [seems unused]
-// ad02 [counts as sun, #localsun]
-// bc00 [poison barbs, #poisonarmor]
+// 9d02 [#islance]
 
 
 
