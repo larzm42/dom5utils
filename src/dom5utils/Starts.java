@@ -28,7 +28,7 @@ public class Starts {
 	public static final long MONSTER_ATTRIBUTE_GAP = 54l;
 
 	public static final long MONSTER_MAGIC = 0x015a7c40l;
-	public static final long ITEM_AND_MONSTER_DESC = 0x00227794l;
+	public static final long ITEM_AND_MONSTER_DESC = 0x00227778l;
 	public static final long ITEM_AND_MONSTER_DESC_INDEX = 0x00382a68l;
 	
 	public static final long MONSTER_TRS_INDEX = 0x0001ac1c;
@@ -47,19 +47,19 @@ public class Starts {
 	public static final long SPELL = 0x014d4d40l;
 	public static final long SPELL_SIZE = 216l;
 
-	public static final long SPELL_DESC = 0x00395ee8l;
-	public static final long SPELL_DESC_INDEX = 0x003962e8;
+	public static final long SPELL_DESC = 0x003962e8l;
+	public static final long SPELL_DESC_INDEX = 0x003e1d98l;
 
 	public static final long EVENT = 0x003e9be8l;
 	public static final long EVENT_SIZE = 1728l;
 	
-	public static final long MERCENARY = 0x011b5918l;
+	public static final long MERCENARY = 0x011b591al;
 	public static final long MERCENARY_SIZE = 312l;
 
-	public static final long ARMOR = 0x002001d8l;
+	public static final long ARMOR = 0x00200240l;
 	public static final long ARMOR_SIZE = 104l;
 
-	public static final long WEAPON = 0x015ce770l;
+	public static final long WEAPON = 0x015ce7e0l;
 	public static final long WEAPON_SIZE = 112l;
 	
 	public static final long NATION = 0x00ead918l;
