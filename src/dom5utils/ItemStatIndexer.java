@@ -40,7 +40,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"shockres", "fireres", "coldres", "poisonres", "darkvision", "airshield", "limitedregeneration", "woundfend", "fixforge", "autodishealer", "healer", 
 			"alch", "insa", "hp", "protf", "protb", "mr", "morale", "str", "att", "def", "prec", "enc", "mapspeed", "ap", "reinvigoration", "pen", "stealth", 
 			"stealthb", "forest", "mount", "waste", "swamp", "fly", "float", "sailingshipsize", "sailingmaxunitsize", "waterbreathing", "giftofwater", "airbr", 
-			"flytr", "quick", "eth", "trample", "bless", "luck", "fluck", "curse", "disease", "cursed", "taint", "ldr-n", "ldr-u", "ldr-m", "inspirational", 
+			"flytr", "quick", "eth", "trample", "bless", "luck", "foolsluck", "barkskin", "stoneskin", "ironskin", "curse", "disease", "cursed", "taint", "ldr-n", "ldr-u", "ldr-m", "inspirational", 
 			"fear", "awe", "animalawe", "exp", "chill", "heat", "gold", "F", "A", "W", "E", "S", "D", "N", "B", "H", "firerange", "airrange", 
 			"waterrange", "earthrange", "astralrange", "deathrange", "naturerange", "bloodrange", "tmpfiregems", "tmpairgems", "tmpwatergems", "tmpearthgems", 
 			"tmpastralgems", "tmpdeathgems", "tmpnaturegems", "tmpbloodslaves", "gf", "ga", "gw", "ge", "gs", "gd", "gn", "gb", "berserk", "bers", "fireshield", 
@@ -58,7 +58,7 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			"flyingmapmove", "arenareward", "swiftness", "taskmaster", "leper", "siegebonus", "invulnerable", "horrormarkattacker", "entangle", "minsizetoequip",
 			"maxsizetoequip", "minstrtoequip", "minhandstoequip", "deathgemonkill", "deathexplosion", "chanceofattackbyknights", "singleuse", "domspreader",
 			"allunitslooklikebearertoscouts", "monstermustbepresent", "banishkiller", "onlyuseablebyfliersormounted", "masterritualist", "stunattackers",
-			"eatforyouth", "startitem", "swimming", "localsun", "poisonarmor", "curserandomunits", "voidbanishchance", "voidret", "chancetobecomewerewolf", "stormimmune", "farsail", "lesserhorrorattackchance", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+			"eatforyouth", "startitem", "swimming", "localsun", "poisonarmor", "curserandomunits", "voidbanishchance", "voidret", "chancetobecomewerewolf", "stormimmune", "farsail", "lesserhorrorattackchance", "islance", "commaster", "comslave", "nofind", "chestwound", "feeblemind", "enlargement", "limitedenlargement", "antimagic", "soulvortex", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
 
 
 	private static String[][] KNOWN_ITEM_ATTRS = {
@@ -259,7 +259,8 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			{"7B00", "chancetobecomewerewolf"},
 			{"AF00", "stormimmune"},
 			{"8902", "farsail"},
-			{"7800", "lesserhorrorattackchance"}
+			{"7800", "lesserhorrorattackchance"},
+			{"9D02", "islance"}
 			
 	};
 	
@@ -281,16 +282,16 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 
 
 	
-	private static String values[][] = {{"bless", "luck", "", "airshield", "barkskin", "", "", "", "bers", "", "", "", "", "", "", "" },
-										{"stoneskin", "fly", "quick", "", "", "", "", "", "", "", "", "eth", "ironskin", "", "", "" },
-										{"", "", "", "float", "", "", "", "", "", "", "", "", "", "", "", "" },
+	private static String values[][] = {{"bless", "luck", "", "airshield", "barkskin", "", "", "", "bers", "", "", "", "", "coldaura", "", "" },
+										{"stoneskin", "fly", "quick", "", "", "", "", "", "", "", "antimagic", "eth", "ironskin", "commaster", "comslave", "enlargement" },
+										{"", "", "", "float", "", "", "", "", "limitedenlargement", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
-										{"", "", "", "", "", "", "trample", "", "", "", "", "", "", "", "", "fireshield" },
+										{"", "invulnerable", "", "", "", "", "trample", "", "", "nofind", "", "soulvortex", "", "", "", "fireshield" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
-										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+										{"foolsluck", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"disease", "curse", "", "", "", "", "", "", "", "", "", "", "", "", "", "cursed" },
-										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+										{"", "", "", "", "", "", "", "chestwound", "", "feeblemind", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" }};
 
@@ -451,7 +452,13 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 				for (String bit : largeBitmap) {
 					if (bit.equals("airshield")) {
 						item.parameters.put(bit, 80);
+					}
+					else if (bit.equals("invulnerable")) {
+						item.parameters.put(bit, 25);
 					} else {
+						if (bit.startsWith("Unknown")) {
+							System.out.println("Unknown bit for item " + item.parameters.get("name") + ": " + bit); 
+						}
 						item.parameters.put(bit, 1);
 					}
 				}
