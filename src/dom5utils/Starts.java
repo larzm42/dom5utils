@@ -64,4 +64,4 @@ public class Starts {
 	
 	public static final long NATION = 0x00eadfa0l;
 	public static final long NATION_SIZE = 2400l;
-	
+}
