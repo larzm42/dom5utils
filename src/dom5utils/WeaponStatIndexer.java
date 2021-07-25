@@ -109,7 +109,7 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 					effect.record_number = weaponNumber;
 					effect.object_type = "Weapon";
 					effect.ritual = 0;
-					effect.modifiers_mask = getBytes6(startIndex+64);
+					effect.modifiers_mask = getBytes8(startIndex+64);
 					effect.raw_argument = getBytes2(startIndex+40);
 					effect.range_base = getBytes2(startIndex+56);
 					effect.area_base = getBytes2(startIndex+82);
