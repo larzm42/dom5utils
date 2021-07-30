@@ -79,7 +79,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			"reqtemple", "horrormarked", "changetargetgenderforseductionandseductionimmune", "corpseconstruct", "guardianspiritmodifier", "isashah", "iceforging",
 			"isayazad", "isadaeva", "blessfly", "plant", "clockworklord", "commaster", "comslave", "minsizeleader", "snowmove", "swimming", "stupid",
 			"skirmisher", "ironvul", "heathensummon", "unseen", "illusionary", "reformtime","immortalrespawn", "nomovepen", "wolf", "dungeon", 
-			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "localsun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "curseluckshield", "pathboostuw", "pathboostland", "noarmormapmovepenalty", "farthronekill", "hpoverflow", "indepstay", "polyimmune", "horrormark", "deathdisease", "allret", "percentpathreduction", "aciddigest", "beckon", "slaverbonus", "carcasscollector", "mindcollar", "labpromotion", "mountainrec", "indepspells", "enchrebate50", "summon1", "randomspell", "deathpower", "deathrec", "norange", "insanify", "reanimator", "defector", "nohof", "batstartsum1d3", "enchrebate10", "undying", "moralebonus", "uncurableaffliction", "autoblessed", "wintersummon1d3", "stygianguide", "end"}; 
+			"graphicsize", "twiceborn", "aboleth", "tmpastralgems", "localsun", "tmpfiregems", "defiler", "mountedbeserk", "lanceok", "startheroab", "minprison", "uwfireshield", "saltvul", "landenc", "plaguedoctor", "curseluckshield", "pathboostuw", "pathboostland", "noarmormapmovepenalty", "farthronekill", "hpoverflow", "indepstay", "polyimmune", "horrormark", "deathdisease", "allret", "percentpathreduction", "aciddigest", "beckon", "slaverbonus", "carcasscollector", "mindcollar", "labpromotion", "mountainrec", "indepspells", "enchrebate50", "summon1", "randomspell", "deathpower", "deathrec", "norange", "insanify", "reanimator", "defector", "nohof", "batstartsum1d3", "enchrebate10", "undying", "moralebonus", "uncurableaffliction", "autoblessed", "wintersummon1d3", "stygianguide", "almostundead", "end"}; 
 			
 		
 			
@@ -88,7 +88,7 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 										{"cold", "forestsurvival", "shockres15", "swampsurvival", "demon", "holy", "mountainsurvival", "illusion", "noheal", "ethereal", "pooramphibian", "stealthy40", "misc2", "coldblood", "inanimate", "female" },
 										{"bluntres", "slashres", "pierceres", "slow_to_recruit", "float", "stormimmune", "teleport", "snowmove", "swimming", "domimmortal", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
-										{"magicbeing", "", "darkvision100", "poormagicleader", "okmagicleader", "goodmagicleader", "expertmagicleader", "superiormagicleader", "poorundeadleader", "okundeadleader", "goodundeadleader", "expertundeadleader", "superiorundeadleader", "", "", "" },
+										{"magicbeing", "", "requndeadleadership", "poormagicleader", "okmagicleader", "goodmagicleader", "expertmagicleader", "superiormagicleader", "poorundeadleader", "okundeadleader", "goodundeadleader", "expertundeadleader", "superiorundeadleader", "", "", "" },
 										{"", "", "", "", "stupid", "", "", "", "noleader", "poorleader", "goodleader", "expertleader", "superiorleader", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 										{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" }};
@@ -477,11 +477,11 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 //	0701	Feeblemind chance in province? Kurgi Only [unknown effect]
 //	1A01	? Angels and Celestial Beings only [seems unused]
 //	1B01	? Rudra & Devata only [seems unused]
-//	3F01	? Delgnat Only [used but unknown function]
+//	3F01	? Delgnat Only [changes home province somehow]
 //	6701	? Barbarians & Bakemono-Sho
-//	6801	? Knight & Barbarian commanders [used but unknown function]
+//	6801	? Knight & Barbarian commanders [changes post-script orders, unknown additional variables set]
 //	4501	? Leshy Plainshape only [leads to taking (maxhp*value)/100 damage in certain unknown circumstances]
-//	8401	? Horrors and God Vessels only [used unknown function]
+//	8401	? Horrors and God Vessels only [somehow involved in spellcasting decisions]
 //	8801	Resummon as this shape? Eater of the Dead only [more or less correct, it looks like it will immediately turn the monster into the ID of its magnitude, kinda like firstshape but it has less checks on it]
 //	8A00	? Cockatrice only [may be x% petrification immunity]
 //	9F01	? Soultorn has this at 10 [undying]
@@ -1087,9 +1087,14 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					}
 					monster.addAttribute(new Attr("stealthy", additionalStealth == null || additionalStealth.equals("0") ? "" : additionalStealth));
 				}
-				if (largeBitmap.contains("darkvision100")) {
-					if (monster.getAttribute("spiritsight") == null) {
-						monster.addAttribute(new Attr("darkvision", 100));
+				if (largeBitmap.contains("requndeadleadership")) {
+					// Formerly "darkvision100", this is the flag that makes a unit require undead leadership
+					// and produces the "Part undead/demon" #almostundead mod command effect
+					// but only if the unit is neither demon nor undead
+					if (monster.getAttribute("undead") == null) {
+						if (monster.getAttribute("demon") == null) {
+							monster.addAttribute(new Attr("almostundead", 1));
+						}
 					}
 				}
 
