@@ -33,6 +33,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class SpellStatIndexer extends AbstractStatIndexer {
 	public static String[] spells_columns = {"id","name", "school", "researchlevel", "path1", "pathlevel1", "path2", "pathlevel2", "effect_record_id", "effects_count", "precision", "fatiguecost", "gemcost", "next_spell", "damage", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
 	public static String[] effects_spells_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
@@ -190,14 +193,22 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 			in.close();
 			stream.close();
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("spells.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("spells", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("spells", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
+			
 			XSSFWorkbook wb2 = new XSSFWorkbook();
-			FileOutputStream fos2 = new FileOutputStream("effects_spells.xlsx");
+			FileOutputStream fos2 = CSVWriter.getFOS("effects_spells", SSType.XLSX);
+			BufferedWriter   csv2 = CSVWriter.getBFW("effects_spells", SSType.CSV);
 			XSSFSheet sheet2 = wb2.createSheet();
+			
 			XSSFWorkbook wb3 = new XSSFWorkbook();
-			FileOutputStream fos3 = new FileOutputStream("attributes_by_spell.xlsx");
+			FileOutputStream fos3 = CSVWriter.getFOS("attributes_by_spell", SSType.XLSX);
+			BufferedWriter   csv3 = CSVWriter.getBFW("attributes_by_spell", SSType.CSV);
 			XSSFSheet sheet3 = wb3.createSheet();
 
 			int rowNum = 0;
@@ -273,14 +284,20 @@ public class SpellStatIndexer extends AbstractStatIndexer {
 
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb2.write(fos2);
 			fos2.close();
+			CSVWriter.writeSimpleCSV(sheet2, csv2, Delimiter.TAB);
+			csv2.close();
 			wb2.close();
 
 			wb3.write(fos3);
 			fos3.close();
+			CSVWriter.writeSimpleCSV(sheet3, csv3, Delimiter.TAB);
+			csv3.close();
 			wb3.close();
 
 		} catch (FileNotFoundException e) {

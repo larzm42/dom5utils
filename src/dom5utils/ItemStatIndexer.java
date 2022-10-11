@@ -35,6 +35,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class ItemStatIndexer extends AbstractStatIndexer {
 	public static String[] items_columns = {"id", "name", "type", "constlevel", "mainpath", "mainlevel", "secondarypath", "secondarylevel", "weapon", "armor", 
 			"shockres", "fireres", "coldres", "poisonres", "darkvision", "airshield", "limitedregeneration", "woundfend", "fixforge", "autodishealer", "healer", 
@@ -475,9 +478,13 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			}
 			in.close();
 			stream.close();
+			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
 
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("BaseI.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("BaseI", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("BaseI", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
 
 			int rowNum = 0;
@@ -507,6 +514,8 @@ public class ItemStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 		} catch (FileNotFoundException e) {

@@ -15,6 +15,7 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,6 +38,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
 
 public class EventStatIndexer {
 	public static String[] event_columns = {"id", "name", "rarity", "description", "requirements",  "effects", "end"};
@@ -605,8 +609,12 @@ public class EventStatIndexer {
 			requirements(events);
 			effects(events);
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("events.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("events", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("events", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
 			
 			int rowNum = 0;
@@ -645,6 +653,8 @@ public class EventStatIndexer {
 			}
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 		} catch (FileNotFoundException e) {
