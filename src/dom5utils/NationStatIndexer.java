@@ -15,6 +15,7 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +31,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
 
 public class NationStatIndexer extends AbstractStatIndexer {
 	public static String[] nations_columns = {"id", "name", "epithet", "abbreviation", "file_name_base", "era", "end"};
@@ -52,6 +56,7 @@ public class NationStatIndexer extends AbstractStatIndexer {
 		private int rowNum = 0;
 		XSSFWorkbook wb;
 		FileOutputStream fos;
+		BufferedWriter csv;
 		XSSFSheet sheet;
 		
 		unitType(int i, String filename) {
@@ -185,11 +190,17 @@ public class NationStatIndexer extends AbstractStatIndexer {
 			in.close();
 			stream.close();
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("nations.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("nations", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("nations", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
+			
 			XSSFWorkbook wb2 = new XSSFWorkbook();
-			FileOutputStream fos2 = new FileOutputStream("attributes_by_nation.xlsx");
+			FileOutputStream fos2 = CSVWriter.getFOS("attributes_by_nation", SSType.XLSX);
+			BufferedWriter   csv2 = CSVWriter.getBFW("attributes_by_nation", SSType.CSV);
 			XSSFSheet sheet2 = wb2.createSheet();
 			
 			int rowNum = 0;
@@ -231,7 +242,8 @@ public class NationStatIndexer extends AbstractStatIndexer {
 					if (entry.getKey() == unitType.UNKNOWN) { continue; }
 					if (entry.getKey().getRowNum() == 0) {
 						entry.getKey().wb = new XSSFWorkbook();
-						entry.getKey().fos = new FileOutputStream(entry.getKey().getFilename() + ".xlsx");
+						entry.getKey().fos = CSVWriter.getFOS(entry.getKey().getFilename(), SSType.XLSX);
+						entry.getKey().csv = CSVWriter.getBFW(entry.getKey().getFilename(), SSType.CSV);
 						entry.getKey().sheet = entry.getKey().wb.createSheet();
 						row = entry.getKey().sheet.createRow(0);
 						for (int i = 0; i < troops_by_nation_columns.length; i++) {
@@ -251,10 +263,14 @@ public class NationStatIndexer extends AbstractStatIndexer {
 			}
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb2.write(fos2);
 			fos2.close();
+			CSVWriter.writeSimpleCSV(sheet2, csv2, Delimiter.TAB);
+			csv2.close();
 			wb2.close();
 			
 			for (Nation nation : nationList) {
@@ -262,6 +278,8 @@ public class NationStatIndexer extends AbstractStatIndexer {
 					if (entry.getKey().rowNum != -1) {
 						entry.getKey().wb.write(entry.getKey().fos);
 						entry.getKey().fos.close();
+						CSVWriter.writeSimpleCSV(entry.getKey().sheet, entry.getKey().csv, Delimiter.TAB);
+						entry.getKey().csv.close();
 						entry.getKey().wb.close();
 						entry.getKey().rowNum = -1;
 					}

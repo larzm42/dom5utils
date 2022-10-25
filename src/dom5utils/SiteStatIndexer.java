@@ -35,6 +35,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class SiteStatIndexer extends AbstractStatIndexer {
 	public static String[] site_columns = {"id", "name", "rarity", "loc", "level", "path", "F", "A", "W", "E", "S", "D", "N", "B", "gold", "res", 
 			"sup", "unr", "exp", "lab", "fort", "scale1", "scale2", "domspread", "turmoil", "sloth", "cold", "death", "misfortune", "drain", 
@@ -396,9 +399,13 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			}
 			in.close();
 			stream.close();
+			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
 
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("MagicSites.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("MagicSites", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("MagicSites", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
 
 			int rowNum = 0;
@@ -429,6 +436,8 @@ public class SiteStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 			
 		} catch (FileNotFoundException e) {

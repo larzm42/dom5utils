@@ -33,6 +33,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class ArmorStatIndexer extends AbstractStatIndexer {
 	public static String[] armors_columns = {"id", "name", "type", "def", "enc", "rcost", "end"};
 	public static String[] attributes_by_armor_columns = {"armor_number", "attribute", "raw_value", "end"};
@@ -119,14 +122,22 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 			in.close();
 			stream.close();
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("armors.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("armors", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("armors", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
+			
 			XSSFWorkbook wb2 = new XSSFWorkbook();
-			FileOutputStream fos2 = new FileOutputStream("protections_by_armor.xlsx");
+			FileOutputStream fos2 = CSVWriter.getFOS("protections_by_armor", SSType.XLSX);
+			BufferedWriter   csv2 = CSVWriter.getBFW("protections_by_armor", SSType.CSV);
 			XSSFSheet sheet2 = wb2.createSheet();
+
 			XSSFWorkbook wb3 = new XSSFWorkbook();
-			FileOutputStream fos3 = new FileOutputStream("attributes_by_armor.xlsx");
+			FileOutputStream fos3 = CSVWriter.getFOS("attributes_by_armor", SSType.XLSX);
+			BufferedWriter   csv3 = CSVWriter.getBFW("attributes_by_armor", SSType.CSV);
 			XSSFSheet sheet3 = wb3.createSheet();
 
 			int rowNum = 0;
@@ -187,14 +198,20 @@ public class ArmorStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb2.write(fos2);
 			fos2.close();
+			CSVWriter.writeSimpleCSV(sheet2, csv2, Delimiter.TAB);
+			csv2.close();
 			wb2.close();
 
 			wb3.write(fos3);
 			fos3.close();
+			CSVWriter.writeSimpleCSV(sheet3, csv3, Delimiter.TAB);
+			csv3.close();
 			wb3.close();
 
 			writer.close();
