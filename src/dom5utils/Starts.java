@@ -48,7 +48,7 @@ public class Starts {
 	public static final long SPELL_SIZE = 216l;
 
 	public static final long SPELL_DESC = 0x003a1668l;
-	public static final long SPELL_DESC_INDEX = 0x003ed147l;
+	public static final long SPELL_DESC_INDEX = 0x003ed148l;
 
 	public static final long EVENT = 0x003f4f98l;
 	public static final long EVENT_SIZE = 1728l;
