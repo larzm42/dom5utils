@@ -33,6 +33,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class WeaponStatIndexer extends AbstractStatIndexer {
 	public static String[] weapons_columns = {"id", "name", "effect_record_id", "att", "def", "len", "nratt", "ammo", "secondaryeffect", "secondaryeffectalways", "rcost", "weapon", "end"};																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
 	public static String[] effects_weapons_columns = {"record_id", "effect_number", "duration", "ritual", "object_type", "raw_argument", "modifiers_mask", "range_base", "range_per_level", "range_strength_divisor", "area_base", "area_per_level", "area_battlefield_pct", "end"};
@@ -128,14 +131,22 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 			in.close();
 			stream.close();
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("weapons.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("weapons", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("weapons", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
+			
 			XSSFWorkbook wb2 = new XSSFWorkbook();
-			FileOutputStream fos2 = new FileOutputStream("effects_weapons.xlsx");
+			FileOutputStream fos2 = CSVWriter.getFOS("effects_weapons", SSType.XLSX);
+			BufferedWriter   csv2 = CSVWriter.getBFW("effects_weapons", SSType.CSV);
 			XSSFSheet sheet2 = wb2.createSheet();
+			
 			XSSFWorkbook wb3 = new XSSFWorkbook();
-			FileOutputStream fos3 = new FileOutputStream("attributes_by_weapon.xlsx");
+			FileOutputStream fos3 = CSVWriter.getFOS("attributes_by_weapon", SSType.XLSX);
+			BufferedWriter   csv3 = CSVWriter.getBFW("attributes_by_weapon", SSType.CSV);
 			XSSFSheet sheet3 = wb3.createSheet();
 
 			int rowNum = 0;
@@ -203,14 +214,20 @@ public class WeaponStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb2.write(fos2);
 			fos2.close();
+			CSVWriter.writeSimpleCSV(sheet2, csv2, Delimiter.TAB);
+			csv2.close();
 			wb2.close();
 
 			wb3.write(fos3);
 			fos3.close();
+			CSVWriter.writeSimpleCSV(sheet3, csv3, Delimiter.TAB);
+			csv3.close();
 			wb3.close();
 			
 			writer.close();

@@ -15,6 +15,7 @@ package dom5utils;
  * along with dom5utils.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +31,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
 
 public class MercenaryStatIndexer extends AbstractStatIndexer {
 	public static String[] mercenary_columns = {"id", "name", "bossname", "com", "unit", "nrunits", "level", "minmen", "minpay", "xp", "randequip", "recrate", "item1", "item2", "eramask", "end"};
@@ -97,8 +101,12 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 			in.close();
 			stream.close();
 			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
+			
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("Mercenary.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("Mercenary", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("Mercenary", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
 			
 			int rowNum = 0;
@@ -122,6 +130,8 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 			}
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 		} catch (FileNotFoundException e) {

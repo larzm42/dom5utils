@@ -38,6 +38,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dom5utils.CSVWriter.Delimiter;
+import dom5utils.CSVWriter.SSType;
+
 public class MonsterStatIndexer extends AbstractStatIndexer {
 	public static String[] unit_columns = {"id", "name", "wpn1", "wpn2", "wpn3", "wpn4", "wpn5", "wpn6", "wpn7", "armor1", "armor2", "armor3", "armor4", 
 			"rt", "reclimit", "basecost", "rcost", "size", "ressize", "hp", "prot", "mr", "mor", "str", "att", "def", "prec", "enc", 
@@ -1249,9 +1252,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					monster.addAttribute(new Attr("fixedname", names.get(nameIndex++)));
 				}
 			}
+			
+			//make sure there's a place to put csv files
+			CSVWriter.createCSVOutputDirectory();
 
 			XSSFWorkbook wb = new XSSFWorkbook();
-			FileOutputStream fos = new FileOutputStream("BaseU.xlsx");
+			FileOutputStream fos = CSVWriter.getFOS("BaseU", SSType.XLSX);
+			BufferedWriter   csv = CSVWriter.getBFW("BaseU", SSType.CSV);
 			XSSFSheet sheet = wb.createSheet();
 
 			int rowNum = 0;
@@ -1283,10 +1290,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 			
 			wb = new XSSFWorkbook();
-			fos = new FileOutputStream("monster.xlsx");
+			fos = CSVWriter.getFOS("monster", SSType.XLSX);
+			csv = CSVWriter.getBFW("monster", SSType.CSV);
 			sheet = wb.createSheet();
 
 			rowNum = 0;
@@ -1321,10 +1331,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 			
 			wb = new XSSFWorkbook();
-			fos = new FileOutputStream("monster_weapon.xlsx");
+			fos = CSVWriter.getFOS("monster_weapon", SSType.XLSX);
+			csv = CSVWriter.getBFW("monster_weapon", SSType.CSV);
 			sheet = wb.createSheet();
 
 			rowNum = 0;
@@ -1355,10 +1368,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb = new XSSFWorkbook();
-			fos = new FileOutputStream("monster_armor.xlsx");
+			fos = CSVWriter.getFOS("monster_armor", SSType.XLSX);
+			csv = CSVWriter.getBFW("monster_armor", SSType.CSV);
 			sheet = wb.createSheet();
 
 			rowNum = 0;
@@ -1389,10 +1405,13 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 
 			wb = new XSSFWorkbook();
-			fos = new FileOutputStream("monster_realm.xlsx");
+			fos = CSVWriter.getFOS("monster_realm", SSType.XLSX);
+			csv = CSVWriter.getBFW("monster_realm", SSType.CSV);
 			sheet = wb.createSheet();
 
 			rowNum = 0;
@@ -1423,6 +1442,8 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 			
 			wb.write(fos);
 			fos.close();
+			CSVWriter.writeSimpleCSV(sheet, csv, Delimiter.TAB);
+			csv.close();
 			wb.close();
 			
 		} catch (FileNotFoundException e) {
