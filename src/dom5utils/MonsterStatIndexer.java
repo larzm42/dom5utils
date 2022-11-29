@@ -905,7 +905,10 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				
 				List<String> largeBitmap = largeBitmap(startIndex + 272, values);
 				for (String bit : largeBitmap) {
-					monster.addAttribute(new Attr(bit, 1));
+					// Heat and cold are additive +3 when added this way, and are dealt with below
+					if (bit != "heat" && bit != "cold") {
+						monster.addAttribute(new Attr(bit, 1));
+					}
 				}
 
 				if (monster.getAttribute("slow_to_recruit") != null) {
@@ -915,12 +918,31 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 				}
 				
 				if (largeBitmap.contains("heat")) {
-					monster.addAttribute(new Attr("heat", "3"));
+					String existing = monster.getAttribute("heat");
+					if (existing != null)
+					{
+						Integer newvalue = Integer.parseInt(existing) + 3;
+						monster.setAttributeValue("heat", newvalue.toString());
+					}
+					else
+					{
+						monster.addAttribute(new Attr("heat", "3"));
+					}
 				}
 				
 				if (largeBitmap.contains("cold")) {
-					monster.addAttribute(new Attr("cold", "3"));
+					String existing = monster.getAttribute("cold");
+					if (existing != null)
+					{
+						Integer newvalue = Integer.parseInt(existing) + 3;
+						monster.setAttributeValue("cold", newvalue.toString());
+					}
+					else
+					{
+						monster.addAttribute(new Attr("cold", "3"));
+					}
 				}
+				
 				
 				String additionalLeader = "0";
 				if (monster.getAttribute("additional leadership") != null) {
