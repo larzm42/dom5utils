@@ -292,5 +292,23 @@ public class Monster {
 		}
 		return null;
 	}
-
+	
+	public void setAttributeValue(String key, String value) throws IllegalArgumentException {
+		if (baseAttrs.contains(key)) {
+			try {
+				new PropertyDescriptor(key, Monster.class).getWriteMethod().invoke(this, value);
+				return;
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| IntrospectionException e) {
+				e.printStackTrace();
+			}
+		}
+		for (Attr attr : attributes) {
+			if (attr.getKey().equals(key)) {
+				attr.setValue(value);
+				return;
+			}
+		}
+		this.addAttribute(new Attr(key, value));
+	}
 }
