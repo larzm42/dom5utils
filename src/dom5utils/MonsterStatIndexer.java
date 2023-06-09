@@ -1060,22 +1060,22 @@ public class MonsterStatIndexer extends AbstractStatIndexer {
 					monster.addAttribute(new Attr("fireres", fireres==0?"":Integer.toString(fireres)));
 				}
 				if (largeBitmap.contains("poisonres15")) {
-					String additionalPoisin = "0";
-					if (monster.getAttribute("poisonres") != null) {
-						additionalPoisin = monster.getAttribute("poisonres").toString();
-					}
-					boolean poisoncloud = false;
-					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.getAttribute("poisoncloud") != null) {
-						poisoncloud = true;
-					}
-					monster.addAttribute(new Attr("poisonres", 15 + Integer.parseInt(additionalPoisin.equals("")?"0":additionalPoisin) + (poisoncloud?10:0)));
-				} else {
 					String additionalPoison = "0";
 					if (monster.getAttribute("poisonres") != null) {
 						additionalPoison = monster.getAttribute("poisonres").toString();
 					}
 					boolean poisoncloud = false;
 					if (largeBitmap.contains("undead")|| largeBitmap.contains("inanimate") || monster.getAttribute("poisoncloud") != null) {
+						poisoncloud = true;
+					}
+					monster.addAttribute(new Attr("poisonres", 15 + Integer.parseInt(additionalPoison.equals("")?"0":additionalPoison) + (poisoncloud?10:0)));
+				} else {
+					String additionalPoison = "0";
+					if (monster.getAttribute("poisonres") != null) {
+						additionalPoison = monster.getAttribute("poisonres").toString();
+					}
+					boolean poisoncloud = false;
+					if (monster.getAttribute("poisoncloud") != null) {
 						poisoncloud = true;
 					}
 					int poisonres = Integer.parseInt(additionalPoison.equals("")?"0":additionalPoison) + (poisoncloud?10:0);
