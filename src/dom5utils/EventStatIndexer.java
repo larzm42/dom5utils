@@ -88,9 +88,11 @@ public class EventStatIndexer {
 //		106 Subterfuge
 //		107 Magic
 	
+
 	static String[][] requirementMapping = {
 		{"1300", "mydominion"}, 
 		{"6A00", "nation"}, 
+		//{"1200", "nation"}, 
 		{"1000", "maxdominion"}, 
 		{"0200", "minpop"}, 
 		{"0400", "temple"}, 
@@ -142,9 +144,9 @@ public class EventStatIndexer {
 		{"3600", "mindef"}, 
 		{"0B00", "commander"}, 
 		{"3B00", "code"}, 
-		{"4300", "code"}, // #req_anycode?
-		{"4400", "code"}, // #req_nearbycode?
-		{"5500", "code"}, // #req_nearowncode?
+		{"4300", "anycode"}, // #req_anycode?
+		{"4400", "nearbycode"}, // #req_nearbycode?
+		{"5500", "nearowncode"}, // #req_nearowncode?
 		{"2300", "researcher"}, 
 		{"1E00", "freshwater"}, 
 		{"2500", "capital"}, 
@@ -165,7 +167,7 @@ public class EventStatIndexer {
 		{"3400", "nearbysite"}, 
 		{"3700", "maxdef"}, 
 		{"3800", "poptype"}, 
-		//{"1100", "nativesoil"}, 
+		{"1100", "nativesoil"}, 
 		{"0F00", "farm"}, 
 		{"0800", "mintroops"}, 
 		{"2600", "maxturn"}, 
@@ -177,10 +179,20 @@ public class EventStatIndexer {
 		{"7800", "targmnr"}, 
 		{"4800", "preach"}, 
 		{"DD00", "targorder"}, 
-		{"4700", "story"},
+		{"4600", "story"},
 		{"4100", "maxpop"},
 		{"5300", "ench"},
-		
+		{"1600", "siege"},
+		{"1800", "nonation"},
+		{"2100", "nositenbr"},
+		{"3f00", "unclaimedthrone"},
+		{"4200", "cave"},
+		{"5000", "nopathblood"},
+		{"5100", "nopathholy"},
+		{"5400", "noench"},
+		{"5600", "permonth"},
+		{"5a00", "enchdom"},
+
 	};
 	
 	static String[] requirementToUnit = {
