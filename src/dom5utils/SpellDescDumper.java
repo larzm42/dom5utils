@@ -75,7 +75,11 @@ public class SpellDescDumper {
 				stream.close();
 				
 				if (buffer.toString().startsWith(":")) {
-					names.add(buffer.toString().substring(1));
+					String name = buffer.toString().substring(1);
+					if ("CalltheWormthatWalks".equals(name)) {
+						name = "CalltheWormThatWalks";
+					}
+					names.add(name);
 					desc = null;
 				} else {
 					desc = buffer.toString();

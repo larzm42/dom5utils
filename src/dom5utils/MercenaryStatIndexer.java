@@ -58,6 +58,8 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 	        int rowNumber = 1;
 			while ((ch = in.read()) > -1) {
 				StringBuffer name = new StringBuffer();
+				ch = in.read();
+				ch = in.read();
 				while (ch != 0) {
 					name.append((char)ch);
 					ch = in.read();
@@ -74,19 +76,19 @@ public class MercenaryStatIndexer extends AbstractStatIndexer {
 				merc.parameters = new HashMap<String, Object>();
 				merc.parameters.put("id", rowNumber);
 				merc.parameters.put("name", name.toString());
-				merc.parameters.put("bossname", getString(startIndex + 36l));
-				merc.parameters.put("com", getBytes2(startIndex + 74));
-				merc.parameters.put("unit", getBytes2(startIndex + 78));
-				merc.parameters.put("nrunits", getBytes2(startIndex + 82));
-				merc.parameters.put("minmen", getBytes2(startIndex + 86));
-				merc.parameters.put("minpay", getBytes2(startIndex + 90));
-				merc.parameters.put("xp", getBytes2(startIndex + 94));
-				merc.parameters.put("randequip", getBytes2(startIndex + 158));
-				merc.parameters.put("recrate", getBytes2(startIndex + 306));
-				merc.parameters.put("item1", getString(startIndex + 162l));
-				merc.parameters.put("item2", getString(startIndex + 198l));
-				merc.parameters.put("eramask", getBytes1(startIndex-2));
-				merc.parameters.put("level", getBytes1(startIndex-1));
+				merc.parameters.put("eramask", getBytes1(startIndex));
+				merc.parameters.put("level", getBytes1(startIndex + 1));
+				merc.parameters.put("bossname", getString(startIndex + 38l));
+				merc.parameters.put("com", getBytes2(startIndex + 76));
+				merc.parameters.put("unit", getBytes2(startIndex + 80));
+				merc.parameters.put("nrunits", getBytes2(startIndex + 84));
+				merc.parameters.put("minmen", getBytes2(startIndex + 88));
+				merc.parameters.put("minpay", getBytes2(startIndex + 92));
+				merc.parameters.put("xp", getBytes2(startIndex + 96));
+				merc.parameters.put("randequip", getBytes2(startIndex + 160));
+				merc.parameters.put("recrate", getBytes2(startIndex + 308));
+				merc.parameters.put("item1", getString(startIndex + 164l));
+				merc.parameters.put("item2", getString(startIndex + 200l));
 				
 				mercenaryList.add(merc);
 				

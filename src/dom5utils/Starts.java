@@ -53,7 +53,7 @@ public class Starts {
 	public static final long EVENT = 0x003f98c0l;
 	public static final long EVENT_SIZE = 1728l;
 	
-	public static final long MERCENARY = 0x011c666al;
+	public static final long MERCENARY = 0x011c6668l;
 	public static final long MERCENARY_SIZE = 312l;
 
 	public static final long ARMOR = 0x0020faa0l;
